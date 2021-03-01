@@ -16,8 +16,11 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_res
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.alien import S4CMAlienOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.mermaid import S4CMMermaidOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.sim_operation import S4CMSimOperation
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.skeleton import S4CMSkeletonOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.vampire import S4CMVampireOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.witch import S4CMWitchOp
 
 
 class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
@@ -46,7 +49,10 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
 
         def _operation_remove_all() -> None:
             S4CMAlienOp().remove(self._sim_info)
+            S4CMMermaidOp().remove(self._sim_info)
+            S4CMSkeletonOp().remove(self._sim_info)
             S4CMVampireOp().remove(self._sim_info)
+            S4CMWitchOp().remove(self._sim_info)
             reopen()
 
         option_dialog.add_option(
@@ -78,7 +84,18 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.BECOME_MERMAID
                 ),
-                on_chosen=lambda *_, **__: reopen()
+                on_chosen=lambda *_, **__: _operation_add(S4CMMermaidOp())
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'Skeleton',
+                CommonOccultType.SKELETON,
+                CommonDialogResponseOptionContext(
+                    S4CMSimControlMenuStringId.BECOME_SKELETON
+                ),
+                on_chosen=lambda *_, **__: _operation_add(S4CMSkeletonOp())
             )
         )
 
@@ -100,7 +117,7 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.BECOME_WITCH
                 ),
-                on_chosen=lambda *_, **__: reopen()
+                on_chosen=lambda *_, **__: _operation_add(S4CMWitchOp())
             )
         )
         return True
