@@ -38,6 +38,8 @@ class S4CMMermaidOp(S4CMSimOperation):
         from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
         trait_ids: Tuple[int] = (
             CommonTraitId.OCCULT_MERMAID_MERMAID_FORM,
+            CommonTraitId.OCCULT_MERMAID_DISCOVERED,
+            CommonTraitId.OCCULT_MERMAID_TEMPORARY_DISCOVERED,
             CommonTraitId.OCCULT_MERMAID_TYAE,
             CommonTraitId.OCCULT_MERMAID,
         )
