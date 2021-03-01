@@ -58,3 +58,4 @@ class S4CMBecomeVampireOp:
         CommonTraitUtils.remove_trait(sim_info, (
             CommonTraitId.IS_PLANT_SIM_NPC
         ))
+        return True
