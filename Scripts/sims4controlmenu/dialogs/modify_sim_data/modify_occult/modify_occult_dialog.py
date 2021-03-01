@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from typing import Callable
+from typing import Callable, Any
 from sims4communitylib.enums.common_occult_type import CommonOccultType
 from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
     CommonChooseButtonOptionDialog
@@ -15,6 +15,7 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_res
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.control_dialog_base import S4CMSimControlDialogBase
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.vampire import S4CMBecomeVampireOp
 
 
 class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
@@ -37,6 +38,10 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
         on_previous: Callable[[], None],
         reopen: Callable[[], None]
     ) -> bool:
+        def _run_operation(operation: Any):
+            operation.run(self._sim_info)
+            reopen()
+
         option_dialog.add_option(
             CommonDialogButtonOption(
                 'RemoveAllOccults',
@@ -77,7 +82,7 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.BECOME_VAMPIRE
                 ),
-                on_chosen=lambda *_, **__: reopen()
+                on_chosen=lambda *_, **__: _run_operation(S4CMBecomeVampireOp())
             )
         )
 
