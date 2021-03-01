@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from typing import Callable, Any
+from typing import Callable
 from sims4communitylib.enums.common_occult_type import CommonOccultType
 from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
     CommonChooseButtonOptionDialog
@@ -15,7 +15,9 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_res
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.control_dialog_base import S4CMSimControlDialogBase
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.vampire import S4CMBecomeVampireOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.alien import S4CMAlienOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.sim_operation import S4CMSimOperation
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.vampire import S4CMVampireOp
 
 
 class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
@@ -38,8 +40,13 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
         on_previous: Callable[[], None],
         reopen: Callable[[], None]
     ) -> bool:
-        def _run_operation(operation: Any):
-            operation.run(self._sim_info)
+        def _operation_add(operation: S4CMSimOperation):
+            operation.add(self._sim_info)
+            reopen()
+
+        def _operation_remove_all() -> None:
+            S4CMAlienOp().remove(self._sim_info)
+            S4CMVampireOp().remove(self._sim_info)
             reopen()
 
         option_dialog.add_option(
@@ -49,7 +56,7 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.REMOVE_ALL_OCCULTS
                 ),
-                on_chosen=lambda *_, **__: reopen()
+                on_chosen=lambda *_, **__: _operation_remove_all()
             )
         )
 
@@ -60,7 +67,7 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.BECOME_ALIEN
                 ),
-                on_chosen=lambda *_, **__: reopen()
+                on_chosen=lambda *_, **__: _operation_add(S4CMAlienOp())
             )
         )
 
@@ -82,7 +89,7 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.BECOME_VAMPIRE
                 ),
-                on_chosen=lambda *_, **__: _run_operation(S4CMBecomeVampireOp())
+                on_chosen=lambda *_, **__: _operation_add(S4CMVampireOp())
             )
         )
 
