@@ -18,7 +18,7 @@ from sims4communitylib.utils.localization.common_localization_utils import Commo
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.utils.localization.common_localized_string_colors import CommonLocalizedStringColor
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
-from sims4controlmenu.commonlib.dialogs.common_ui_response_dialog_response import CommonUiDialogResponse
+from sims4controlmenu.commonlib.dialogs.common_ui_dialog_response import CommonUiDialogResponse
 from sims4controlmenu.modinfo import ModInfo
 
 
@@ -71,6 +71,15 @@ class CommonUiResponseDialog(UiDialog, HasClassLog):
     @property
     def cancelled(self) -> bool:
         return self.response < 0
+
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def previous(self) -> bool:
+        return self.response == CommonUiResponseDialog._PREVIOUS_BUTTON_ID
+
+    def add_response(self, response: CommonUiDialogResponse):
+        """ Add a response to the dialog. """
+        self._responses += (response,)
 
     def get_response(self) -> Any:
         """ Get the chosen response. If there is one. """
