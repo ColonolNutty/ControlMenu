@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="S4CMOpenSimControlMenuInteraction" i="interaction" m="sims4controlmenu.interactions.open_sim_control_menu" n="S4CM_Open_Sim_Control_Menu" s="16376299487119115833">
+  <V t="disabled" n="_saveable" />
+  <T n="category">0</T>
+  <T n="display_name">0x955CE68D<!--Control Menu--></T>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+  <T n="pie_menu_priority">2000</T>
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key">2f7d0004:00000000:87A22DAF548644A6</T>
+      </U>
+    </V>
+  </V>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

@@ -12,28 +12,24 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_but
     CommonDialogButtonOption
 from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
+from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.modify_occult_dialog import S4CMModifyOccultDialog
 from sims4controlmenu.dialogs.modify_sim_data.control_dialog_base import S4CMSimControlDialogBase
-from sims4controlmenu.dialogs.modify_sim_data.modify_sim_data_dialog import S4CMModifySimDataDialog
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
 
 
-class S4CMSimControlDialog(S4CMSimControlDialogBase):
+class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
     """ The control dialog for Sims. """
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 's4cm_sim_control_dialog'
+        return 's4cm_modify_sim_data_dialog'
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return S4CMStringId.CONTROL_MENU
-
-    # noinspection PyMissingOrEmptyDocstring
-    @property
-    def include_previous_button(self) -> bool:
-        return False
+        return S4CMStringId.MODIFY_SIM_DATA
 
     def _setup_dialog(
         self,
@@ -44,12 +40,12 @@ class S4CMSimControlDialog(S4CMSimControlDialogBase):
     ) -> bool:
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'ModifySimData',
+                'ModifyOccult',
                 None,
                 CommonDialogResponseOptionContext(
-                    S4CMStringId.MODIFY_SIM_DATA
+                    S4CMSimControlMenuStringId.MODIFY_OCCULT,
                 ),
-                on_chosen=lambda *_, **__: S4CMModifySimDataDialog(self._sim_info, on_previous=reopen).open()
+                on_chosen=lambda *_, **__: S4CMModifyOccultDialog(self._sim_info, on_previous=reopen).open()
             )
         )
         return True

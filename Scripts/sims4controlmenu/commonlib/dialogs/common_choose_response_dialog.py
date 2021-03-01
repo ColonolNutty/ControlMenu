@@ -136,12 +136,14 @@ class CommonChooseResponseDialog(CommonDialog):
         on_chosen: Callable[[Any, CommonChoiceOutcome], None]=CommonFunctionUtils.noop,
         on_previous: Callable[[], None]=CommonFunctionUtils.noop,
         dialog_options: UiDialogOption=0,
+        include_previous_button: bool=True,
         sim_info: SimInfo=None
     ):
         """show(\
             on_chosen=CommonFunctionUtils.noop,\
             on_previous=CommonFunctionUtils.noop,\
             dialog_options=0,\
+            include_previous_button=True,\
             sim_info=None,\
         )
 
@@ -153,6 +155,8 @@ class CommonChooseResponseDialog(CommonDialog):
         :type on_previous: Callable[[], None], optional
         :param dialog_options: Options to apply to the dialog, such as removing the close button. Default is no options.
         :type dialog_options: UiDialogOption, optional
+        :param include_previous_button: If True, the Previous button will be appended to the end of the dialog. Default is True.
+        :type include_previous_button: bool, optional
         :param sim_info: The Sim that will appear in the dialog image. The default Sim is the Active Sim. Default is None.
         :type sim_info: SimInfo, optional
         """
@@ -161,6 +165,7 @@ class CommonChooseResponseDialog(CommonDialog):
                 on_chosen=on_chosen,
                 on_previous=on_previous,
                 dialog_options=dialog_options,
+                include_previous_button=include_previous_button,
                 sim_info=sim_info
             )
         except Exception as ex:
@@ -171,6 +176,7 @@ class CommonChooseResponseDialog(CommonDialog):
         on_chosen: Callable[[Any, CommonChoiceOutcome], None]=CommonFunctionUtils.noop,
         on_previous: Callable[[], None]=CommonFunctionUtils.noop,
         dialog_options: UiDialogOption=0,
+        include_previous_button: bool=True,
         sim_info: SimInfo=None
     ):
         def _on_chosen(choice: Any, outcome: CommonChoiceOutcome) -> None:
@@ -185,6 +191,7 @@ class CommonChooseResponseDialog(CommonDialog):
             on_chosen=_on_chosen,
             on_previous=on_previous,
             dialog_options=dialog_options,
+            include_previous_button=include_previous_button,
             sim_info=sim_info
         )
         if _dialog is None:
@@ -198,12 +205,14 @@ class CommonChooseResponseDialog(CommonDialog):
         on_chosen: Callable[[Any, CommonChoiceOutcome], None]=CommonFunctionUtils.noop,
         on_previous: Callable[[], None]=CommonFunctionUtils.noop,
         dialog_options: Union[UiDialogOption, int]=0,
+        include_previous_button: bool=True,
         sim_info: SimInfo=None
     ) -> Union[CommonUiResponseDialog, None]:
         """build_dialog(\
             on_chosen=CommonFunctionUtils.noop,\
             on_previous=CommonFunctionUtils.noop,\
             dialog_options=0,\
+            include_previous_button=True,\
             sim_info=None\
         )
 
@@ -215,6 +224,8 @@ class CommonChooseResponseDialog(CommonDialog):
         :type on_previous: Callable[[], None], optional
         :param dialog_options: Display options for the dialog, such as hiding the close button. Default is no display options.
         :type dialog_options: UiDialogOption, optional
+        :param include_previous_button: If True, the Previous button will be appended to the end of the dialog. Default is True.
+        :type include_previous_button: bool, optional
         :param sim_info: A Sim that will appear in the top left image when the dialog is shown. If set to None, the active Sim will be used. Default is None.
         :type sim_info: SimInfo, optional
         :return: The built dialog or None if a problem occurs.
@@ -224,6 +235,7 @@ class CommonChooseResponseDialog(CommonDialog):
 
         _dialog = self._create_dialog(
             dialog_options=dialog_options,
+            include_previous_button=include_previous_button,
             sim_info=sim_info
         )
         if _dialog is None:
@@ -270,6 +282,7 @@ class CommonChooseResponseDialog(CommonDialog):
     def _create_dialog(
         self,
         dialog_options: UiDialogOption=0,
+        include_previous_button: bool=True,
         sim_info: SimInfo=None
     ) -> Union[CommonUiResponseDialog, None]:
         try:
@@ -277,6 +290,7 @@ class CommonChooseResponseDialog(CommonDialog):
             return CommonUiResponseDialog.TunableFactory().default(
                 sim_info or CommonSimUtils.get_active_sim_info(),
                 tuple(),
+                include_previous_button=include_previous_button,
                 dialog_options=dialog_options,
                 text=lambda *_, **__: self.description,
                 title=lambda *_, **__: self.title

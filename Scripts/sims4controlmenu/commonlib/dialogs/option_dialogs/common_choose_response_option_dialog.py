@@ -1,10 +1,11 @@
 """
-The Sims 4 Community Library is licensed under the Creative Commons Attribution 4.0 International public license (CC BY 4.0).
+The Sims 4 Control Menu is licensed under the Creative Commons Attribution 4.0 International public license (CC BY 4.0).
 https://creativecommons.org/licenses/by/4.0/
 https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+
 from typing import Any, Callable, Union
 from sims4communitylib.dialogs.common_choice_outcome import CommonChoiceOutcome
 from sims4communitylib.dialogs.option_dialogs.common_option_dialog import CommonOptionDialog
@@ -18,6 +19,8 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_res
 class CommonChooseResponseOptionDialog(CommonOptionDialog):
     """CommonChooseResponseOptionDialog(\
         internal_dialog,\
+        include_previous_button=True,\
+        on_previous=CommonFunctionUtils.noop\
         on_close=CommonFunctionUtils.noop\
     )
 
@@ -27,6 +30,8 @@ class CommonChooseResponseOptionDialog(CommonOptionDialog):
 
     :param internal_dialog: The dialog this option dialog wraps.
     :type internal_dialog: CommonChooseResponseDialog
+    :param include_previous_button: If True, the Previous button will be appended to the end of the dialog. Default is True.
+    :type include_previous_button: bool, optional
     :param on_previous: A callback invoked upon the Previous response being chosen. Default is no operation.
     :type on_previous: Callable[[], None], optional
     :param on_close: A callback invoked upon the dialog closing.
@@ -35,6 +40,7 @@ class CommonChooseResponseOptionDialog(CommonOptionDialog):
     def __init__(
         self,
         internal_dialog: CommonChooseResponseDialog,
+        include_previous_button: bool=True,
         on_previous: Callable[[], None]=CommonFunctionUtils.noop,
         on_close: Callable[[], None]=CommonFunctionUtils.noop
     ):
@@ -42,6 +48,7 @@ class CommonChooseResponseOptionDialog(CommonOptionDialog):
             internal_dialog,
             on_close=on_close
         )
+        self._include_previous_button = include_previous_button
         self._on_previous = on_previous
         self._options = []
 
@@ -101,9 +108,9 @@ class CommonChooseResponseOptionDialog(CommonOptionDialog):
 
         """
         try:
-            return self._internal_dialog.show(*_, on_chosen=self._on_chosen(), on_previous=self._on_previous, **__)
+            return self._internal_dialog.show(*_, on_chosen=self._on_chosen(), include_previous_button=self._include_previous_button, on_previous=self._on_previous, **__)
         except Exception as ex:
-            self.log.error('choose_option.show', exception=ex)
+            self.log.error('choose_response_option.show', exception=ex)
 
     def build_dialog(self, *_: Any, **__: Any) -> Union[CommonUiResponseDialog, None]:
         """build_dialog(*_, **__)
@@ -116,9 +123,9 @@ class CommonChooseResponseOptionDialog(CommonOptionDialog):
         :rtype: Union[CommonUiResponseDialog, None]
         """
         try:
-            return self._internal_dialog.build_dialog(*_, on_chosen=self._on_chosen(), on_previous=self._on_previous, **__)
+            return self._internal_dialog.build_dialog(*_, on_chosen=self._on_chosen(), include_previous_button=self._include_previous_button, on_previous=self._on_previous, **__)
         except Exception as ex:
-            self.log.error('choose_option.build_dialog', exception=ex)
+            self.log.error('choose_response_option.build_dialog', exception=ex)
         return None
 
     def _on_chosen(self) -> Callable[[CommonDialogResponseOption, CommonChoiceOutcome], None]:

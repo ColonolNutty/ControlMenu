@@ -37,6 +37,7 @@ class CommonChooseButtonOptionDialog(CommonChooseResponseOptionDialog):
         description_identifier,\
         title_tokens=(),\
         description_tokens=(),\
+        on_previous=CommonFunctionUtils.noop\
         on_previous=CommonFunctionUtils.noop,\
         on_close=CommonFunctionUtils.noop\
     )
@@ -134,6 +135,8 @@ class CommonChooseButtonOptionDialog(CommonChooseResponseOptionDialog):
     :type title_tokens: Iterator[Any], optional
     :param description_tokens: An iterable of Tokens to format into the description. Default is an empty collection.
     :type description_tokens: Iterator[Any], optional
+    :param include_previous_button: If True, the Previous button will be appended to the end of the dialog. Default is True.
+    :type include_previous_button: bool, optional
     :param on_previous: A callback invoked upon the the Previous option being chosen. Default is CommonFunctionUtils.noop.
     :type on_previous: Callable[[], None], optional
     :param on_close: A callback invoked upon the dialog closing. Default is CommonFunctionUtils.noop.
@@ -152,6 +155,7 @@ class CommonChooseButtonOptionDialog(CommonChooseResponseOptionDialog):
         description_identifier: Union[int, str, LocalizedString, CommonStringId],
         title_tokens: Iterator[Any]=(),
         description_tokens: Iterator[Any]=(),
+        include_previous_button: bool=True,
         on_previous: Callable[[], None]=CommonFunctionUtils.noop,
         on_close: Callable[[], None]=CommonFunctionUtils.noop
     ):
@@ -164,6 +168,7 @@ class CommonChooseButtonOptionDialog(CommonChooseResponseOptionDialog):
                 title_tokens=title_tokens,
                 description_tokens=description_tokens
             ),
+            include_previous_button=include_previous_button,
             on_previous=on_previous,
             on_close=on_close
         )
