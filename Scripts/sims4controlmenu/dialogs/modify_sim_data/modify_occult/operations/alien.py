@@ -9,8 +9,6 @@ from typing import Tuple
 
 from sims.occult.occult_enums import OccultType
 from sims.sim_info import SimInfo
-from sims4communitylib.enums.buffs_enum import CommonBuffId
-from sims4communitylib.utils.sims.common_buff_utils import CommonBuffUtils
 from sims4communitylib.utils.sims.common_occult_utils import CommonOccultUtils
 from sims4controlmenu.commonlib.utils.common_sim_loot_utils import CommonSimLootActionUtils
 from sims4controlmenu.dialogs.modify_sim_data.sim_operation import S4CMSingleSimOperation
@@ -29,19 +27,27 @@ class S4CMAlienAddOp(S4CMSingleSimOperation):
             # loot_Occult_AlienSwitch
             103254
         )
+        # noinspection PyPropertyAccess
         physique = sim_info.physique
+        # noinspection PyPropertyAccess
         facial_attributes = sim_info.facial_attributes
+        # noinspection PyPropertyAccess
         voice_pitch = sim_info.voice_pitch
+        # noinspection PyPropertyAccess
         voice_actor = sim_info.voice_actor
+        # noinspection PyPropertyAccess
         voice_effect = sim_info.voice_effect
+        # noinspection PyPropertyAccess
         skin_tone = sim_info.skin_tone
         flags = sim_info.flags
         pelt_layers = None
         if hasattr(sim_info, 'pelt_layers'):
+            # noinspection PyPropertyAccess
             pelt_layers = sim_info.pelt_layers
         base_trait_ids = None
         if hasattr(sim_info, 'base_trait_ids'):
             base_trait_ids = list(sim_info.base_trait_ids)
+        # noinspection PyPropertyAccess
         genetic_data_b = sim_info.genetic_data
         if hasattr(genetic_data_b, 'SerializeToString'):
             genetic_data_b = genetic_data_b.SerializeToString()
