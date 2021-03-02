@@ -8,12 +8,8 @@ Copyright (c) COLONOLNUTTY
 from sims.sim_info import SimInfo
 
 
-class S4CMSimOperation:
+class S4CMSingleSimOperation:
     """Perform an operation on a Sim"""
-    def add(self, sim_info: SimInfo) -> bool:
+    def run(self, sim_info: SimInfo) -> bool:
         """Apply the operation."""
-        raise NotImplementedError()
-
-    def remove(self, sim_info: SimInfo) -> bool:
-        """Reverse the operation."""
         raise NotImplementedError()

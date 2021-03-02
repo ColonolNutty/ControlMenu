@@ -15,12 +15,15 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_res
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.control_dialog_base import S4CMSimControlDialogBase
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.alien import S4CMAlienOp
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.mermaid import S4CMMermaidOp
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.sim_operation import S4CMSimOperation
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.skeleton import S4CMSkeletonOp
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.vampire import S4CMVampireOp
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.witch import S4CMWitchOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.alien import S4CMAlienAddOp, S4CMAlienRemoveOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.mermaid import S4CMMermaidAddOp, \
+    S4CMMermaidRemoveOp
+from sims4controlmenu.dialogs.modify_sim_data.sim_operation import S4CMSingleSimOperation
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.skeleton import S4CMSkeletonAddOp, \
+    S4CMSkeletonRemoveOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.vampire import S4CMVampireAddOp, \
+    S4CMVampireRemoveOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.witch import S4CMWitchAddOp, S4CMWitchRemoveOp
 
 
 class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
@@ -43,16 +46,16 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
         on_previous: Callable[[], None],
         reopen: Callable[[], None]
     ) -> bool:
-        def _operation_add(operation: S4CMSimOperation):
-            operation.add(self._sim_info)
+        def _operation_add(operation: S4CMSingleSimOperation):
+            operation.run(self._sim_info)
             reopen()
 
         def _operation_remove_all() -> None:
-            S4CMAlienOp().remove(self._sim_info)
-            S4CMMermaidOp().remove(self._sim_info)
-            S4CMSkeletonOp().remove(self._sim_info)
-            S4CMVampireOp().remove(self._sim_info)
-            S4CMWitchOp().remove(self._sim_info)
+            S4CMAlienRemoveOp().run(self._sim_info)
+            S4CMMermaidRemoveOp().run(self._sim_info)
+            S4CMSkeletonRemoveOp().run(self._sim_info)
+            S4CMVampireRemoveOp().run(self._sim_info)
+            S4CMWitchRemoveOp().run(self._sim_info)
             reopen()
 
         option_dialog.add_option(
@@ -68,56 +71,56 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'Alien',
+                'AlienAdd',
                 CommonOccultType.ALIEN,
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.BECOME_ALIEN
                 ),
-                on_chosen=lambda *_, **__: _operation_add(S4CMAlienOp())
+                on_chosen=lambda *_, **__: _operation_add(S4CMAlienAddOp())
             )
         )
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'Mermaid',
+                'MermaidAdd',
                 CommonOccultType.MERMAID,
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.BECOME_MERMAID
                 ),
-                on_chosen=lambda *_, **__: _operation_add(S4CMMermaidOp())
+                on_chosen=lambda *_, **__: _operation_add(S4CMMermaidAddOp())
             )
         )
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'Skeleton',
+                'SkeletonAdd',
                 CommonOccultType.SKELETON,
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.BECOME_SKELETON
                 ),
-                on_chosen=lambda *_, **__: _operation_add(S4CMSkeletonOp())
+                on_chosen=lambda *_, **__: _operation_add(S4CMSkeletonAddOp())
             )
         )
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'Vampire',
+                'VampireAdd',
                 CommonOccultType.VAMPIRE,
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.BECOME_VAMPIRE
                 ),
-                on_chosen=lambda *_, **__: _operation_add(S4CMVampireOp())
+                on_chosen=lambda *_, **__: _operation_add(S4CMVampireAddOp())
             )
         )
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'Witch',
+                'WitchAdd',
                 CommonOccultType.WITCH,
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.BECOME_WITCH
                 ),
-                on_chosen=lambda *_, **__: _operation_add(S4CMWitchOp())
+                on_chosen=lambda *_, **__: _operation_add(S4CMWitchAddOp())
             )
         )
         return True

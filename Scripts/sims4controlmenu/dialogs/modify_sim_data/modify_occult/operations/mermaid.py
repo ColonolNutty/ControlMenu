@@ -6,33 +6,30 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Tuple
-
-from event_testing.resolver import SingleSimResolver
 from sims.sim_info import SimInfo
-from sims4.resources import Types
 from sims4communitylib.enums.traits_enum import CommonTraitId
-from sims4communitylib.utils.common_resource_utils import CommonResourceUtils
 from sims4communitylib.utils.sims.common_occult_utils import CommonOccultUtils
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.sim_operation import S4CMSimOperation
+from sims4controlmenu.commonlib.utils.common_sim_loot_utils import CommonSimLootActionUtils
+from sims4controlmenu.dialogs.modify_sim_data.sim_operation import S4CMSingleSimOperation
 
 
-class S4CMMermaidOp(S4CMSimOperation):
-    """Turn a Sim into a Mermaid."""
+class S4CMMermaidAddOp(S4CMSingleSimOperation):
+    """Add the Mermaid Occult to a Sim."""
 
     # noinspection PyMissingOrEmptyDocstring
-    def add(self, sim_info: SimInfo) -> bool:
+    def run(self, sim_info: SimInfo) -> bool:
         if CommonOccultUtils.is_mermaid(sim_info):
             return False
         # loot_Mermaid_DebugAdd
         add_loot_id = 205399
-        add_loot_action = CommonResourceUtils.load_instance(Types.ACTION, add_loot_id)
-        if add_loot_action is None:
-            return False
-        add_loot_action.apply_to_resolver(SingleSimResolver(sim_info))
-        return True
+        return CommonSimLootActionUtils.apply_loot_action_to_sim(add_loot_id, sim_info)
+
+
+class S4CMMermaidRemoveOp(S4CMSingleSimOperation):
+    """Remove the Mermaid Occult from a Sim."""
 
     # noinspection PyMissingOrEmptyDocstring
-    def remove(self, sim_info: SimInfo) -> bool:
+    def run(self, sim_info: SimInfo) -> bool:
         if not CommonOccultUtils.is_mermaid(sim_info):
             return False
         from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
@@ -45,4 +42,3 @@ class S4CMMermaidOp(S4CMSimOperation):
         )
         CommonTraitUtils.remove_trait(sim_info, *trait_ids)
         return True
-
