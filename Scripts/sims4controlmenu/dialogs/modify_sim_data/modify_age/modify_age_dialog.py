@@ -13,24 +13,22 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_but
 from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
-from sims4controlmenu.dialogs.modify_sim_data.modify_age.modify_age_dialog import S4CMModifyAgeDialog
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.modify_occult_dialog import S4CMModifyOccultDialog
 from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
-from sims4controlmenu.enums.string_identifiers import S4CMStringId
+from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.set_age_dialog import S4CMSetAgeDialog
 
 
-class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
+class S4CMModifyAgeDialog(S4CMSimControlDialogBase):
     """ The control dialog for Sims. """
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 's4cm_modify_sim_data_dialog'
+        return 's4cm_modify_age_dialog'
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return S4CMStringId.MODIFY_SIM_DATA
+        return S4CMSimControlMenuStringId.MODIFY_AGE
 
     def _setup_dialog(
         self,
@@ -41,22 +39,12 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
     ) -> bool:
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'ModifyOccult',
+                'SetAge',
                 None,
                 CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.MODIFY_OCCULT,
+                    S4CMSimControlMenuStringId.SET_AGE
                 ),
-                on_chosen=lambda *_, **__: S4CMModifyOccultDialog(self._sim_info, on_previous=reopen).open()
-            )
-        )
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'ModifyAge',
-                None,
-                CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.MODIFY_AGE,
-                ),
-                on_chosen=lambda *_, **__: S4CMModifyAgeDialog(self._sim_info, on_previous=reopen).open()
+                on_chosen=lambda *_, **__: S4CMSetAgeDialog(self._sim_info, on_previous=reopen).open()
             )
         )
         return True

@@ -12,7 +12,7 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_but
     CommonDialogButtonOption
 from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
-from sims4controlmenu.dialogs.modify_sim_data.control_dialog_base import S4CMSimControlDialogBase
+from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.dialogs.modify_sim_data.modify_sim_data_dialog import S4CMModifySimDataDialog
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
 

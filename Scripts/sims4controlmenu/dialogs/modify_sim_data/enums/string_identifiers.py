@@ -1,5 +1,5 @@
 """
-The Sims 4 Community Library is licensed under the Creative Commons Attribution 4.0 International public license (CC BY 4.0).
+The Sims 4 Control Menu is licensed under the Creative Commons Attribution 4.0 International public license (CC BY 4.0).
 https://creativecommons.org/licenses/by/4.0/
 https://creativecommons.org/licenses/by/4.0/legalcode
 
@@ -14,6 +14,7 @@ class S4CMSimControlMenuStringId(CommonInt):
     .. note:: These identifiers point to strings within String Tables within package files.
 
     """
+    # Occult
     MODIFY_OCCULT = 879006419
     REMOVE_ALL_OCCULTS = 189227297
     BECOME_ALIEN = 1956449995
@@ -21,3 +22,7 @@ class S4CMSimControlMenuStringId(CommonInt):
     BECOME_SKELETON = 106772875
     BECOME_VAMPIRE = 909949252
     BECOME_WITCH = 1524706587
+
+    # Age
+    MODIFY_AGE = 3924124514
+    SET_AGE = 3005632386

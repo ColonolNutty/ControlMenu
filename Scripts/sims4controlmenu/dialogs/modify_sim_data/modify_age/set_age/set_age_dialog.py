@@ -6,7 +6,9 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Callable
-from sims4communitylib.enums.common_occult_type import CommonOccultType
+
+from sims4communitylib.enums.common_age import CommonAge
+from sims4communitylib.enums.strings_enum import CommonStringId
 from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
     CommonChooseButtonOptionDialog
 from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_button_option import \
@@ -15,29 +17,27 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_res
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.alien import S4CMAlienAddOp, S4CMAlienRemoveOp
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.mermaid import S4CMMermaidAddOp, \
-    S4CMMermaidRemoveOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.adult import S4CMSetAgeAdultOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.child import S4CMSetAgeChildOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.elder import S4CMSetAgeElderOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.teen import S4CMSetAgeTeenOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.toddler import S4CMSetAgeToddlerOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.young_adult import S4CMSetAgeYoungAdultOp
 from sims4controlmenu.dialogs.modify_sim_data.sim_operation import S4CMSingleSimOperation
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.skeleton import S4CMSkeletonAddOp, \
-    S4CMSkeletonRemoveOp
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.vampire import S4CMVampireAddOp, \
-    S4CMVampireRemoveOp
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.witch import S4CMWitchAddOp, S4CMWitchRemoveOp
 
 
-class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
+class S4CMSetAgeDialog(S4CMSimControlDialogBase):
     """ The control dialog for Sims. """
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 's4cm_modify_occult_dialog'
+        return 's4cm_set_age_dialog'
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return S4CMSimControlMenuStringId.MODIFY_OCCULT
+        return S4CMSimControlMenuStringId.SET_AGE
 
     def _setup_dialog(
         self,
@@ -46,81 +46,73 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
         on_previous: Callable[[], None],
         reopen: Callable[[], None]
     ) -> bool:
-        def _operation_add(operation: S4CMSingleSimOperation):
+        def _operation_set(operation: S4CMSingleSimOperation):
             operation.run(self._sim_info)
             reopen()
 
-        def _operation_remove_all() -> None:
-            S4CMAlienRemoveOp().run(self._sim_info)
-            S4CMMermaidRemoveOp().run(self._sim_info)
-            S4CMSkeletonRemoveOp().run(self._sim_info)
-            S4CMVampireRemoveOp().run(self._sim_info)
-            S4CMWitchRemoveOp().run(self._sim_info)
-            reopen()
-
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'RemoveAllOccults',
-                CommonOccultType.NON_OCCULT,
+                'Toddler',
+                CommonAge.TODDLER,
                 CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.REMOVE_ALL_OCCULTS
+                    CommonStringId.TODDLER
                 ),
-                on_chosen=lambda *_, **__: _operation_remove_all()
+                on_chosen=lambda *_, **__: _operation_set(S4CMSetAgeToddlerOp())
             )
         )
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'AlienAdd',
-                CommonOccultType.ALIEN,
+                'Child',
+                CommonAge.CHILD,
                 CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.BECOME_ALIEN
+                    CommonStringId.CHILD
                 ),
-                on_chosen=lambda *_, **__: _operation_add(S4CMAlienAddOp())
+                on_chosen=lambda *_, **__: _operation_set(S4CMSetAgeChildOp())
             )
         )
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'MermaidAdd',
-                CommonOccultType.MERMAID,
+                'Teen',
+                CommonAge.TEEN,
                 CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.BECOME_MERMAID
+                    CommonStringId.TEEN
                 ),
-                on_chosen=lambda *_, **__: _operation_add(S4CMMermaidAddOp())
+                on_chosen=lambda *_, **__: _operation_set(S4CMSetAgeTeenOp())
             )
         )
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'SkeletonAdd',
-                CommonOccultType.SKELETON,
+                'YoungAdult',
+                CommonAge.YOUNGADULT,
                 CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.BECOME_SKELETON
+                    CommonStringId.YOUNG_ADULT
                 ),
-                on_chosen=lambda *_, **__: _operation_add(S4CMSkeletonAddOp())
+                on_chosen=lambda *_, **__: _operation_set(S4CMSetAgeYoungAdultOp())
             )
         )
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'VampireAdd',
-                CommonOccultType.VAMPIRE,
+                'Adult',
+                CommonAge.ADULT,
                 CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.BECOME_VAMPIRE
+                    CommonStringId.ADULT
                 ),
-                on_chosen=lambda *_, **__: _operation_add(S4CMVampireAddOp())
+                on_chosen=lambda *_, **__: _operation_set(S4CMSetAgeAdultOp())
             )
         )
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'WitchAdd',
-                CommonOccultType.WITCH,
+                'Elder',
+                CommonAge.ELDER,
                 CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.BECOME_WITCH
+                    CommonStringId.ELDER
                 ),
-                on_chosen=lambda *_, **__: _operation_add(S4CMWitchAddOp())
+                on_chosen=lambda *_, **__: _operation_set(S4CMSetAgeElderOp())
             )
         )
         return True
