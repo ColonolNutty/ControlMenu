@@ -6,9 +6,6 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Callable
-
-from sims.sim_info import SimInfo
-from sims4communitylib.utils.sims.common_age_utils import CommonAgeUtils
 from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdUtils
 from sims4communitylib.utils.sims.common_sim_pregnancy_utils import CommonSimPregnancyUtils
 from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
