@@ -15,6 +15,7 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_res
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.modify_age.modify_age_dialog import S4CMModifyAgeDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.modify_occult_dialog import S4CMModifyOccultDialog
+from sims4controlmenu.dialogs.modify_sim_data.pregnancy.pregnancy_dialog import S4CMPregnancyDialog
 from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
 
@@ -57,6 +58,16 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
                     S4CMSimControlMenuStringId.MODIFY_AGE,
                 ),
                 on_chosen=lambda *_, **__: S4CMModifyAgeDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'Pregnancy',
+                None,
+                CommonDialogResponseOptionContext(
+                    S4CMSimControlMenuStringId.PREGNANCY,
+                ),
+                on_chosen=lambda *_, **__: S4CMPregnancyDialog(self._sim_info, on_previous=reopen).open()
             )
         )
         return True

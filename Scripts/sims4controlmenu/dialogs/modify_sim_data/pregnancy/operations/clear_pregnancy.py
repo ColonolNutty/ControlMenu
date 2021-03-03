@@ -8,25 +8,19 @@ Copyright (c) COLONOLNUTTY
 from typing import Callable
 
 from sims.sim_info import SimInfo
-from sims4communitylib.enums.common_age import CommonAge
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
-from sims4communitylib.utils.sims.common_age_utils import CommonAgeUtils
-from sims4communitylib.utils.sims.common_sim_spawn_utils import CommonSimSpawnUtils
+from sims4communitylib.utils.sims.common_sim_pregnancy_utils import CommonSimPregnancyUtils
 from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
 
 
-class S4CMSetAgeOp(S4CMSingleSimOperation):
-    """Set the age of a Sim."""
-
-    @property
-    def age(self) -> CommonAge:
-        """The age to set the Sim to when this operation is run."""
-        raise NotImplementedError()
+class S4CMClearPregnancyOp(S4CMSingleSimOperation):
+    """Clear a pregnancy in a Sim."""
 
     # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
-        result = CommonAgeUtils.set_age(sim_info, self.age)
-        if result:
-            CommonSimSpawnUtils.soft_reset(sim_info, cause='S4CM Sim Age Change')
+        if not CommonSimPregnancyUtils.is_pregnant(sim_info):
+            on_completed(False)
+            return False
+        result = CommonSimPregnancyUtils.clear_pregnancy(sim_info)
         on_completed(result)
         return result

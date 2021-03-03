@@ -23,7 +23,7 @@ from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.elde
 from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.teen import S4CMSetAgeTeenOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.toddler import S4CMSetAgeToddlerOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.young_adult import S4CMSetAgeYoungAdultOp
-from sims4controlmenu.dialogs.modify_sim_data.sim_operation import S4CMSingleSimOperation
+from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
 
 
 class S4CMSetAgeDialog(S4CMSimControlDialogBase):
@@ -46,9 +46,11 @@ class S4CMSetAgeDialog(S4CMSimControlDialogBase):
         on_previous: Callable[[], None],
         reopen: Callable[[], None]
     ) -> bool:
-        def _operation_set(operation: S4CMSingleSimOperation):
-            operation.run(self._sim_info)
-            reopen()
+        def _operation_run(operation: S4CMSingleSimOperation):
+            def _on_operation_complete(_: bool) -> None:
+                reopen()
+
+            operation.run(self._sim_info, on_completed=_on_operation_complete)
 
         option_dialog.add_option(
             CommonDialogButtonOption(
@@ -57,7 +59,7 @@ class S4CMSetAgeDialog(S4CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     CommonStringId.TODDLER
                 ),
-                on_chosen=lambda *_, **__: _operation_set(S4CMSetAgeToddlerOp())
+                on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeToddlerOp())
             )
         )
 
@@ -68,7 +70,7 @@ class S4CMSetAgeDialog(S4CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     CommonStringId.CHILD
                 ),
-                on_chosen=lambda *_, **__: _operation_set(S4CMSetAgeChildOp())
+                on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeChildOp())
             )
         )
 
@@ -79,7 +81,7 @@ class S4CMSetAgeDialog(S4CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     CommonStringId.TEEN
                 ),
-                on_chosen=lambda *_, **__: _operation_set(S4CMSetAgeTeenOp())
+                on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeTeenOp())
             )
         )
 
@@ -90,7 +92,7 @@ class S4CMSetAgeDialog(S4CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     CommonStringId.YOUNG_ADULT
                 ),
-                on_chosen=lambda *_, **__: _operation_set(S4CMSetAgeYoungAdultOp())
+                on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeYoungAdultOp())
             )
         )
 
@@ -101,7 +103,7 @@ class S4CMSetAgeDialog(S4CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     CommonStringId.ADULT
                 ),
-                on_chosen=lambda *_, **__: _operation_set(S4CMSetAgeAdultOp())
+                on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeAdultOp())
             )
         )
 
@@ -112,7 +114,7 @@ class S4CMSetAgeDialog(S4CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     CommonStringId.ELDER
                 ),
-                on_chosen=lambda *_, **__: _operation_set(S4CMSetAgeElderOp())
+                on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeElderOp())
             )
         )
         return True
