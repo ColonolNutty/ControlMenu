@@ -9,3 +9,8 @@ The final paths for the files should be the following:
 
 The Sims 4/Mods/sims4controlmenu.package
 The Sims 4/Mods/sims4controlmenu.ts4script
+
+
+---- Usage ----
+
+To use the mod, simply click on a Sim or on various objects -> Control Menu

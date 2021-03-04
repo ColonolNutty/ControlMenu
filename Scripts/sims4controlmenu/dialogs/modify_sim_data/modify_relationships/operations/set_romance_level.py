@@ -27,4 +27,12 @@ class S4CMSetRomanceLevelOp(S4CMSetRelationshipLevelOp):
         return -1
 
     def _is_allowed_relationship_track(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        return super()._is_allowed_relationship_track(sim_info_a, sim_info_b) and CommonAgeUtils.is_teen_adult_or_elder(sim_info_a) and CommonAgeUtils.is_teen_adult_or_elder(sim_info_b)
+        if not super()._is_allowed_relationship_track(sim_info_a, sim_info_b):
+            return False
+        if CommonAgeUtils.is_teen(sim_info_a) and CommonAgeUtils.is_teen(sim_info_b):
+            return True
+        # Teen to Teen is ok, this check prevents Teen to Adult/Elder/etc. like vanilla has it.
+        if CommonAgeUtils.is_teen(sim_info_a) or CommonAgeUtils.is_teen(sim_info_b):
+            return False
+        return CommonAgeUtils.is_adult_or_elder(sim_info_a)\
+               and CommonAgeUtils.is_adult_or_elder(sim_info_b)
