@@ -55,7 +55,7 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
         )
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'ModifyMoney',
+                'ModifyCurrency',
                 None,
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.MODIFY_CURRENCY,
