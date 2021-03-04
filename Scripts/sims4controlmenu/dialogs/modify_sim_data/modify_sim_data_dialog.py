@@ -16,6 +16,8 @@ from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4
 from sims4controlmenu.dialogs.modify_sim_data.modify_age.modify_age_dialog import S4CMModifyAgeDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_money.modify_currency_dialog import S4CMModifyCurrencyDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.modify_occult_dialog import S4CMModifyOccultDialog
+from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.modify_relationships_dialog import \
+    S4CMModifyRelationshipsDialog
 from sims4controlmenu.dialogs.modify_sim_data.pregnancy.pregnancy_dialog import S4CMPregnancyDialog
 from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
@@ -69,6 +71,16 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
                     S4CMSimControlMenuStringId.MODIFY_OCCULT,
                 ),
                 on_chosen=lambda *_, **__: S4CMModifyOccultDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'ModifyRelationships',
+                None,
+                CommonDialogResponseOptionContext(
+                    S4CMSimControlMenuStringId.MODIFY_RELATIONSHIPS,
+                ),
+                on_chosen=lambda *_, **__: S4CMModifyRelationshipsDialog(self._sim_info, on_previous=reopen).open()
             )
         )
         option_dialog.add_option(
