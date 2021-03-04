@@ -15,6 +15,7 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_res
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.remove_all_occults import S4CMRemoveAllOccultsOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.servo import S4CMServoAddOp
 from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.alien import S4CMAlienAddOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.mermaid import S4CMMermaidAddOp
@@ -80,6 +81,17 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
                     S4CMSimControlMenuStringId.BECOME_MERMAID
                 ),
                 on_chosen=lambda *_, **__: _operation_run(S4CMMermaidAddOp())
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'ServoAdd',
+                None,
+                CommonDialogResponseOptionContext(
+                    S4CMSimControlMenuStringId.BECOME_SERVO
+                ),
+                on_chosen=lambda *_, **__: _operation_run(S4CMServoAddOp())
             )
         )
 
