@@ -51,7 +51,8 @@ class S4CMCreatePregnancyOp(S4CMSingleSimOperation):
             include_sim_callback=_can_create_pregnancy,
             instanced_sims_only=False,
             mod_identity=ModInfo.get_identity(),
-            on_sim_chosen=_on_chosen
+            on_sim_chosen=_on_chosen,
+            on_close=lambda: on_completed(False)
         )
         if not dialog.has_options():
             on_completed(False)

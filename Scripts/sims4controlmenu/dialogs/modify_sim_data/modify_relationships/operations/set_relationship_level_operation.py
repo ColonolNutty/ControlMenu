@@ -102,7 +102,8 @@ class S4CMSetRelationshipLevelOp(S4CMSingleSimOperation):
             include_sim_callback=_is_allowed,
             instanced_sims_only=False,
             mod_identity=ModInfo.get_identity(),
-            on_sim_chosen=_on_chosen
+            on_sim_chosen=_on_chosen,
+            on_close=lambda: on_completed(False)
         )
         if not dialog.has_options():
             on_completed(False)
@@ -149,4 +150,4 @@ class S4CMSetRelationshipLevelOp(S4CMSingleSimOperation):
         return CommonResourceUtils.load_instance(Types.STATISTIC, track_id)
 
     def _is_allowed_relationship_track(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        return self._determine_relationship_track(sim_info_a, sim_info_b) != -1
+        return self._determine_relationship_track(sim_info_a, sim_info_b) != -1 and sim_info_a is not sim_info_b
