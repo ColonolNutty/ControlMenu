@@ -14,14 +14,14 @@ from sims4communitylib.classes.interactions.common_immediate_super_interaction i
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
-from sims4controlmenu.dialogs.sim_control_dialog import S4CMSimControlDialog
+from sims4controlmenu.dialogs.modify_sim_data.outfit.swap_to_outfit import S4CMSwapToOutfitOp
 from sims4controlmenu.modinfo import ModInfo
 
 
-class S4CMOpenSimControlMenuInteraction(CommonImmediateSuperInteraction):
-    """S4CMOpenSimControlMenuInteraction(*_, **__)
+class S4CMChangeOutfitInteraction(CommonImmediateSuperInteraction):
+    """S4CMChangeOutfitInteraction(*_, **__)
 
-    Show a dialog to control aspects of a Sim.
+    Show a dialog to change the outfit of a Sim.
     """
 
     # noinspection PyMissingOrEmptyDocstring
@@ -32,7 +32,7 @@ class S4CMOpenSimControlMenuInteraction(CommonImmediateSuperInteraction):
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 's4cm_change_motives'
+        return 's4cm_change_outfit'
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
@@ -40,11 +40,11 @@ class S4CMOpenSimControlMenuInteraction(CommonImmediateSuperInteraction):
         if interaction_target is None or not CommonTypeUtils.is_sim_or_sim_info(interaction_target):
             cls.get_log().debug('Failed, Target is not a Sim.')
             return TestResult.NONE
-        cls.get_log().debug('Success, can open Sim control menu.')
+        cls.get_log().debug('Success, can Change Outfit.')
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
     def on_started(self, interaction_sim: Sim, interaction_target: Sim) -> bool:
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
-        S4CMSimControlDialog(target_sim_info).open()
+        S4CMSwapToOutfitOp().run(target_sim_info)
         return True

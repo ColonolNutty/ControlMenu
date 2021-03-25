@@ -14,7 +14,7 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_res
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.modify_age.modify_age_dialog import S4CMModifyAgeDialog
-from sims4controlmenu.dialogs.modify_sim_data.modify_money.modify_currency_dialog import S4CMModifyCurrencyDialog
+from sims4controlmenu.dialogs.modify_sim_data.modify_currency.modify_currency_dialog import S4CMModifyCurrencyDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.modify_occult_dialog import S4CMModifyOccultDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.modify_relationships_dialog import \
     S4CMModifyRelationshipsDialog

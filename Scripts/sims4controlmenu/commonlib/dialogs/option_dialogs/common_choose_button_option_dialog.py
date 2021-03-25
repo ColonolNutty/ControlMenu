@@ -37,7 +37,7 @@ class CommonChooseButtonOptionDialog(CommonChooseResponseOptionDialog):
         description_identifier,\
         title_tokens=(),\
         description_tokens=(),\
-        on_previous=CommonFunctionUtils.noop\
+        include_previous_button=True,\
         on_previous=CommonFunctionUtils.noop,\
         on_close=CommonFunctionUtils.noop\
     )
@@ -157,7 +157,8 @@ class CommonChooseButtonOptionDialog(CommonChooseResponseOptionDialog):
         description_tokens: Iterator[Any]=(),
         include_previous_button: bool=True,
         on_previous: Callable[[], None]=CommonFunctionUtils.noop,
-        on_close: Callable[[], None]=CommonFunctionUtils.noop
+        on_close: Callable[[], None]=CommonFunctionUtils.noop,
+        per_page: int=10
     ):
         super().__init__(
             CommonChooseResponseDialog(
@@ -166,7 +167,8 @@ class CommonChooseButtonOptionDialog(CommonChooseResponseOptionDialog):
                 description_identifier,
                 tuple(),
                 title_tokens=title_tokens,
-                description_tokens=description_tokens
+                description_tokens=description_tokens,
+                per_page=per_page
             ),
             include_previous_button=include_previous_button,
             on_previous=on_previous,
@@ -189,11 +191,13 @@ class CommonChooseButtonOptionDialog(CommonChooseResponseOptionDialog):
     def show(
         self,
         dialog_options: UiDialogOption=0,
-        sim_info: SimInfo=None
+        sim_info: SimInfo=None,
+        page: int=1
     ):
         """show(\
             dialog_options=0,\
-            sim_info=None\
+            sim_info=None,\
+            page=1\
         )
 
         Show the dialog and invoke the callbacks upon the player making a choice.
@@ -202,20 +206,25 @@ class CommonChooseButtonOptionDialog(CommonChooseResponseOptionDialog):
         :type dialog_options: UiDialogOption, optional
         :param sim_info: The SimInfo of the Sim that will appear in the dialog image. The default Sim is the active Sim. Default is None.
         :type sim_info: SimInfo, optional
+        :param page: The page to show the dialog on. Default is the first page.
+        :type page: int, optional
         """
         return super().show(
             dialog_options=dialog_options,
-            sim_info=sim_info
+            sim_info=sim_info,
+            page=page
         )
 
     def build_dialog(
         self,
         dialog_options: UiDialogOption=0,
-        sim_info: SimInfo=None
+        sim_info: SimInfo=None,
+        page: int=1
     ) -> Union[UiDialogBase, None]:
         """build_dialog(\
             dialog_options=0,\
-            sim_info=None\
+            sim_info=None,\
+            page=1\
         )
 
         Build the dialog and invoke the callbacks upon the player making a choice.
@@ -224,12 +233,15 @@ class CommonChooseButtonOptionDialog(CommonChooseResponseOptionDialog):
         :type dialog_options: UiDialogOption, optional
         :param sim_info: The SimInfo of the Sim that will appear in the dialog image. The default Sim is the active Sim. Default is None.
         :type sim_info: SimInfo, optional
+        :param page: The page to build the dialog on. Default is the first page.
+        :type page: int, optional
         :return: The built dialog or None if a problem occurs.
         :rtype: Union[UiDialogBase, None]
         """
         return super().build_dialog(
             dialog_options=dialog_options,
-            sim_info=sim_info
+            sim_info=sim_info,
+            page=page
         )
 
 
@@ -269,7 +281,8 @@ def _common_testing_show_choose_button_option_dialog(_connection: int=None):
             title_tokens=title_tokens,
             description_tokens=description_tokens,
             on_previous=_on_previous_chosen,
-            on_close=_on_close
+            on_close=_on_close,
+            per_page=2
         )
 
         option_dialog.add_option(

@@ -13,8 +13,8 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_but
 from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
-from sims4controlmenu.dialogs.modify_sim_data.modify_money.operations.add_simoleons import S4CMAddSimoleonsOp
-from sims4controlmenu.dialogs.modify_sim_data.modify_money.operations.remove_simoleons import S4CMRemoveSimoleonsOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_currency.operations.add_simoleons import S4CMAddSimoleonsOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_currency.operations.remove_simoleons import S4CMRemoveSimoleonsOp
 from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
 

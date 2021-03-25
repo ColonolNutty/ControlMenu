@@ -13,4 +13,5 @@ The Sims 4/Mods/sims4controlmenu.ts4script
 
 ---- Usage ----
 
-To use the mod, simply click on a Sim or on various objects -> Control Menu
+To use the mod, simply click on a Sim or on various objects then navigate to the Control Menu interaction
+Please note: If the control menu does not appear when clicking on some things, it likely means functionality is not yet available for that thing.

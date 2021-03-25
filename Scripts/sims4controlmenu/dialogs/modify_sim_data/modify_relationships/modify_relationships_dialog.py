@@ -21,6 +21,7 @@ from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.se
     S4CMSetRomanceLevelOp
 from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
+from sims4controlmenu.settings.setting_utils import S4CMSettingUtils
 
 
 class S4CMModifyRelationshipsDialog(S4CMSimControlDialogBase):
@@ -60,16 +61,17 @@ class S4CMModifyRelationshipsDialog(S4CMSimControlDialogBase):
             )
         )
 
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'RomanceLevel',
-                None,
-                CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.SET_ROMANCE_LEVEL
-                ),
-                on_chosen=lambda *_, **__: _operation_run(S4CMSetRomanceLevelOp())
+        if S4CMSettingUtils.is_allowed_romantic_relationship(self._sim_info):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'RomanceLevel',
+                    None,
+                    CommonDialogResponseOptionContext(
+                        S4CMSimControlMenuStringId.SET_ROMANCE_LEVEL
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(S4CMSetRomanceLevelOp())
+                )
             )
-        )
 
         option_dialog.add_option(
             CommonDialogButtonOption(

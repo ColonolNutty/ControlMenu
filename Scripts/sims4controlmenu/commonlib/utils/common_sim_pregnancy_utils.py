@@ -5,12 +5,11 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from event_testing.resolver import DoubleSimResolver
-from sims.pregnancy.pregnancy_tracker import PregnancyTracker
 from sims.sim_info import SimInfo
 from sims4communitylib.utils.sims.common_age_utils import CommonAgeUtils
 from sims4communitylib.utils.sims.common_sim_pregnancy_utils import CommonSimPregnancyUtils
 from sims4communitylib.utils.sims.common_species_utils import CommonSpeciesUtils
+from sims4controlmenu.settings.setting_utils import S4CMSettingUtils
 
 
 class S4CMSimPregnancyUtils:
@@ -57,4 +56,8 @@ class S4CMSimPregnancyUtils:
             # If both Sims are dogs, that is an ok combination.
             if not CommonSpeciesUtils.is_dog(sim_info_a) or not CommonSpeciesUtils.is_dog(sim_info_b):
                 return False
-        return PregnancyTracker.AT_BIRTH_TESTS.run_tests(DoubleSimResolver(sim_info_a, sim_info_b)) or PregnancyTracker.AT_BIRTH_TESTS.run_tests(DoubleSimResolver(sim_info_b, sim_info_a))
+        if not S4CMSettingUtils.is_enabled_for_interactions(sim_info_a) or not S4CMSettingUtils.is_enabled_for_interactions(sim_info_b):
+            return False
+        if not S4CMSettingUtils.are_allowed_romantic_relationship(sim_info_a, sim_info_b):
+            return False
+        return True

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<I c="S4CMOpenSimControlMenuInteraction" i="interaction" m="sims4controlmenu.interactions.open_sim_control_menu" n="S4CM_Open_Sim_Control_Menu" s="16376299487119115833">
+<I c="S4CMChangeOutfitInteraction" i="interaction" m="sims4controlmenu.interactions.change_outfit" n="S4CM_Change_Outfit" s="12757220147486121231">
   <V t="disabled" n="_saveable" />
-  <T n="category">0</T>
-  <T n="display_name">0x955CE68D<!--Control Menu--></T>
+  <T n="category">13987828198227596096<!--PieMenuCategory: S4CM_Pie_Category_Outfit--></T>
+  <T n="display_name">0x059D1798<!--Change Outfit...--></T>
   <L n="interaction_category_tags">
     <E>INVALID</E>
   </L>
   <V n="pie_menu_icon" t="enabled">
     <V n="enabled" t="resource_key">
       <U n="resource_key">
-        <T n="key">2f7d0004:00000000:87A22DAF548644A6</T>
+        <T n="key">2f7d0004:00000000:C3096A2731F2B50A</T>
       </U>
     </V>
   </V>
@@ -17,5 +17,4 @@
     <T n="bar_enabled">False</T>
   </U>
   <E n="target_type">OBJECT</E>
-  <T n="pie_menu_priority">2000</T>
 </I>

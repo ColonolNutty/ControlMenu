@@ -5,12 +5,11 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from ui.ui_dialog import UiDialog, ButtonType, UiDialogOption
-from typing import Tuple, Any, Union, Iterator
+from ui.ui_dialog import UiDialog, UiDialogOption
+from typing import Tuple, Any, Iterator
 from sims4.commands import Command, CommandType, CheatOutput
 
 from event_testing.resolver import Resolver
-from protocolbuffers.Localization_pb2 import LocalizedString
 from sims4communitylib.enums.strings_enum import CommonStringId
 from sims4communitylib.logging.has_class_log import HasClassLog
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
@@ -24,8 +23,6 @@ from sims4controlmenu.modinfo import ModInfo
 
 class CommonUiResponseDialog(UiDialog, HasClassLog):
     """A ui response dialog."""
-    _PREVIOUS_BUTTON_ID: int = int(ButtonType.DIALOG_RESPONSE_CANCEL)
-
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_mod_identity(cls) -> CommonModIdentity:
@@ -43,8 +40,6 @@ class CommonUiResponseDialog(UiDialog, HasClassLog):
         *args,
         resolver: Resolver=None,
         target_sim_id: int=None,
-        include_previous_button: int=True,
-        previous_button_text: Union[int, str, LocalizedString, CommonStringId]=None,
         dialog_options: UiDialogOption=UiDialogOption.DISABLE_CLOSE_BUTTON,
         **kwargs
     ):
@@ -59,42 +54,41 @@ class CommonUiResponseDialog(UiDialog, HasClassLog):
         HasClassLog.__init__(self)
         self._response_value = None
         self._responses = tuple(responses)
-        self._include_previous_button = include_previous_button
-        self._previous_button_text = CommonLocalizationUtils.create_localized_string(previous_button_text) if previous_button_text is not None else CommonLocalizationUtils.create_localized_string(CommonStringId.PREVIOUS)
 
-    # noinspection PyMissingOrEmptyDocstring
     @property
     def accepted(self) -> bool:
-        return self.response != CommonUiResponseDialog._PREVIOUS_BUTTON_ID
+        """Whether or not a response was chosen."""
+        return self.response != CommonUiResponseDialog._PREVIOUS_BUTTON_ID and self.response != CommonUiResponseDialog._NEXT_BUTTON_ID
 
-    # noinspection PyMissingOrEmptyDocstring
     @property
     def cancelled(self) -> bool:
+        """Whether not the dialog was cancelled."""
         return self.response < 0
 
-    # noinspection PyMissingOrEmptyDocstring
-    @property
-    def previous(self) -> bool:
-        return self.response == CommonUiResponseDialog._PREVIOUS_BUTTON_ID
-
     def add_response(self, response: CommonUiDialogResponse):
-        """ Add a response to the dialog. """
+        """add_response(response)
+
+        Add a response to the dialog.
+
+        :param response: The response to add.
+        :type response: CommonUiDialogResponse
+        """
         self._responses += (response,)
 
     def get_response(self) -> Any:
-        """ Get the chosen response. If there is one. """
+        """Retrieve the chosen response. If there is one."""
         return self.response
 
     def get_response_value(self) -> Any:
-        """ Get the chosen value. If there is one. """
+        """Retrieve the chosen response value. If there is one."""
         return self._response_value
 
     def respond(self, chosen_response: int) -> bool:
-        """When the player makes a choice, this is chosen."""
+        """When the player makes a choice, this function is invoked."""
         try:
             self.log.format_with_message('Chosen response', response=chosen_response)
             self.response = chosen_response
-            if chosen_response == CommonUiResponseDialog._PREVIOUS_BUTTON_ID or chosen_response < 0:
+            if chosen_response < 0:
                 self._response_value = None
             else:
                 self._response_value = None
@@ -112,14 +106,12 @@ class CommonUiResponseDialog(UiDialog, HasClassLog):
     def _get_responses_gen(self) -> Iterator[CommonUiDialogResponse]:
         yield from super()._get_responses_gen()
 
-    # noinspection PyMissingOrEmptyDocstring
     @property
     def responses(self) -> Tuple[CommonUiDialogResponse]:
+        """The responses of the dialog."""
         result: Tuple[CommonUiDialogResponse] = (
             *self._responses,
         )
-        if self._include_previous_button:
-            result += (CommonUiDialogResponse(CommonUiResponseDialog._PREVIOUS_BUTTON_ID, None, text=self._previous_button_text),)
         return result
 
 
