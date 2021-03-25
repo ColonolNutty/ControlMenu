@@ -1,2 +1,9 @@
+Version 1.1:
+- Added Change Outfit and Change into Nude interactions to Sims
+- The Set Romance Relationship Levels are now only available for Teen Sims and Above.
+- The Set Romance Relationship Levels are no longer allowed for Sims that are blood related.
+- Familial Relationships are no longer allowed to be added between Pet Sims and Human Sims.
+- Teen Sims are now considered to be Adult Sims for various functions, such as Create Pregnancy, Romance Relationship Levels, etc.
+
 Version 1.0:
 - Initial Release
