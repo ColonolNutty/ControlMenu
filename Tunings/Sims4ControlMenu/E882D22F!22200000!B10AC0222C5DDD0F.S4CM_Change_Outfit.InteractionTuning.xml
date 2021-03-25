@@ -17,4 +17,5 @@
     <T n="bar_enabled">False</T>
   </U>
   <E n="target_type">OBJECT</E>
+  <T n="pie_menu_priority">1</T>
 </I>

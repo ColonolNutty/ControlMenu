@@ -2,7 +2,7 @@
 <I c="S4CMChangeOutfitToNudeInteraction" i="interaction" m="sims4controlmenu.interactions.change_outfit_to_nude" n="S4CM_Change_Outfit_To_Nude" s="3582704332436874322">
   <V t="disabled" n="_saveable" />
   <T n="category">13987828198227596096<!--PieMenuCategory: S4CM_Pie_Category_Outfit--></T>
-  <T n="display_name">0xAE5F504E<!--Change To Nude--></T>
+  <T n="display_name">0xFB27A58D<!--Change into Nude--></T>
   <L n="interaction_category_tags">
     <E>INVALID</E>
   </L>

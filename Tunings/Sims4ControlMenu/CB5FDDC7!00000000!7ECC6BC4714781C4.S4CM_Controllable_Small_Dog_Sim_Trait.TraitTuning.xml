@@ -24,6 +24,7 @@
     <T>16376299487119115833<!--S4CM_Open_Sim_Control_Menu--></T>
     <T>12757220147486121231<!--S4CM_Change_Outfit--></T>
     <T>3582704332436874322<!--S4CM_Change_Outfit_To_Nude--></T>
+    <T>6031966473377133127<!--S4CM_Teleport_Sim_To_Active_Sim_Location--></T>
   </L>
   <T n="buffs_add_on_spawn_only">False</T>
   <T n="display_name">0x0EBA1BD9<!--S4CM Controllable--></T>

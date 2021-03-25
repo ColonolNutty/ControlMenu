@@ -11,5 +11,11 @@ from sims4communitylib.enums.enumtypes.common_int import CommonInt
 class S4CMInteractionId(CommonInt):
     """Identifiers for interactions"""
     SIM_CONTROL_MENU = 16376299487119115833
+
+    # Outfit
     CHANGE_OUTFIT = 12757220147486121231
     CHANGE_OUTFIT_TO_NUDE = 3582704332436874322
+
+    # Teleport
+    TELEPORT_ACTIVE_SIM_HERE = 29401968472433189
+    TELEPORT_SIMS_TO_TARGET = 7533692985877864161
