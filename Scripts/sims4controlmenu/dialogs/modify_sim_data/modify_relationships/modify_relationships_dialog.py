@@ -13,6 +13,7 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_but
 from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
+from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.forget_sims import S4CMForgetSimsOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.set_family_relationship import \
     S4CMSetFamilyRelationsBitOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.set_friendship_level import \
@@ -81,6 +82,17 @@ class S4CMModifyRelationshipsDialog(S4CMSimControlDialogBase):
                     S4CMSimControlMenuStringId.SET_FAMILY_RELATIONS
                 ),
                 on_chosen=lambda *_, **__: _operation_run(S4CMSetFamilyRelationsBitOp())
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'ForgetSims',
+                None,
+                CommonDialogResponseOptionContext(
+                    S4CMSimControlMenuStringId.FORGET_SIMS,
+                ),
+                on_chosen=lambda *_, **__: _operation_run(S4CMForgetSimsOp())
             )
         )
         return True
