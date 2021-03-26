@@ -19,7 +19,7 @@ from sims4controlmenu.dialogs.modify_sim_data.modify_occult.modify_occult_dialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.modify_relationships_dialog import \
     S4CMModifyRelationshipsDialog
 from sims4controlmenu.dialogs.modify_sim_data.pregnancy.pregnancy_dialog import S4CMPregnancyDialog
-from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
+from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
 from sims4controlmenu.settings.setting_utils import S4CMSettingUtils
 

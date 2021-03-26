@@ -20,7 +20,7 @@ from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.se
     S4CMSetFriendshipLevelOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.set_romance_level import \
     S4CMSetRomanceLevelOp
-from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
+from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
 from sims4controlmenu.settings.setting_utils import S4CMSettingUtils
 

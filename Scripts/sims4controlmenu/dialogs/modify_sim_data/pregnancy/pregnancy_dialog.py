@@ -19,7 +19,7 @@ from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4
 from sims4controlmenu.dialogs.modify_sim_data.pregnancy.operations.clear_pregnancy import S4CMClearPregnancyOp
 from sims4controlmenu.dialogs.modify_sim_data.pregnancy.operations.create_pregnancy import S4CMCreatePregnancyOp
 from sims4controlmenu.dialogs.modify_sim_data.pregnancy.operations.induce_labor import S4CMInduceLaborOp
-from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
+from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
 
 

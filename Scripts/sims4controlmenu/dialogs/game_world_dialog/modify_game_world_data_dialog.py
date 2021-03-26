@@ -12,30 +12,25 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_but
     CommonDialogButtonOption
 from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
-from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
-from sims4controlmenu.dialogs.modify_sim_data.modify_age.modify_age_dialog import S4CMModifyAgeDialog
-from sims4controlmenu.dialogs.modify_sim_data.modify_currency.modify_currency_dialog import S4CMModifyCurrencyDialog
-from sims4controlmenu.dialogs.modify_sim_data.modify_occult.modify_occult_dialog import S4CMModifyOccultDialog
-from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.modify_relationships_dialog import \
-    S4CMModifyRelationshipsDialog
-from sims4controlmenu.dialogs.modify_sim_data.pregnancy.pregnancy_dialog import S4CMPregnancyDialog
+from sims4controlmenu.dialogs.game_world_dialog.enums.string_identifiers import S4CMGameWorldControlMenuStringId
+from sims4controlmenu.dialogs.game_world_dialog.game_clock.set_clock_speed_scale_multiplier import \
+    S4CMSetClockSpeedScaleMultiplierOp
 from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
-from sims4controlmenu.settings.setting_utils import S4CMSettingUtils
 
 
-class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
-    """ The control dialog for Sims. """
+class S4CMModifyGameWorldDataDialog(S4CMSimControlDialogBase):
+    """ The control dialog for the Game World. """
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 's4cm_modify_sim_data_dialog'
+        return 's4cm_modify_game_world_data_dialog'
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return S4CMStringId.MODIFY_SIM_DATA
+        return S4CMStringId.MODIFY_GAME_WORLD_DATA
 
     def _setup_dialog(
         self,
@@ -46,53 +41,12 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
     ) -> bool:
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'ModifyAge',
+                'SetClockSpeedScale',
                 None,
                 CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.MODIFY_AGE,
+                    S4CMGameWorldControlMenuStringId.SET_CLOCK_SPEED_SCALE,
                 ),
-                on_chosen=lambda *_, **__: S4CMModifyAgeDialog(self._sim_info, on_previous=reopen).open()
+                on_chosen=lambda *_, **__: None if S4CMSetClockSpeedScaleMultiplierOp().run(on_completed=lambda *_, **__: reopen()) else None
             )
         )
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'ModifyCurrency',
-                None,
-                CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.MODIFY_CURRENCY,
-                ),
-                on_chosen=lambda *_, **__: S4CMModifyCurrencyDialog(self._sim_info, on_previous=reopen).open()
-            )
-        )
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'ModifyOccult',
-                None,
-                CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.MODIFY_OCCULT,
-                ),
-                on_chosen=lambda *_, **__: S4CMModifyOccultDialog(self._sim_info, on_previous=reopen).open()
-            )
-        )
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'ModifyRelationships',
-                None,
-                CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.MODIFY_RELATIONSHIPS,
-                ),
-                on_chosen=lambda *_, **__: S4CMModifyRelationshipsDialog(self._sim_info, on_previous=reopen).open()
-            )
-        )
-        if S4CMSettingUtils.is_enabled_for_interactions(self._sim_info):
-            option_dialog.add_option(
-                CommonDialogButtonOption(
-                    'Pregnancy',
-                    None,
-                    CommonDialogResponseOptionContext(
-                        S4CMSimControlMenuStringId.PREGNANCY,
-                    ),
-                    on_chosen=lambda *_, **__: S4CMPregnancyDialog(self._sim_info, on_previous=reopen).open()
-                )
-            )
         return True

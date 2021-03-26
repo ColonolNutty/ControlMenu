@@ -12,7 +12,8 @@ from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_but
     CommonDialogButtonOption
 from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
-from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
+from sims4controlmenu.dialogs.game_world_dialog.modify_game_world_data_dialog import S4CMModifyGameWorldDataDialog
+from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.dialogs.modify_sim_data.modify_sim_data_dialog import S4CMModifySimDataDialog
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
 
@@ -50,6 +51,16 @@ class S4CMSimControlDialog(S4CMSimControlDialogBase):
                     S4CMStringId.MODIFY_SIM_DATA
                 ),
                 on_chosen=lambda *_, **__: S4CMModifySimDataDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'ModifyGameWorldData',
+                None,
+                CommonDialogResponseOptionContext(
+                    S4CMStringId.MODIFY_GAME_WORLD_DATA
+                ),
+                on_chosen=lambda *_, **__: S4CMModifyGameWorldDataDialog(self._sim_info, on_previous=reopen).open()
             )
         )
         return True
