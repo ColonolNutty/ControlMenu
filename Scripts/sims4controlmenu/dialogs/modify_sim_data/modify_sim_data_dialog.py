@@ -21,6 +21,7 @@ from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.modify_relati
 from sims4controlmenu.dialogs.modify_sim_data.pregnancy.pregnancy_dialog import S4CMPregnancyDialog
 from sims4controlmenu.dialogs.modify_sim_data.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
+from sims4controlmenu.settings.setting_utils import S4CMSettingUtils
 
 
 class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
@@ -83,14 +84,15 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
                 on_chosen=lambda *_, **__: S4CMModifyRelationshipsDialog(self._sim_info, on_previous=reopen).open()
             )
         )
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'Pregnancy',
-                None,
-                CommonDialogResponseOptionContext(
-                    S4CMSimControlMenuStringId.PREGNANCY,
-                ),
-                on_chosen=lambda *_, **__: S4CMPregnancyDialog(self._sim_info, on_previous=reopen).open()
+        if S4CMSettingUtils.is_enabled_for_interactions(self._sim_info):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'Pregnancy',
+                    None,
+                    CommonDialogResponseOptionContext(
+                        S4CMSimControlMenuStringId.PREGNANCY,
+                    ),
+                    on_chosen=lambda *_, **__: S4CMPregnancyDialog(self._sim_info, on_previous=reopen).open()
+                )
             )
-        )
         return True

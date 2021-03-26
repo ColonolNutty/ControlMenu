@@ -24,7 +24,7 @@ class S4CMSettingUtils:
     @staticmethod
     def should_treat_teen_sims_as_adult_sims() -> bool:
         """Whether or not Teen Sims should be treated as Adult Sims."""
-        return True
+        return False
 
     @staticmethod
     def is_allowed_romantic_relationship(sim_info: SimInfo) -> bool:
@@ -32,8 +32,8 @@ class S4CMSettingUtils:
         return CommonAgeUtils.is_teen(sim_info) or S4CMSettingUtils.is_enabled_for_interactions(sim_info)
 
     @staticmethod
-    def are_allowed_family_relationship(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        """Whether or not two Sims are allowed to have a family relationship."""
+    def are_allowed_family_relationship_bits(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
+        """Whether or not two Sims are allowed to have a family relationship bits."""
         return CommonSpeciesUtils.are_same_species(sim_info_a, sim_info_b)
 
     @staticmethod

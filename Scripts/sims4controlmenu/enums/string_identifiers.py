@@ -22,3 +22,6 @@ class S4CMStringId(CommonInt):
 
     # Teleport
     CHOOSE_SIMS_TO_TELEPORT = 3029254654
+
+    # Spawn
+    CHOOSE_SIMS_TO_SPAWN = 487599508

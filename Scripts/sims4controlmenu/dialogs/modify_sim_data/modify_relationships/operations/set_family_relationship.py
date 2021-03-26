@@ -141,7 +141,7 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
             option_dialog.show(sim_info=sim_info)
 
         def _is_allowed(target_sim_info: SimInfo):
-            return sim_info is not target_sim_info and S4CMSettingUtils.are_allowed_family_relationship(sim_info, target_sim_info)
+            return sim_info is not target_sim_info and S4CMSettingUtils.are_allowed_family_relationship_bits(sim_info, target_sim_info)
 
         dialog = CommonPremadeChooseSimOptionDialog(
             S4CMSimControlMenuStringId.SET_FAMILY_RELATIONS,
