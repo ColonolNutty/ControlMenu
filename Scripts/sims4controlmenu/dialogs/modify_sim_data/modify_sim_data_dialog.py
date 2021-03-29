@@ -84,7 +84,7 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
                 on_chosen=lambda *_, **__: S4CMModifyRelationshipsDialog(self._sim_info, on_previous=reopen).open()
             )
         )
-        if S4CMSettingUtils.is_enabled_for_interactions(self._sim_info):
+        if S4CMSettingUtils.is_sim_allowed_to_perform_adult_sim_operations(self._sim_info):
             option_dialog.add_option(
                 CommonDialogButtonOption(
                     'Pregnancy',

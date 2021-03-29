@@ -15,21 +15,14 @@ from sims4controlmenu.commonlib.utils.common_sim_relationship_utils import S4CMS
 class S4CMSettingUtils:
     """Setting utils"""
     @staticmethod
-    def is_enabled_for_interactions(sim_info: SimInfo) -> bool:
-        """Whether or not the Sim is enabled for S4CM interactions."""
-        if CommonAgeUtils.is_teen(sim_info) and not S4CMSettingUtils.should_treat_teen_sims_as_adult_sims():
-            return False
-        return CommonAgeUtils.is_teen_adult_or_elder(sim_info)
-
-    @staticmethod
-    def should_treat_teen_sims_as_adult_sims() -> bool:
-        """Whether or not Teen Sims should be treated as Adult Sims."""
-        return False
+    def is_sim_allowed_to_perform_adult_sim_operations(sim_info: SimInfo) -> bool:
+        """Whether or not the Sim is allowed to perform Operations intended for Adult Sims."""
+        return CommonAgeUtils.is_adult_or_elder(sim_info)
 
     @staticmethod
     def is_allowed_romantic_relationship(sim_info: SimInfo) -> bool:
         """Determine if a Sim is allowed to have a romantic relationship with another Sim."""
-        return CommonAgeUtils.is_teen(sim_info) or S4CMSettingUtils.is_enabled_for_interactions(sim_info)
+        return CommonAgeUtils.is_teen_adult_or_elder(sim_info)
 
     @staticmethod
     def are_allowed_family_relationship_bits(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:

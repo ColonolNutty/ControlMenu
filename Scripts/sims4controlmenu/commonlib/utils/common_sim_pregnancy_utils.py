@@ -56,7 +56,7 @@ class S4CMSimPregnancyUtils:
             # If both Sims are dogs, that is an ok combination.
             if not CommonSpeciesUtils.is_dog(sim_info_a) or not CommonSpeciesUtils.is_dog(sim_info_b):
                 return False
-        if not S4CMSettingUtils.is_enabled_for_interactions(sim_info_a) or not S4CMSettingUtils.is_enabled_for_interactions(sim_info_b):
+        if not S4CMSettingUtils.is_sim_allowed_to_perform_adult_sim_operations(sim_info_a) or not S4CMSettingUtils.is_sim_allowed_to_perform_adult_sim_operations(sim_info_b):
             return False
         if not S4CMSettingUtils.are_allowed_romantic_relationship(sim_info_a, sim_info_b):
             return False

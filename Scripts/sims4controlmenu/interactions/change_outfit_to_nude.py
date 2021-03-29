@@ -44,7 +44,7 @@ class S4CMChangeOutfitToNudeInteraction(CommonImmediateSuperInteraction):
             cls.get_log().debug('Failed, Target is not a Sim.')
             return TestResult.NONE
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
-        if not S4CMSettingUtils.is_enabled_for_interactions(target_sim_info):
+        if not S4CMSettingUtils.is_sim_allowed_to_perform_adult_sim_operations(target_sim_info):
             cls.get_log().debug('Failed, Target Sim is not enabled for interactions.')
             return TestResult.NONE
         if CommonOutfitUtils.is_wearing_bathing_outfit(target_sim_info):

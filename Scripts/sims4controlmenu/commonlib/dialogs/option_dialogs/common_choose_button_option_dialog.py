@@ -156,6 +156,8 @@ class CommonChooseButtonOptionDialog(CommonChooseResponseOptionDialog):
         title_tokens: Iterator[Any]=(),
         description_tokens: Iterator[Any]=(),
         include_previous_button: bool=True,
+        next_button_text: Union[int, str, LocalizedString, CommonStringId]=CommonStringId.NEXT,
+        previous_button_text: Union[int, str, LocalizedString, CommonStringId]=CommonStringId.PREVIOUS,
         on_previous: Callable[[], None]=CommonFunctionUtils.noop,
         on_close: Callable[[], None]=CommonFunctionUtils.noop,
         per_page: int=10
@@ -166,6 +168,8 @@ class CommonChooseButtonOptionDialog(CommonChooseResponseOptionDialog):
                 title_identifier,
                 description_identifier,
                 tuple(),
+                next_button_text=next_button_text,
+                previous_button_text=previous_button_text,
                 title_tokens=title_tokens,
                 description_tokens=description_tokens,
                 per_page=per_page

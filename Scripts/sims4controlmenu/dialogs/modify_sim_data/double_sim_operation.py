@@ -13,6 +13,6 @@ from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 
 class S4CMDoubleSimOperation:
     """Perform an operation on using two Sims"""
-    def run(self, sim_info_one: SimInfo, sim_info_two: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
         """Apply the operation."""
         raise NotImplementedError()
