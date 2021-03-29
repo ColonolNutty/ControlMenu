@@ -101,6 +101,7 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
                     return
                 if chosen_operation.has_relation(sim_info, chosen_sim_info):
                     _on_chosen(chosen_sim_info)
+                    return
 
                 def _on_yes_selected(_: Any):
                     if chosen_operation is None:
@@ -117,7 +118,7 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
                 confirmation = CommonOkCancelDialog(
                     S4CMStringId.CONFIRMATION,
                     S4CMSimControlMenuStringId.SIM_WILL_BECOME_RELATIONSHIP_TO_SIM_CONFIRMATION_TEXT,
-                    description_tokens=(sim_info, chosen_operation._display_name_override, chosen_sim_info),
+                    description_tokens=(sim_info, chosen_operation.get_display_name(chosen_sim_info, sim_info), chosen_sim_info),
                     ok_text_identifier=S4CMStringId.YES,
                     cancel_text_identifier=S4CMStringId.NO
                 )
@@ -147,12 +148,11 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
 
             for relationship_operation in self._relation_operations:
                 relationship_operation: S4CMSetSimAAsRelationToSimBOperation = relationship_operation
-                relationship_option = relationship_operation.relationship_option
-                display_name = relationship_option.get_display_name(sim_info, chosen_sim_info)
-                has_relation = relationship_operation.has_relation(chosen_sim_info, sim_info)
+                display_name = relationship_operation.get_display_name(chosen_sim_info, sim_info)
+                has_relation = relationship_operation.has_relation(sim_info, chosen_sim_info)
                 option_dialog.add_option(
                     CommonDialogButtonOption(
-                        str(relationship_option.relationship_bit_id),
+                        str(relationship_operation.relationship_bit_id),
                         relationship_operation,
                         CommonDialogResponseOptionContext(
                             CommonLocalizationUtils.colorize(display_name, CommonLocalizedStringColor.GREEN) if has_relation else display_name

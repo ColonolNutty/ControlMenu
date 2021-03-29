@@ -22,3 +22,7 @@ class S4CMSetSimAAsCousinToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
     @property
     def opposite_relationship_bit_id(self) -> CommonRelationshipBitId:
         return CommonRelationshipBitId.FAMILY_COUSIN
+
+    @property
+    def _should_update_family_tree(self) -> bool:
+        return False

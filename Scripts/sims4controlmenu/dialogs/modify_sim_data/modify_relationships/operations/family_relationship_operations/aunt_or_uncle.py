@@ -22,3 +22,6 @@ class S4CMSetSimAAsAuntOrUncleToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
     @property
     def opposite_relationship_bit_id(self) -> CommonRelationshipBitId:
         return CommonRelationshipBitId.FAMILY_NIECE_NEPHEW
+
+    # Update all Aunt and Uncles for Niece Nephew
+    # Update all of the Aunt/Uncles children as Cousin.

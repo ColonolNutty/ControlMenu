@@ -23,6 +23,78 @@ from sims4controlmenu.modinfo import ModInfo
 class _S4CMSetSimAAsFatherToSimBOpTests:
     @staticmethod
     @CommonTestService.test()
+    def _has_relation_sim_a_is_father_of_sim_b() -> None:
+        # Father
+        sim_info_a: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
+        # Child
+        sim_info_b: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
+        try:
+            # Sim A as biological parent of Sim B and Sim B as biological child of Sim A
+            CommonAssertionUtils.is_true(CommonRelationshipUtils.add_relationship_bit(sim_info_b, sim_info_a, CommonRelationshipBitId.FAMILY_PARENT), 'Failed to set Sim A as parent of Sim B')
+            CommonAssertionUtils.is_true(CommonRelationshipUtils.add_relationship_bit(sim_info_a, sim_info_b, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Failed to set Sim B as child of Sim A')
+            CommonAssertionUtils.is_true(CommonSimGenealogyUtils.set_as_father_of(sim_info_a, sim_info_b), 'Failed to set Sim A as biological father of Sim B')
+
+            CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp().has_relation(sim_info_a, sim_info_b), 'Failed, Sim A should have been the father of Sim B but was not.')
+        except Exception as ex:
+            raise ex
+        finally:
+            CommonSimSpawnUtils.delete_sim(sim_info_a, cause='S4CM: testing cleanup')
+            CommonSimSpawnUtils.delete_sim(sim_info_b, cause='S4CM: testing cleanup')
+
+    @staticmethod
+    @CommonTestService.test()
+    def _has_relation_sim_a_is_not_father_of_sim_b() -> None:
+        # Father
+        sim_info_a: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
+        # Child
+        sim_info_b: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
+        try:
+            CommonAssertionUtils.is_false(S4CMSetSimAAsFatherToSimBOp().has_relation(sim_info_a, sim_info_b), 'Failed, Sim A should not have been the father of Sim B but was.')
+        except Exception as ex:
+            raise ex
+        finally:
+            CommonSimSpawnUtils.delete_sim(sim_info_a, cause='S4CM: testing cleanup')
+            CommonSimSpawnUtils.delete_sim(sim_info_b, cause='S4CM: testing cleanup')
+
+    @staticmethod
+    @CommonTestService.test()
+    def _has_relation_sim_a_is_only_rel_bit_father_of_sim_b() -> None:
+        # Father
+        sim_info_a: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
+        # Child
+        sim_info_b: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
+        try:
+            # Sim A as parent of Sim B and Sim B as child of Sim A
+            CommonAssertionUtils.is_true(CommonRelationshipUtils.add_relationship_bit(sim_info_b, sim_info_a, CommonRelationshipBitId.FAMILY_PARENT), 'Failed to set Sim A as parent of Sim B')
+            CommonAssertionUtils.is_true(CommonRelationshipUtils.add_relationship_bit(sim_info_a, sim_info_b, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Failed to set Sim B as child of Sim A')
+
+            CommonAssertionUtils.is_false(S4CMSetSimAAsFatherToSimBOp().has_relation(sim_info_a, sim_info_b), 'Failed, Sim A should not have been the father of Sim B with only the relationship bit but was.')
+        except Exception as ex:
+            raise ex
+        finally:
+            CommonSimSpawnUtils.delete_sim(sim_info_a, cause='S4CM: testing cleanup')
+            CommonSimSpawnUtils.delete_sim(sim_info_b, cause='S4CM: testing cleanup')
+
+    @staticmethod
+    @CommonTestService.test()
+    def _has_relation_sim_a_is_only_family_tree_father_of_sim_b() -> None:
+        # Father
+        sim_info_a: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
+        # Child
+        sim_info_b: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
+        try:
+            # Sim A as biological parent of Sim B and Sim B as biological child of Sim A
+            CommonAssertionUtils.is_true(CommonSimGenealogyUtils.set_as_father_of(sim_info_a, sim_info_b), 'Failed to set Sim A as biological father of Sim B')
+
+            CommonAssertionUtils.is_false(S4CMSetSimAAsFatherToSimBOp().has_relation(sim_info_a, sim_info_b), 'Failed, Sim A should not have been the father of Sim B with only the family tree but was.')
+        except Exception as ex:
+            raise ex
+        finally:
+            CommonSimSpawnUtils.delete_sim(sim_info_a, cause='S4CM: testing cleanup')
+            CommonSimSpawnUtils.delete_sim(sim_info_b, cause='S4CM: testing cleanup')
+
+    @staticmethod
+    @CommonTestService.test()
     def _setting_sim_a_as_father_to_sim_b_should_change_father_from_sim_c_to_sim_a() -> None:
         # New Mother
         sim_info_a: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
@@ -38,7 +110,7 @@ class _S4CMSetSimAAsFatherToSimBOpTests:
 
             # Run Operation
             CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp()._update_family_tree(sim_info_a, sim_info_b), 'Failed to update family tree.')
-            S4CMSetSimAAsFatherToSimBOp()._run(sim_info_a, sim_info_b)
+            S4CMSetSimAAsFatherToSimBOp()._add_relationship_bits(sim_info_a, sim_info_b)
 
             # Sim A should be parent of Sim B and Sim B should be child of Sim A
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_a, CommonRelationshipBitId.FAMILY_PARENT), 'Failed, Sim A was not a parent of Sim B')
@@ -94,7 +166,7 @@ class _S4CMSetSimAAsFatherToSimBOpTests:
 
             # Run operation
             CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp()._update_family_tree(sim_info_a, sim_info_b), 'Failed to update family tree.')
-            S4CMSetSimAAsFatherToSimBOp()._run(sim_info_a, sim_info_b)
+            S4CMSetSimAAsFatherToSimBOp()._add_relationship_bits(sim_info_a, sim_info_b)
 
             # Sim D should not be grandparent of Sim B and Sim B should not be grandchild of Sim D
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_d, CommonRelationshipBitId.FAMILY_GRANDPARENT), 'Failed, Sim D was still marked as Grandparent of Sim B')
@@ -156,7 +228,7 @@ class _S4CMSetSimAAsFatherToSimBOpTests:
 
             # Run operation
             CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp()._update_family_tree(sim_info_a, sim_info_b), 'Failed to update family tree.')
-            S4CMSetSimAAsFatherToSimBOp()._run(sim_info_a, sim_info_b)
+            S4CMSetSimAAsFatherToSimBOp()._add_relationship_bits(sim_info_a, sim_info_b)
 
             # Sim D should not be grandparent of Sim B and Sim B should not be grandchild of Sim D
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_d, CommonRelationshipBitId.FAMILY_GRANDPARENT), 'Failed, Sim D was still marked as Grandparent of Sim B')
@@ -236,7 +308,7 @@ class _S4CMSetSimAAsFatherToSimBOpTests:
 
             # Run operation
             CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp()._update_family_tree(sim_info_a, sim_info_b), 'Failed to update family tree.')
-            S4CMSetSimAAsFatherToSimBOp()._run(sim_info_a, sim_info_b)
+            S4CMSetSimAAsFatherToSimBOp()._add_relationship_bits(sim_info_a, sim_info_b)
 
             # Sim F should not be aunt/uncle of Sim B and Sim B should not be niece/nephew of Sim F
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_f, CommonRelationshipBitId.FAMILY_AUNT_UNCLE), 'Failed, Sim F was still marked as Aunt/Uncle of Sim B')
@@ -332,7 +404,7 @@ class _S4CMSetSimAAsFatherToSimBOpTests:
 
             # Run operation
             CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp()._update_family_tree(sim_info_a, sim_info_b), 'Failed to update family tree.')
-            S4CMSetSimAAsFatherToSimBOp()._run(sim_info_a, sim_info_b)
+            S4CMSetSimAAsFatherToSimBOp()._add_relationship_bits(sim_info_a, sim_info_b)
 
             # Sim H should not be cousin of Sim B and Sim B should not be cousin of Sim H
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_h, CommonRelationshipBitId.FAMILY_COUSIN), 'Failed, Sim H was still marked as Cousin of Sim B')
@@ -353,6 +425,56 @@ class _S4CMSetSimAAsFatherToSimBOpTests:
             CommonSimSpawnUtils.delete_sim(sim_info_g, cause='S4CM: testing cleanup')
             CommonSimSpawnUtils.delete_sim(sim_info_h, cause='S4CM: testing cleanup')
             CommonSimSpawnUtils.delete_sim(sim_info_i, cause='S4CM: testing cleanup')
+
+    @staticmethod
+    @CommonTestService.test()
+    def _setting_sim_a_as_father_to_sim_b_should_set_new_father_as_grandfather_of_children_of_sim_b() -> None:
+        # New Father
+        sim_info_a: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
+        # Child
+        sim_info_b: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
+        # Old Father
+        sim_info_c: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
+        # Child Of Sim B
+        sim_info_d: SimInfo = CommonSimSpawnUtils.create_human_sim_info()
+        try:
+            # Sim B as biological parent of Sim D and Sim D as biological child of Sim B
+            CommonAssertionUtils.is_true(CommonRelationshipUtils.add_relationship_bit(sim_info_d, sim_info_b, CommonRelationshipBitId.FAMILY_PARENT), 'Failed to set Sim B as parent of Sim D')
+            CommonAssertionUtils.is_true(CommonRelationshipUtils.add_relationship_bit(sim_info_b, sim_info_d, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Failed to set Sim D as child of Sim B')
+            CommonAssertionUtils.is_true(CommonSimGenealogyUtils.set_as_mother_of(sim_info_b, sim_info_d), 'Failed to set Sim B as biological mother of Sim D')
+
+            # Sim C as biological parent of Sim B and Sim B as biological child of Sim C
+            CommonAssertionUtils.is_true(CommonRelationshipUtils.add_relationship_bit(sim_info_b, sim_info_c, CommonRelationshipBitId.FAMILY_PARENT), 'Failed to set Sim C as parent of Sim B')
+            CommonAssertionUtils.is_true(CommonRelationshipUtils.add_relationship_bit(sim_info_c, sim_info_b, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Failed to set Sim B as child of Sim C')
+            CommonAssertionUtils.is_true(CommonSimGenealogyUtils.set_as_father_of(sim_info_c, sim_info_b), 'Failed to set Sim C as biological father of Sim B')
+
+            # Sim C as biological grandparent of Sim D and Sim D as biological grandchild of Sim C
+            CommonAssertionUtils.is_true(CommonRelationshipUtils.add_relationship_bit(sim_info_d, sim_info_c, CommonRelationshipBitId.FAMILY_GRANDPARENT), 'Failed to set Sim C as grandparent of Sim D')
+            CommonAssertionUtils.is_true(CommonRelationshipUtils.add_relationship_bit(sim_info_c, sim_info_d, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Failed to set Sim D as grandchild of Sim C')
+            CommonAssertionUtils.is_true(CommonSimGenealogyUtils.set_as_mothers_father_of(sim_info_d, sim_info_c), 'Failed to set Sim C as biological grandfather of Sim D on mothers side')
+
+            # Run operation
+            CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp()._update_family_tree(sim_info_a, sim_info_b), 'Failed to update family tree.')
+            S4CMSetSimAAsFatherToSimBOp()._add_relationship_bits(sim_info_a, sim_info_b)
+
+            # Sim C should not be grandparent of Sim D and Sim D should not be grandchild of Sim C
+            CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_d, sim_info_c, CommonRelationshipBitId.FAMILY_GRANDPARENT), 'Failed, Sim C was still marked as grandparent of Sim D')
+            CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_c, sim_info_d, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Failed, Sim D was still marked as grandchild of Sim C')
+
+            # Sim A should be grandparent of Sim D and Sim D should be grandchild of Sim A
+            CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_d, sim_info_a, CommonRelationshipBitId.FAMILY_GRANDPARENT), 'Failed, Sim A was not marked as grandparent of Sim D')
+            CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_a, sim_info_d, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Failed, Sim D was not marked as grandchild of Sim A')
+
+            # Sim A should be biological grandfather of Sim D
+            grandfather_sim_info_d = CommonSimGenealogyUtils.get_sim_info_of_grandfather_of_sim_on_mothers_side(sim_info_d)
+            CommonAssertionUtils.is_true(grandfather_sim_info_d is sim_info_a, 'Failed, Sim D did not have Sim A as grandfather. Sim: {}'.format(CommonSimNameUtils.get_full_name(grandfather_sim_info_d)))
+        except Exception as ex:
+            raise ex
+        finally:
+            CommonSimSpawnUtils.delete_sim(sim_info_a, cause='S4CM: testing cleanup')
+            CommonSimSpawnUtils.delete_sim(sim_info_b, cause='S4CM: testing cleanup')
+            CommonSimSpawnUtils.delete_sim(sim_info_c, cause='S4CM: testing cleanup')
+            CommonSimSpawnUtils.delete_sim(sim_info_d, cause='S4CM: testing cleanup')
 
     @staticmethod
     @CommonTestService.test()
@@ -410,7 +532,7 @@ class _S4CMSetSimAAsFatherToSimBOpTests:
 
             # Run operation
             CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp()._update_family_tree(sim_info_a, sim_info_b), 'Failed to update family tree.')
-            S4CMSetSimAAsFatherToSimBOp()._run(sim_info_a, sim_info_b)
+            S4CMSetSimAAsFatherToSimBOp()._add_relationship_bits(sim_info_a, sim_info_b)
 
             # Sim D should not be brother/sister of Sim B and Sim B should not be brother/sister of Sim D
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_d, CommonRelationshipBitId.FAMILY_BROTHER_SISTER), 'Failed, Sim D was still marked as brother/sister of Sim B')
@@ -489,7 +611,7 @@ class _S4CMSetSimAAsFatherToSimBOpTests:
 
             # Run operation
             CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp()._update_family_tree(sim_info_a, sim_info_b), 'Failed to update family tree.')
-            S4CMSetSimAAsFatherToSimBOp()._run(sim_info_a, sim_info_b)
+            S4CMSetSimAAsFatherToSimBOp()._add_relationship_bits(sim_info_a, sim_info_b)
 
             # Sim D should not be brother/sister of Sim B and Sim B should not be brother/sister of Sim D
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_d, CommonRelationshipBitId.FAMILY_BROTHER_SISTER), 'Failed, Sim D was still marked as brother/sister of Sim B')
@@ -555,7 +677,7 @@ class _S4CMSetSimAAsFatherToSimBOpTests:
 
             # Run operation
             CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp()._update_family_tree(sim_info_a, sim_info_b), 'Failed to update family tree.')
-            S4CMSetSimAAsFatherToSimBOp()._run(sim_info_a, sim_info_b)
+            S4CMSetSimAAsFatherToSimBOp()._add_relationship_bits(sim_info_a, sim_info_b)
 
             # Sim D should not be brother/sister of Sim B and Sim B should not be brother/sister of Sim D
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_d, CommonRelationshipBitId.FAMILY_BROTHER_SISTER), 'Failed, Sim D was still marked as brother/sister of Sim B')
@@ -613,7 +735,7 @@ class _S4CMSetSimAAsFatherToSimBOpTests:
 
             # Run operation
             CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp()._update_family_tree(sim_info_a, sim_info_b), 'Failed to update family tree.')
-            S4CMSetSimAAsFatherToSimBOp()._run(sim_info_a, sim_info_b)
+            S4CMSetSimAAsFatherToSimBOp()._add_relationship_bits(sim_info_a, sim_info_b)
 
             # Sim D should not be brother/sister of Sim B and Sim B should not be brother/sister of Sim D
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_d, CommonRelationshipBitId.FAMILY_BROTHER_SISTER), 'Failed, Sim D was still marked as brother/sister of Sim B')
@@ -682,7 +804,7 @@ class _S4CMSetSimAAsFatherToSimBOpTests:
 
             # Run operation
             CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp()._update_family_tree(sim_info_a, sim_info_b), 'Failed to update family tree.')
-            S4CMSetSimAAsFatherToSimBOp()._run(sim_info_a, sim_info_b)
+            S4CMSetSimAAsFatherToSimBOp()._add_relationship_bits(sim_info_a, sim_info_b)
 
             # Sim D should not be brother/sister of Sim B and Sim B should not be brother/sister of Sim D
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_d, CommonRelationshipBitId.FAMILY_BROTHER_SISTER), 'Failed, Sim D was still marked as brother/sister of Sim B')
@@ -766,7 +888,7 @@ class _S4CMSetSimAAsFatherToSimBOpTests:
 
             # Run operation
             CommonAssertionUtils.is_true(S4CMSetSimAAsFatherToSimBOp()._update_family_tree(sim_info_a, sim_info_b), 'Failed to update family tree.')
-            S4CMSetSimAAsFatherToSimBOp()._run(sim_info_a, sim_info_b)
+            S4CMSetSimAAsFatherToSimBOp()._add_relationship_bits(sim_info_a, sim_info_b)
 
             # Sim D should not be brother/sister of Sim B and Sim B should not be brother/sister of Sim D
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_d, CommonRelationshipBitId.FAMILY_BROTHER_SISTER), 'Failed, Sim D was not marked as brother/sister of Sim B')

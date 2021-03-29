@@ -24,7 +24,6 @@ class S4CMSetSimAAsGrandmotherOnMothersSideToSimBOp(S4CMSetSimAAsRelationToSimBO
     def opposite_relationship_bit_id(self) -> CommonRelationshipBitId:
         return CommonRelationshipBitId.FAMILY_GRANDCHILD
 
-    # noinspection PyMissingOrEmptyDocstring
     @property
-    def _display_name_override(self) -> CommonRelationshipBitId:
+    def _display_name(self) -> int:
         return S4CMSimControlMenuStringId.GRANDMOTHER_ON_MOTHERS_SIDE

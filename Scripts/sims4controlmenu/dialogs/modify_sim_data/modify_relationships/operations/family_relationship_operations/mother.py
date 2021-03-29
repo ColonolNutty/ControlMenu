@@ -31,26 +31,22 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
     def opposite_relationship_bit_id(self) -> CommonRelationshipBitId:
         return CommonRelationshipBitId.FAMILY_SON_DAUGHTER
 
-    # noinspection PyMissingOrEmptyDocstring
     @property
-    def _display_name_override(self) -> CommonRelationshipBitId:
+    def _display_name(self) -> int:
         return S4CMSimControlMenuStringId.MOTHER
 
     # noinspection PyMissingOrEmptyDocstring
     def has_relation(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        parent_sim_info_b = CommonSimGenealogyUtils.get_mother_sim_info(sim_info_b)
-        if parent_sim_info_b is None or sim_info_a is not parent_sim_info_b:
-            return False
-        return super().has_relation(sim_info_a, sim_info_b)
+        return super().has_relation(sim_info_a, sim_info_b) and CommonSimGenealogyUtils.is_mother_of(sim_info_a, sim_info_b)
 
     def _update_family_tree(self, new_parent_sim_info: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
         self.log.format_with_message('Setting Sim A as mother of Sim B', sim_a=new_parent_sim_info, sim_b=sim_info_b)
         try:
             self._set_as_parent(new_parent_sim_info, sim_info_b)
+            on_completed(True)
         except Exception as ex:
             self.log.error('Failed to set as mother.', exception=ex)
-        finally:
-            on_completed(True)
+            on_completed(False)
         return True
 
     def _set_as_parent(self, new_parent_sim_info: SimInfo, sim_info_b: SimInfo):
@@ -91,9 +87,9 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                         CommonRelationshipUtils.remove_relationship_bit(cousin_sim_info, sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
 
             father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(sim_info)
-            genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(old_mother_sim_info)
+            old_mother_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(old_mother_sim_info)
             with genealogy_caching():
-                for brother_sister_sim_info in genealogy_tracker.get_child_sim_infos_gen():
+                for brother_sister_sim_info in old_mother_genealogy_tracker.get_child_sim_infos_gen():
                     CommonRelationshipUtils.remove_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
                     CommonRelationshipUtils.remove_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
 
@@ -106,6 +102,13 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                         self.log.format_with_message('Found a brother/sister. Removing them as Siblings.', sim=brother_sister_sim_info, father_sim_info=father_sim_info, old_brother_father_sim=old_brother_father_sim_info)
                         CommonRelationshipUtils.remove_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
                         CommonRelationshipUtils.remove_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
+
+            genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(sim_info)
+            with genealogy_caching():
+                for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
+                    CommonRelationshipUtils.remove_relationship_bit(child_sim_info, old_mother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                    CommonRelationshipUtils.remove_relationship_bit(old_mother_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                    CommonSimGenealogyUtils.remove_mothers_mother_relation(child_sim_info)
 
         # Remove old grandmother
         old_grandmother_sim_info = CommonSimGenealogyUtils.get_sim_info_of_grandmother_of_sim_on_mothers_side(sim_info)
@@ -168,6 +171,13 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                     CommonRelationshipUtils.remove_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
                     CommonRelationshipUtils.add_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
                     CommonRelationshipUtils.add_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
+
+        genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(sim_info)
+        with genealogy_caching():
+            for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
+                CommonRelationshipUtils.add_relationship_bit(child_sim_info, new_parent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                CommonSimGenealogyUtils.set_as_mothers_mother_of(new_parent_sim_info, child_sim_info)
 
         # Add new grandmother
         new_grandmother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(new_parent_sim_info)
