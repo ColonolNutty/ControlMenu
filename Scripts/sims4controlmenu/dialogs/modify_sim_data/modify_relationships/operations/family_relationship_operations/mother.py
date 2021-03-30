@@ -40,23 +40,18 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
         return super().has_relation(sim_info_a, sim_info_b) and CommonSimGenealogyUtils.is_mother_of(sim_info_a, sim_info_b)
 
     def _update_family_tree(self, new_parent_sim_info: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
-        self.log.format_with_message('Setting Sim A as mother of Sim B', sim_a=new_parent_sim_info, sim_b=sim_info_b)
         try:
-            self._set_as_parent(new_parent_sim_info, sim_info_b)
+            self.log.format_with_message('Setting Sim A as mother of Sim B', sim_a=new_parent_sim_info, sim_b=sim_info_b)
+            self._remove_old_relation(sim_info_b)
+            self._add_new_relation(sim_info_b, new_parent_sim_info)
+            self.log.format_with_message('Done setting Sim A as mother of Sim B', sim_a=new_parent_sim_info, sim_b=sim_info_b)
             on_completed(True)
         except Exception as ex:
             self.log.error('Failed to set as mother.', exception=ex)
             on_completed(False)
         return True
 
-    def _set_as_parent(self, new_parent_sim_info: SimInfo, sim_info_b: SimInfo):
-        self.log.format_with_message('Setting Sim A as mother of Sim B', sim_a=new_parent_sim_info, sim_b=sim_info_b)
-        self._remove_old_parent(sim_info_b)
-        self._add_new_parent(sim_info_b, new_parent_sim_info)
-        self.log.format_with_message('Done setting Sim A as mother of Sim B', sim_a=new_parent_sim_info, sim_b=sim_info_b)
-        return True
-
-    def _remove_old_parent(self, sim_info: SimInfo) -> bool:
+    def _remove_old_relation(self, sim_info: SimInfo) -> bool:
         self.log.format_with_message('Removing old mother from Sim', sim=sim_info)
 
         # Remove old mother.
@@ -76,6 +71,14 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                     uncle_aunt_sim_info_list.append(uncle_aunt_sim_info)
                     CommonRelationshipUtils.remove_relationship_bit(sim_info, uncle_aunt_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
                     CommonRelationshipUtils.remove_relationship_bit(uncle_aunt_sim_info, sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+
+            for uncle_aunt_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bits_generator(old_mother_sim_info, (CommonRelationshipBitId.FAMILY_BROTHER_SISTER, CommonRelationshipBitId.FAMILY_STEP_SIBLING), instanced_only=False):
+                if uncle_aunt_sim_info in uncle_aunt_sim_info_list:
+                    continue
+                self.log.format_with_message('Found an uncle/aunt. Removing them.', sim=uncle_aunt_sim_info)
+                uncle_aunt_sim_info_list.append(uncle_aunt_sim_info)
+                CommonRelationshipUtils.remove_relationship_bit(sim_info, uncle_aunt_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                CommonRelationshipUtils.remove_relationship_bit(uncle_aunt_sim_info, sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
             # Remove Cousins
             for uncle_aunt_sim_info in uncle_aunt_sim_info_list:
@@ -129,7 +132,7 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
         self.log.debug('Done removing old mother')
         return True
 
-    def _add_new_parent(self, sim_info: SimInfo, new_parent_sim_info: SimInfo) -> bool:
+    def _add_new_relation(self, sim_info: SimInfo, new_parent_sim_info: SimInfo) -> bool:
         self.log.format_with_message('Adding new mother to Sim', sim=sim_info, new_parent_sim=new_parent_sim_info)
         # Add new Mother
         CommonSimGenealogyUtils.set_as_mother_of(new_parent_sim_info, sim_info)
@@ -142,6 +145,14 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                 uncle_aunt_sim_info_list.append(uncle_aunt_sim_info)
                 CommonRelationshipUtils.add_relationship_bit(sim_info, uncle_aunt_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
                 CommonRelationshipUtils.add_relationship_bit(uncle_aunt_sim_info, sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+
+        for uncle_aunt_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bits_generator(new_parent_sim_info, (CommonRelationshipBitId.FAMILY_BROTHER_SISTER, CommonRelationshipBitId.FAMILY_STEP_SIBLING), instanced_only=False):
+            if uncle_aunt_sim_info in uncle_aunt_sim_info_list:
+                continue
+            self.log.format_with_message('Found an uncle/aunt. Adding them as aunt/uncle to sim.', sim=sim_info, new_uncle=uncle_aunt_sim_info)
+            uncle_aunt_sim_info_list.append(uncle_aunt_sim_info)
+            CommonRelationshipUtils.add_relationship_bit(sim_info, uncle_aunt_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+            CommonRelationshipUtils.add_relationship_bit(uncle_aunt_sim_info, sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
         # Remove Cousins
         for uncle_aunt_sim_info in uncle_aunt_sim_info_list:

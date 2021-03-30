@@ -91,6 +91,13 @@ class S4CMSimControlMenuStringId(CommonInt):
     UPDATE_FAMILY_TREE_TITLE = 3381621033
     UPDATE_FAMILY_TREE_DESCRIPTION = 2332807826
 
+    WHICH_PARENT_IS_SHARED = 4067889306
+    # Tokens: {0.SimFirstName} {0.SimLastName} (Sim A) {1.SimFirstName} {1.SimLastName} (Sim B)
+    WHICH_PARENT_IS_SHARED_DESCRIPTION = 3758979209
+
+    # Tokens: {0.SimFirstName} {0.SimLastName} (Sim A) {1.String} (Relation)
+    SIM_DOES_NOT_HAVE_A_RELATION = 806588682
+
     # Outfit
     CHANGE_OUTFIT = 94181272
     CHOOSE_OUTFIT = 2988267483

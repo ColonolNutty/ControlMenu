@@ -483,6 +483,84 @@ class CommonSimGenealogyUtils:
         return sim_info_a is grand_parent_sim_info_b
 
     @staticmethod
+    def has_father(sim_info: SimInfo) -> bool:
+        """has_father(sim_info)
+
+        Determine if a Sim has a father.
+
+        :param sim_info: An instance of a Sim.
+        :type sim_info: SimInfo
+        :return: True, if the Sim has a father. False, if not.
+        :rtype: bool
+        """
+        return CommonSimGenealogyUtils.get_father_sim_info(sim_info) is not None
+
+    @staticmethod
+    def has_mother(sim_info: SimInfo) -> bool:
+        """has_mother(sim_info)
+
+        Determine if Sim A is the mother of Sim B.
+
+        :param sim_info: An instance of a Sim.
+        :type sim_info: SimInfo
+        :return: True, if the Sim has a mother. False, if not.
+        :rtype: bool
+        """
+        return CommonSimGenealogyUtils.get_mother_sim_info(sim_info) is not None
+
+    @staticmethod
+    def has_grandfather_on_fathers_side(sim_info: SimInfo) -> bool:
+        """has_grandfather_on_fathers_side(sim_info)
+
+        Determine if a Sim has a grandfather on the fathers side.
+
+        :param sim_info: An instance of a Sim.
+        :type sim_info: SimInfo
+        :return: True, if the Sim has a grandfather on the fathers side. False, if not.
+        :rtype: bool
+        """
+        return CommonSimGenealogyUtils.get_sim_info_of_grandfather_of_sim_on_fathers_side(sim_info) is not None
+
+    @staticmethod
+    def has_grandmother_on_fathers_side(sim_info: SimInfo) -> bool:
+        """has_grandmother_on_fathers_side(sim_info)
+
+        Determine if a Sim has a grandmother on the fathers side.
+
+        :param sim_info: An instance of a Sim.
+        :type sim_info: SimInfo
+        :return: True, if the Sim has a grandmother on the fathers side. False, if not.
+        :rtype: bool
+        """
+        return CommonSimGenealogyUtils.get_sim_info_of_grandmother_of_sim_on_fathers_side(sim_info) is not None
+
+    @staticmethod
+    def has_grandfather_on_mothers_side(sim_info: SimInfo) -> bool:
+        """has_grandfather_on_mothers_side(sim_info)
+
+        Determine if a Sim has a grandfather on the mothers side.
+
+        :param sim_info: An instance of a Sim.
+        :type sim_info: SimInfo
+        :return: True, if the Sim has a grandfather on the mothers side. False, if not.
+        :rtype: bool
+        """
+        return CommonSimGenealogyUtils.get_sim_info_of_grandfather_of_sim_on_mothers_side(sim_info) is not None
+
+    @staticmethod
+    def has_grandmother_on_mothers_side(sim_info: SimInfo) -> bool:
+        """has_grandmother_on_mothers_side(sim_info)
+
+        Determine if a Sim has a grandmother on the mothers side.
+
+        :param sim_info: An instance of a Sim.
+        :type sim_info: SimInfo
+        :return: True, if the Sim has a grandmother on the mothers side. False, if not.
+        :rtype: bool
+        """
+        return CommonSimGenealogyUtils.get_sim_info_of_grandmother_of_sim_on_mothers_side(sim_info) is not None
+
+    @staticmethod
     def _retrieve_relation_sim_info(sim_info: SimInfo, relationship_index: FamilyRelationshipIndex) -> Union[SimInfo, None]:
         return CommonSimUtils.get_sim_info(CommonSimGenealogyUtils._retrieve_relation_sim_id(sim_info, relationship_index))
 

@@ -8,6 +8,8 @@ Version 1.1:
 - The Set Romance Relationship Levels are no longer allowed for Sims that are blood related.
 - Familial Relationships are no longer allowed to be added between Pet Sims and Human Sims.
 - Teen Sims and below can no longer see the Pregnancy operations when opening the Sim dialog.
+- Setting a Family Relationship will also give you the option to update the Family Tree with that relationship, depending on the relationship.
+  - This includes Grandmothers, Grandfathers, Uncles/Aunts, Nieces/Nephew, Brothers/Sisters, Step Brothers/Step Sisters, and Cousins.
 
 Version 1.0:
 - Initial Release

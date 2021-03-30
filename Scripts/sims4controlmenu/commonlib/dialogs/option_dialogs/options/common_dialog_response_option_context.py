@@ -45,7 +45,7 @@ class CommonDialogResponseOptionContext:
         subtext_identifier: Union[int, str, LocalizedString, CommonStringId]=None,
         subtext_tokens: Iterator[Any]=(),
         disabled_text_identifier: Union[int, str, LocalizedString, CommonStringId]=None,
-        disabled_text_tokens: Iterator[Any]=None
+        disabled_text_tokens: Iterator[Any]=()
     ):
         self._text = CommonLocalizationUtils.create_localized_string(text_identifier, tokens=tuple(text_tokens))
         self._subtext = CommonLocalizationUtils.create_localized_string(subtext_identifier, tokens=tuple(subtext_tokens)) if subtext_identifier is not None else None

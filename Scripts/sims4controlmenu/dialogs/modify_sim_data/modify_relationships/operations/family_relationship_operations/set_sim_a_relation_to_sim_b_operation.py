@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from typing import Callable, Any
+from typing import Callable, Any, Union
 
 from protocolbuffers.Localization_pb2 import LocalizedString
 from relationships.relationship_bit import RelationshipBit
@@ -27,7 +27,6 @@ from sims4controlmenu.dialogs.modify_sim_data.double_sim_operation import S4CMDo
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
 from sims4controlmenu.logging.has_s4cm_log import HasS4CMLog
-from sims4controlmenu.modinfo import ModInfo
 
 
 class S4CMSetSimAAsRelationToSimBOperation(S4CMDoubleSimOperation, HasS4CMLog, CommonService):
@@ -101,7 +100,7 @@ class S4CMSetSimAAsRelationToSimBOperation(S4CMDoubleSimOperation, HasS4CMLog, C
             on_completed(True)
 
         option_dialog = CommonChooseButtonOptionDialog(
-            ModInfo.get_identity(),
+            self.mod_identity,
             S4CMSimControlMenuStringId.UPDATE_FAMILY_TREE_TITLE,
             S4CMSimControlMenuStringId.UPDATE_FAMILY_TREE_DESCRIPTION,
             previous_button_text=S4CMStringId.CANCEL,
@@ -162,3 +161,17 @@ class S4CMSetSimAAsRelationToSimBOperation(S4CMDoubleSimOperation, HasS4CMLog, C
         :rtype: LocalizedString
         """
         return CommonLocalizationUtils.create_localized_string(self._display_name, tokens=(sim_info_a, sim_info_b))
+
+    def get_disabled_text(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> Union[LocalizedString, None]:
+        """get_disabled_text(sim_info_a, sim_info_b)
+
+        If the option should be disabled, this will return the reason for it.
+
+        :param sim_info_a: An instance of a Sim.
+        :type sim_info_a: SimInfo
+        :param sim_info_b: An instance of a Sim.
+        :type sim_info_b: SimInfo
+        :return: A localized string.
+        :rtype: LocalizedString
+        """
+        return None

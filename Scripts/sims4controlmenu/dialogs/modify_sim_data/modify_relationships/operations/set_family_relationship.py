@@ -155,7 +155,8 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
                         str(relationship_operation.relationship_bit_id),
                         relationship_operation,
                         CommonDialogResponseOptionContext(
-                            CommonLocalizationUtils.colorize(display_name, CommonLocalizedStringColor.GREEN) if has_relation else display_name
+                            CommonLocalizationUtils.colorize(display_name, CommonLocalizedStringColor.GREEN) if has_relation else display_name,
+                            disabled_text_identifier=relationship_operation.get_disabled_text(sim_info, chosen_sim_info)
                         ),
                         on_chosen=_on_bit_chosen
                     )
