@@ -202,6 +202,16 @@ class S4CMSetSimAAsAuntOrUncleToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                     if CommonSimGenealogyUtils.is_grandmother_of_sim_on_mothers_side(grandmother_sim_info, child_sim_info):
                         CommonSimGenealogyUtils.remove_mothers_mother_relation(child_sim_info)
 
+        for grandparent_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(sim_info, CommonRelationshipBitId.FAMILY_PARENT, instanced_only=False):
+            self.log.format_with_message('Found grandparent. Removing them.', sim=sim_info, grandparent_sim=grandparent_sim_info)
+            CommonRelationshipUtils.remove_relationship_bit(sim_info, grandparent_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
+            CommonRelationshipUtils.remove_relationship_bit(grandparent_sim_info, sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
+            with genealogy_caching():
+                for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
+                    self.log.format_with_message('Found child, removing grandparent.', sim=child_sim_info, grandparent=grandparent_sim_info)
+                    CommonRelationshipUtils.remove_relationship_bit(child_sim_info, grandparent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                    CommonRelationshipUtils.remove_relationship_bit(grandparent_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+
         self.log.format_with_message('Done removing old relations', new_sim=sim_info)
         return True
 
@@ -348,6 +358,20 @@ class S4CMSetSimAAsAuntOrUncleToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                 self.log.format_with_message('Found grandmother. Adding them.', sim=new_grandchild_sim_info, grandmother=mother_sim_info)
                 CommonRelationshipUtils.add_relationship_bit(new_grandchild_sim_info, mother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
                 CommonRelationshipUtils.add_relationship_bit(mother_sim_info, new_grandchild_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+
+        for grandparent_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(new_parent_sim_info, CommonRelationshipBitId.FAMILY_PARENT, instanced_only=False):
+            self.log.format_with_message('Found grandparent. Adding them.', sim=new_aunt_or_uncle_sim_info, grandparent_sim=grandparent_sim_info)
+            CommonRelationshipUtils.add_relationship_bit(new_aunt_or_uncle_sim_info, grandparent_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
+            CommonRelationshipUtils.add_relationship_bit(grandparent_sim_info, new_aunt_or_uncle_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
+            with genealogy_caching():
+                for child_sim_info in new_uncle_genealogy_tracker.get_child_sim_infos_gen():
+                    self.log.format_with_message('Found child, Adding grandparent.', sim=child_sim_info, grandparent=grandparent_sim_info)
+                    CommonRelationshipUtils.add_relationship_bit(child_sim_info, grandparent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                    CommonRelationshipUtils.add_relationship_bit(grandparent_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+            for new_grandchild_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(new_aunt_or_uncle_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER, instanced_only=False):
+                self.log.format_with_message('Found grandmother. Adding them.', sim=new_grandchild_sim_info, grandparent=grandparent_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_grandchild_sim_info, grandparent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                CommonRelationshipUtils.add_relationship_bit(grandparent_sim_info, new_grandchild_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
 
         self.log.format_with_message('Done adding new aunt/uncle', sim=new_nephew_sim_info, new_sim=new_aunt_or_uncle_sim_info)
         return True
