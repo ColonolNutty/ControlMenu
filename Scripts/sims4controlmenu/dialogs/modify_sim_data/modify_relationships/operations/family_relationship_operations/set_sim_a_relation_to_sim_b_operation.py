@@ -59,12 +59,24 @@ class S4CMSetSimAAsRelationToSimBOperation(S4CMDoubleSimOperation, HasS4CMLog, C
         return self.__display_name
 
     @property
+    def _opposite_display_name(self) -> int:
+        if self.__opposite_display_name is None:
+            relationship_bit_id: int = self.opposite_relationship_bit_id
+            relationship_bit: RelationshipBit = CommonResourceUtils.load_instance(Types.RELATIONSHIP_BIT, relationship_bit_id)
+            if relationship_bit is None:
+                self.__opposite_display_name = 0
+            # noinspection PyUnresolvedReferences
+            self.__opposite_display_name = relationship_bit.display_name
+        return self.__opposite_display_name
+
+    @property
     def _should_update_family_tree(self) -> bool:
         return True
 
     def __init__(self) -> None:
         super().__init__()
         self.__display_name = None
+        self.__opposite_display_name = None
 
     def has_relation(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
         """has_relation(sim_info_a, sim_info_b)
@@ -151,7 +163,7 @@ class S4CMSetSimAAsRelationToSimBOperation(S4CMDoubleSimOperation, HasS4CMLog, C
     def get_display_name(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> LocalizedString:
         """get_display_name(sim_info_a, sim_info_b)
 
-        Create a display name for the relationship bit option.
+        Create a display name for the relationship bit.
 
         :param sim_info_a: An instance of a Sim.
         :type sim_info_a: SimInfo
@@ -161,6 +173,20 @@ class S4CMSetSimAAsRelationToSimBOperation(S4CMDoubleSimOperation, HasS4CMLog, C
         :rtype: LocalizedString
         """
         return CommonLocalizationUtils.create_localized_string(self._display_name, tokens=(sim_info_a, sim_info_b))
+
+    def get_opposite_display_name(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> LocalizedString:
+        """get_opposite_display_name(sim_info_a, sim_info_b)
+
+        Create a display name for the opposite relationship bit.
+
+        :param sim_info_a: An instance of a Sim.
+        :type sim_info_a: SimInfo
+        :param sim_info_b: An instance of a Sim.
+        :type sim_info_b: SimInfo
+        :return: A localized string.
+        :rtype: LocalizedString
+        """
+        return CommonLocalizationUtils.create_localized_string(self._opposite_display_name, tokens=(sim_info_a, sim_info_b))
 
     def get_disabled_text(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> Union[LocalizedString, None]:
         """get_disabled_text(sim_info_a, sim_info_b)

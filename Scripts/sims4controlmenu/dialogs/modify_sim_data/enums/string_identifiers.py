@@ -71,7 +71,7 @@ class S4CMSimControlMenuStringId(CommonInt):
 
     CHOOSE_PARENT_RELATIONSHIP = 3402647200
     # Tokens: {0.SimFirstName} {0.SimLastName} (Sim A) {1.String} (Relation) {2.SimFirstName} {2.SimLastName} (Sim B)
-    SIM_WILL_BECOME_RELATIONSHIP_TO_SIM_CONFIRMATION_TEXT = 4256981643
+    SIM_WILL_BECOME_RELATIONSHIP_TO_SIM_CONFIRMATION_TEXT = 1370950998
 
     # Tokens: {0.SimFirstName}{0.SimLastName} (Sim A) {1.String} (Relation One) {2.String} (Relation 2) {3.SimFirstName} {3.SimLastName} (Sim B)
     WILL_SIM_BECOME_A_RELATION_OR_RELATION_TO_SIM = 2681670750
@@ -97,6 +97,15 @@ class S4CMSimControlMenuStringId(CommonInt):
 
     # Tokens: {0.SimFirstName} {0.SimLastName}
     SIM_NEEDS_TO_HAVE_MOTHER_OR_FATHER_BEFORE_YOU_CAN_ADD_UNCLES_OR_AUNTS_TO_THEM = 3221894912
+
+    # Tokens: {0.SimFirstName} {0.SimLastName} (Sim) {1.String} (Relation Required) {2.String} (Relation To Add)
+    SIM_NEEDS_TO_HAVE_A_RELATION_BEFORE_YOU_CAN_ADD_A_RELATION_TO_THEM = 1705229418
+
+    # Tokens: {0.SimFirstName} {0.SimLastName} (Sim) {1.String} (Relation Required) {2.String} (Relation Required) {3.String} (Relation To Add)
+    SIM_NEEDS_TO_HAVE_A_RELATION_OR_RELATION_BEFORE_YOU_CAN_ADD_A_RELATION_TO_THEM = 1280809925
+
+    # Tokens: {0.SimFirstName} {0.SimLastName} (Sim) {1.String} (Relation 1) {2.String} (Relation 2) {3.SimFirstName} {3.SimLastName} (Sim)
+    SIM_CANNOT_BE_BOTH_RELATION_AND_RELATION_OF_SIM = 2531370599
 
     # Tokens: {0.SimFirstName} {0.SimLastName} (Sim A) {1.String} (Relation)
     SIM_DOES_NOT_HAVE_A_RELATION = 806588682
