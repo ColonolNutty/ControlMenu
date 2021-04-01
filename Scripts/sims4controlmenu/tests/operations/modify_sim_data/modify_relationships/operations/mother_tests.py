@@ -183,7 +183,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_d, sim_info_c, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Failed, Sim C was no longer marked as a child of Sim D')
 
             # Sim E should be biological grandmother of Sim B
-            grandmother_sim_info_b = CommonSimGenealogyUtils.get_sim_info_of_grandmother_of_sim_on_mothers_side(sim_info_b)
+            grandmother_sim_info_b = CommonSimGenealogyUtils.get_mothers_mother_sim_info(sim_info_b)
             CommonAssertionUtils.is_true(grandmother_sim_info_b is sim_info_e, 'Failed, Sim B did not have Sim E as grandmother. Sim: {}'.format(CommonSimNameUtils.get_full_name(grandmother_sim_info_b)))
 
             # Sim D should be biological mother of Sim C
@@ -245,7 +245,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_e, sim_info_b, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Failed, Sim B was not marked as a Grandchild of Sim E')
 
             # Sim E should be biological grandfather of Sim B
-            grandfather_sim_info_b = CommonSimGenealogyUtils.get_sim_info_of_grandfather_of_sim_on_mothers_side(sim_info_b)
+            grandfather_sim_info_b = CommonSimGenealogyUtils.get_mothers_father_sim_info(sim_info_b)
             CommonAssertionUtils.is_true(grandfather_sim_info_b is sim_info_e, 'Failed, Sim B did not have Sim E as grandfather. Sim: {}'.format(CommonSimNameUtils.get_full_name(grandfather_sim_info_b)))
         except Exception as ex:
             raise ex
@@ -472,7 +472,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_a, sim_info_d, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Failed, Sim D was not marked as grandchild of Sim A')
 
             # Sim A should be biological grandmother of Sim D
-            grandmother_sim_info_d = CommonSimGenealogyUtils.get_sim_info_of_grandmother_of_sim_on_mothers_side(sim_info_d)
+            grandmother_sim_info_d = CommonSimGenealogyUtils.get_mothers_mother_sim_info(sim_info_d)
             CommonAssertionUtils.is_true(grandmother_sim_info_d is sim_info_a, 'Failed, Sim D did not have Sim A as grandmother. Sim: {}'.format(CommonSimNameUtils.get_full_name(grandmother_sim_info_d)))
         except Exception as ex:
             raise ex

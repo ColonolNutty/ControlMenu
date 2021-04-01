@@ -95,6 +95,9 @@ class S4CMSimControlMenuStringId(CommonInt):
     # Tokens: {0.SimFirstName} {0.SimLastName} (Sim A) {1.SimFirstName} {1.SimLastName} (Sim B)
     WHICH_PARENT_IS_SHARED_DESCRIPTION = 3758979209
 
+    # Tokens: {0.SimFirstName} {0.SimLastName}
+    SIM_NEEDS_TO_HAVE_MOTHER_OR_FATHER_BEFORE_YOU_CAN_ADD_UNCLES_OR_AUNTS_TO_THEM = 3221894912
+
     # Tokens: {0.SimFirstName} {0.SimLastName} (Sim A) {1.String} (Relation)
     SIM_DOES_NOT_HAVE_A_RELATION = 806588682
 

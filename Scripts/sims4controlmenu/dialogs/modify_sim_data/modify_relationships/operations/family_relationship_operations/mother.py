@@ -114,7 +114,7 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                     CommonSimGenealogyUtils.remove_mothers_mother_relation(child_sim_info)
 
         # Remove old grandmother
-        old_grandmother_sim_info = CommonSimGenealogyUtils.get_sim_info_of_grandmother_of_sim_on_mothers_side(sim_info)
+        old_grandmother_sim_info = CommonSimGenealogyUtils.get_mothers_mother_sim_info(sim_info)
         if old_grandmother_sim_info is not None:
             self.log.format_with_message('Found an old grandmother on mothers side. Removing them.', sim=old_grandmother_sim_info)
             CommonRelationshipUtils.remove_relationship_bit(sim_info, old_grandmother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
@@ -122,7 +122,7 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
             CommonSimGenealogyUtils.remove_mothers_mother_relation(sim_info)
 
         # Remove old grandfather
-        old_grandfather_sim_info = CommonSimGenealogyUtils.get_sim_info_of_grandfather_of_sim_on_mothers_side(sim_info)
+        old_grandfather_sim_info = CommonSimGenealogyUtils.get_mothers_father_sim_info(sim_info)
         if old_grandfather_sim_info is not None:
             self.log.format_with_message('Found an old grandfather on mothers side. Removing them.', sim=old_grandfather_sim_info)
             CommonRelationshipUtils.remove_relationship_bit(sim_info, old_grandfather_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)

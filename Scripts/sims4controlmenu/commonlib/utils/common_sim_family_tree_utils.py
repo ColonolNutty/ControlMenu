@@ -174,7 +174,7 @@ class CommonSimGenealogyUtils:
         return CommonSimGenealogyUtils._retrieve_relation_sim_info(sim_info, FamilyRelationshipIndex.MOTHER)
 
     @staticmethod
-    def get_sim_info_of_grandmother_of_sim_on_mothers_side(sim_info: SimInfo) -> Union[SimInfo, None]:
+    def get_mothers_mother_sim_info(sim_info: SimInfo) -> Union[SimInfo, None]:
         """get_sim_info_of_grandmother_of_sim_on_mothers_side(sim_info)
 
         Retrieve the Grandmother of a Sim on their mothers side.
@@ -187,7 +187,7 @@ class CommonSimGenealogyUtils:
         return CommonSimGenealogyUtils._retrieve_relation_sim_info(sim_info, FamilyRelationshipIndex.MOTHERS_MOM)
 
     @staticmethod
-    def get_sim_info_of_grandfather_of_sim_on_mothers_side(sim_info: SimInfo) -> Union[SimInfo, None]:
+    def get_mothers_father_sim_info(sim_info: SimInfo) -> Union[SimInfo, None]:
         """get_sim_info_of_grandfather_of_sim_on_mothers_side(sim_info)
 
         Retrieve the Grandfather of a Sim on their mothers side.
@@ -200,7 +200,7 @@ class CommonSimGenealogyUtils:
         return CommonSimGenealogyUtils._retrieve_relation_sim_info(sim_info, FamilyRelationshipIndex.MOTHERS_FATHER)
 
     @staticmethod
-    def get_sim_info_of_grandmother_of_sim_on_fathers_side(sim_info: SimInfo) -> Union[SimInfo, None]:
+    def get_fathers_mother_sim_info(sim_info: SimInfo) -> Union[SimInfo, None]:
         """get_sim_info_of_grandmother_of_sim_on_fathers_side(sim_info)
 
         Retrieve the Grandmother of a Sim on their fathers side.
@@ -213,7 +213,7 @@ class CommonSimGenealogyUtils:
         return CommonSimGenealogyUtils._retrieve_relation_sim_info(sim_info, FamilyRelationshipIndex.FATHERS_MOM)
 
     @staticmethod
-    def get_sim_info_of_grandfather_of_sim_on_fathers_side(sim_info: SimInfo) -> Union[SimInfo, None]:
+    def get_fathers_father_sim_info(sim_info: SimInfo) -> Union[SimInfo, None]:
         """get_sim_info_of_grandfather_of_sim_on_fathers_side(sim_info)
 
         Retrieve the Grandfather of a Sim on their fathers side.
@@ -431,7 +431,7 @@ class CommonSimGenealogyUtils:
         :return: True, if Sim A is the grandfather of Sim B on their fathers side. False, if not.
         :rtype: bool
         """
-        grand_parent_sim_info_b = CommonSimGenealogyUtils.get_sim_info_of_grandfather_of_sim_on_fathers_side(sim_info_b)
+        grand_parent_sim_info_b = CommonSimGenealogyUtils.get_fathers_father_sim_info(sim_info_b)
         return sim_info_a is grand_parent_sim_info_b
 
     @staticmethod
@@ -447,7 +447,7 @@ class CommonSimGenealogyUtils:
         :return: True, if Sim A is the grandmother of Sim B on their fathers side. False, if not.
         :rtype: bool
         """
-        grand_parent_sim_info_b = CommonSimGenealogyUtils.get_sim_info_of_grandmother_of_sim_on_fathers_side(sim_info_b)
+        grand_parent_sim_info_b = CommonSimGenealogyUtils.get_fathers_mother_sim_info(sim_info_b)
         return sim_info_a is grand_parent_sim_info_b
 
     @staticmethod
@@ -463,7 +463,7 @@ class CommonSimGenealogyUtils:
         :return: True, if Sim A is the grandfather of Sim B on their mothers side. False, if not.
         :rtype: bool
         """
-        grand_parent_sim_info_b = CommonSimGenealogyUtils.get_sim_info_of_grandfather_of_sim_on_mothers_side(sim_info_b)
+        grand_parent_sim_info_b = CommonSimGenealogyUtils.get_mothers_father_sim_info(sim_info_b)
         return sim_info_a is grand_parent_sim_info_b
 
     @staticmethod
@@ -479,7 +479,7 @@ class CommonSimGenealogyUtils:
         :return: True, if Sim A is the grandmother of Sim B on their mothers side. False, if not.
         :rtype: bool
         """
-        grand_parent_sim_info_b = CommonSimGenealogyUtils.get_sim_info_of_grandmother_of_sim_on_mothers_side(sim_info_b)
+        grand_parent_sim_info_b = CommonSimGenealogyUtils.get_mothers_mother_sim_info(sim_info_b)
         return sim_info_a is grand_parent_sim_info_b
 
     @staticmethod
@@ -519,7 +519,7 @@ class CommonSimGenealogyUtils:
         :return: True, if the Sim has a grandfather on the fathers side. False, if not.
         :rtype: bool
         """
-        return CommonSimGenealogyUtils.get_sim_info_of_grandfather_of_sim_on_fathers_side(sim_info) is not None
+        return CommonSimGenealogyUtils.get_fathers_father_sim_info(sim_info) is not None
 
     @staticmethod
     def has_grandmother_on_fathers_side(sim_info: SimInfo) -> bool:
@@ -532,7 +532,7 @@ class CommonSimGenealogyUtils:
         :return: True, if the Sim has a grandmother on the fathers side. False, if not.
         :rtype: bool
         """
-        return CommonSimGenealogyUtils.get_sim_info_of_grandmother_of_sim_on_fathers_side(sim_info) is not None
+        return CommonSimGenealogyUtils.get_fathers_mother_sim_info(sim_info) is not None
 
     @staticmethod
     def has_grandfather_on_mothers_side(sim_info: SimInfo) -> bool:
@@ -545,7 +545,7 @@ class CommonSimGenealogyUtils:
         :return: True, if the Sim has a grandfather on the mothers side. False, if not.
         :rtype: bool
         """
-        return CommonSimGenealogyUtils.get_sim_info_of_grandfather_of_sim_on_mothers_side(sim_info) is not None
+        return CommonSimGenealogyUtils.get_mothers_father_sim_info(sim_info) is not None
 
     @staticmethod
     def has_grandmother_on_mothers_side(sim_info: SimInfo) -> bool:
@@ -558,7 +558,7 @@ class CommonSimGenealogyUtils:
         :return: True, if the Sim has a grandmother on the mothers side. False, if not.
         :rtype: bool
         """
-        return CommonSimGenealogyUtils.get_sim_info_of_grandmother_of_sim_on_mothers_side(sim_info) is not None
+        return CommonSimGenealogyUtils.get_mothers_mother_sim_info(sim_info) is not None
 
     @staticmethod
     def _retrieve_relation_sim_info(sim_info: SimInfo, relationship_index: FamilyRelationshipIndex) -> Union[SimInfo, None]:
