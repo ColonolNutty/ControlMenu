@@ -16,6 +16,7 @@ class S4CMFullFamily:
     """A Full Family"""
 
     def __init__(self) -> None:
+        self._destroyed = False
         # Father 1 Side:
         self.grandfather_one: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='One')
         self.grandmother_one: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='One')
@@ -77,6 +78,9 @@ class S4CMFullFamily:
         self._setup_relationships()
 
     def _setup_relationships(self) -> None:
+        if hasattr(self, '_destroyed') and getattr(self, '_destroyed', False):
+            raise AssertionError('Full Family has already been destroyed!')
+
         # Father 1 Side:
         # Grandfather 1 (Parent of Father 1, Uncle 1, and Uncle 2, Step Parent of Mother 1, Mother 2, Uncle 5, 6, 7, and 8, Grandparent of Child 1, Child 2, Step Child 2, Cousin 1, 2, 3, and 4, Step Grandparent of Step Child 1, Cousin 9, 10, 11, 12, 13, 14, 15, and 16)
         # Grandmother 1 (Parent of Father 1, Uncle 1, and Uncle 2, Step Parent of Mother 1, Mother 2, Uncle 5, 6, 7, and 8, Grandparent of Child 1, Child 2, Step Child 2, Cousin 1, 2, 3, and 4, Step Grandparent of Step Child 1, Cousin 9, 10, 11, 12, 13, 14, 15, and 16)
@@ -3116,3 +3120,63 @@ class S4CMFullFamily:
         CommonSimSpawnUtils.delete_sim(self.child_two, cause='S4CM: testing cleanup')
         CommonSimSpawnUtils.delete_sim(self.step_child_one, cause='S4CM: testing cleanup')
         CommonSimSpawnUtils.delete_sim(self.step_child_two, cause='S4CM: testing cleanup')
+
+        # Father 1 Side:
+        self.grandfather_one: SimInfo = None
+        self.grandmother_one: SimInfo = None
+        self.uncle_one: SimInfo = None
+        self.uncle_two: SimInfo = None
+        self.father_one: SimInfo = None
+        self.cousin_one: SimInfo = None
+        self.cousin_two: SimInfo = None
+        self.cousin_three: SimInfo = None
+        self.cousin_four: SimInfo = None
+        
+        # Father 2 Side:
+        self.grandfather_two: SimInfo = None
+        self.grandmother_two: SimInfo = None
+        self.uncle_three: SimInfo = None
+        self.uncle_four: SimInfo = None
+        self.father_two: SimInfo = None
+        self.cousin_five: SimInfo = None
+        self.cousin_six: SimInfo = None
+        self.cousin_seven: SimInfo = None
+        self.cousin_eight: SimInfo = None
+        
+        # Mother 1 Side:
+        self.grandfather_three: SimInfo = None
+        self.grandmother_three: SimInfo = None
+        self.uncle_five: SimInfo = None
+        self.uncle_six: SimInfo = None
+        self.mother_one: SimInfo = None
+        self.cousin_nine: SimInfo = None
+        self.cousin_ten: SimInfo = None
+        self.cousin_eleven: SimInfo = None
+        self.cousin_twelve: SimInfo = None
+        
+        # Mother 1 Side:
+        self.grandfather_four: SimInfo = None
+        self.grandmother_four: SimInfo = None
+        self.uncle_seven: SimInfo = None
+        self.uncle_eight: SimInfo = None
+        self.mother_two: SimInfo = None
+        self.cousin_thirteen: SimInfo = None
+        self.cousin_fourteen: SimInfo = None
+        self.cousin_fifteen: SimInfo = None
+        self.cousin_sixteen: SimInfo = None
+        
+        # Aunt 1 Side:
+        self.grandfather_five: SimInfo = None
+        self.grandmother_five: SimInfo = None
+        self.aunt_two: SimInfo = None
+        self.aunt_one: SimInfo = None
+        self.cousin_seventeen: SimInfo = None
+        self.cousin_eighteen: SimInfo = None
+
+        # Children:
+        self.child_one: SimInfo = None
+        self.child_two: SimInfo = None
+        self.step_child_one: SimInfo = None
+        self.step_child_two: SimInfo = None
+
+        setattr(self, '_destroyed', True)
