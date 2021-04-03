@@ -185,7 +185,7 @@ class CommonSimGenealogyUtils:
 
     @staticmethod
     def get_mothers_mother_sim_info(sim_info: SimInfo) -> Union[SimInfo, None]:
-        """get_sim_info_of_grandmother_of_sim_on_mothers_side(sim_info)
+        """get_mothers_mother_sim_info(sim_info)
 
         Retrieve the Grandmother of a Sim on their mothers side.
 
@@ -198,7 +198,7 @@ class CommonSimGenealogyUtils:
 
     @staticmethod
     def get_mothers_father_sim_info(sim_info: SimInfo) -> Union[SimInfo, None]:
-        """get_sim_info_of_grandfather_of_sim_on_mothers_side(sim_info)
+        """get_mothers_father_sim_info(sim_info)
 
         Retrieve the Grandfather of a Sim on their mothers side.
 
@@ -211,7 +211,7 @@ class CommonSimGenealogyUtils:
 
     @staticmethod
     def get_fathers_mother_sim_info(sim_info: SimInfo) -> Union[SimInfo, None]:
-        """get_sim_info_of_grandmother_of_sim_on_fathers_side(sim_info)
+        """get_fathers_mother_sim_info(sim_info)
 
         Retrieve the Grandmother of a Sim on their fathers side.
 
@@ -224,7 +224,7 @@ class CommonSimGenealogyUtils:
 
     @staticmethod
     def get_fathers_father_sim_info(sim_info: SimInfo) -> Union[SimInfo, None]:
-        """get_sim_info_of_grandfather_of_sim_on_fathers_side(sim_info)
+        """get_fathers_father_sim_info(sim_info)
 
         Retrieve the Grandfather of a Sim on their fathers side.
 
@@ -236,45 +236,33 @@ class CommonSimGenealogyUtils:
         return CommonSimGenealogyUtils._retrieve_relation_sim_info(sim_info, FamilyRelationshipIndex.FATHERS_FATHER)
 
     @staticmethod
-    def remove_family_relation_to(sim_info_a: SimInfo, sim_info_b: SimInfo, include_family_tree: bool=True) -> bool:
-        """remove_family_relation_to(sim_info_a, sim_info_b, include_family_tree=True)
+    def remove_family_relations_with(sim_info_a: SimInfo, sim_info_b: SimInfo, remove_from_family_tree: bool=True) -> bool:
+        """remove_family_relations_with(sim_info_a, sim_info_b, remove_from_family_tree=True)
 
-        Remove the relation of Sim A to Sim B and the relation of Sim B to Sim A.
+        Remove the family relations Sim A has with Sim B and the family relations Sim B has with Sim A.
 
         :param sim_info_a: An instance of a Sim.
         :type sim_info_a: SimInfo
-        :param sim_info_b: An instance of a Sim.
+        :param sim_info_b: The Sim to remove from the family of Sim A.
         :type sim_info_b: SimInfo
-        :param include_family_tree: If True, the Sims will also be removed from the family trees of each other. If False, only the relationship bits will be removed. Default is True.
-        :type include_family_tree: bool, optional
-        :return: True, if the father of the Sim has been removed. False, if not.
+        :param remove_from_family_tree: If True, Sim A will remove Sim B from their family tree as well. If False, the family tree of Sim A will not be modified. Default is True.
+        :type remove_from_family_tree: bool, optional
+        :return: True, if the family relations between the Sims was removed successfully. False, if not.
         :rtype: bool
         """
-        if include_family_tree:
+        if remove_from_family_tree:
             if CommonSimGenealogyUtils.is_father_of(sim_info_a, sim_info_b):
                 CommonSimGenealogyUtils.remove_father_relation(sim_info_b)
-            if CommonSimGenealogyUtils.is_father_of(sim_info_b, sim_info_a):
-                CommonSimGenealogyUtils.remove_father_relation(sim_info_a)
             if CommonSimGenealogyUtils.is_mother_of(sim_info_a, sim_info_b):
                 CommonSimGenealogyUtils.remove_mother_relation(sim_info_b)
-            if CommonSimGenealogyUtils.is_mother_of(sim_info_b, sim_info_a):
-                CommonSimGenealogyUtils.remove_mother_relation(sim_info_a)
-            if CommonSimGenealogyUtils.is_grandfather_of_sim_on_fathers_side(sim_info_a, sim_info_b):
+            if CommonSimGenealogyUtils.is_fathers_father_of(sim_info_a, sim_info_b):
                 CommonSimGenealogyUtils.remove_fathers_father_relation(sim_info_b)
-            if CommonSimGenealogyUtils.is_grandfather_of_sim_on_fathers_side(sim_info_b, sim_info_a):
-                CommonSimGenealogyUtils.remove_fathers_father_relation(sim_info_a)
-            if CommonSimGenealogyUtils.is_grandmother_of_sim_on_fathers_side(sim_info_a, sim_info_b):
+            if CommonSimGenealogyUtils.is_fathers_mother_of(sim_info_a, sim_info_b):
                 CommonSimGenealogyUtils.remove_fathers_mother_relation(sim_info_b)
-            if CommonSimGenealogyUtils.is_grandmother_of_sim_on_fathers_side(sim_info_b, sim_info_a):
-                CommonSimGenealogyUtils.remove_fathers_mother_relation(sim_info_a)
-            if CommonSimGenealogyUtils.is_grandfather_of_sim_on_mothers_side(sim_info_a, sim_info_b):
+            if CommonSimGenealogyUtils.is_mothers_father_of(sim_info_a, sim_info_b):
                 CommonSimGenealogyUtils.remove_mothers_father_relation(sim_info_b)
-            if CommonSimGenealogyUtils.is_grandfather_of_sim_on_mothers_side(sim_info_b, sim_info_a):
-                CommonSimGenealogyUtils.remove_mothers_father_relation(sim_info_a)
-            if CommonSimGenealogyUtils.is_grandmother_of_sim_on_mothers_side(sim_info_a, sim_info_b):
+            if CommonSimGenealogyUtils.is_mothers_mother_of(sim_info_a, sim_info_b):
                 CommonSimGenealogyUtils.remove_mothers_mother_relation(sim_info_b)
-            if CommonSimGenealogyUtils.is_grandmother_of_sim_on_mothers_side(sim_info_b, sim_info_a):
-                CommonSimGenealogyUtils.remove_mothers_mother_relation(sim_info_a)
 
         relationship_bit_ids: Tuple[CommonRelationshipBitId] = (
             CommonRelationshipBitId.FAMILY_AUNT_UNCLE,
@@ -291,7 +279,6 @@ class CommonSimGenealogyUtils:
 
         for relationship_bit_id in relationship_bit_ids:
             CommonRelationshipUtils.remove_relationship_bit(sim_info_a, sim_info_b, relationship_bit_id)
-            CommonRelationshipUtils.remove_relationship_bit(sim_info_b, sim_info_a, relationship_bit_id)
         return True
 
     @staticmethod
@@ -429,8 +416,8 @@ class CommonSimGenealogyUtils:
         return sim_info_a is parent_sim_info_b
 
     @staticmethod
-    def is_grandfather_of_sim_on_fathers_side(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        """is_grandfather_of_sim_on_fathers_side(sim_info_a, sim_info_b)
+    def is_fathers_father_of(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
+        """is_fathers_father_of(sim_info_a, sim_info_b)
 
         Determine if Sim A is the grandfather of Sim B on the fathers side of Sim B.
 
@@ -445,8 +432,8 @@ class CommonSimGenealogyUtils:
         return sim_info_a is grand_parent_sim_info_b
 
     @staticmethod
-    def is_grandmother_of_sim_on_fathers_side(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        """is_grandmother_of_sim_on_fathers_side(sim_info_a, sim_info_b)
+    def is_fathers_mother_of(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
+        """is_fathers_mother_of(sim_info_a, sim_info_b)
 
         Determine if Sim A is the grandmother of Sim B on the fathers side of Sim B.
 
@@ -461,8 +448,8 @@ class CommonSimGenealogyUtils:
         return sim_info_a is grand_parent_sim_info_b
 
     @staticmethod
-    def is_grandfather_of_sim_on_mothers_side(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        """is_grandfather_of_sim_on_mothers_side(sim_info_a, sim_info_b)
+    def is_mothers_father_of(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
+        """is_mothers_father_of(sim_info_a, sim_info_b)
 
         Determine if Sim A is the grandfather of Sim B on the mothers side of Sim B.
 
@@ -477,8 +464,8 @@ class CommonSimGenealogyUtils:
         return sim_info_a is grand_parent_sim_info_b
 
     @staticmethod
-    def is_grandmother_of_sim_on_mothers_side(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        """is_grandmother_of_sim_on_mothers_side(sim_info_a, sim_info_b)
+    def is_mothers_mother_of(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
+        """is_mothers_mother_of(sim_info_a, sim_info_b)
 
         Determine if Sim A is the grandmother of Sim B on the mothers side of Sim B.
 

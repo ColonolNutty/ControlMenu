@@ -91,7 +91,8 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
 
             def _on_none_chosen(_: Any, __: Any):
                 try:
-                    CommonSimGenealogyUtils.remove_family_relation_to(sim_info, chosen_sim_info)
+                    CommonSimGenealogyUtils.remove_family_relations_with(sim_info, chosen_sim_info)
+                    CommonSimGenealogyUtils.remove_family_relations_with(chosen_sim_info, sim_info)
                 except Exception as ex:
                     self.log.error('Failed to remove family relations', exception=ex)
                 _on_chosen(chosen_sim_info)

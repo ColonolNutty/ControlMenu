@@ -187,9 +187,9 @@ class S4CMSetSimAAsAuntOrUncleToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                     self.log.format_with_message('Found child, removing grandfather.', sim=child_sim_info, grandfather=grandfather_sim_info)
                     CommonRelationshipUtils.remove_relationship_bit(child_sim_info, grandfather_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
                     CommonRelationshipUtils.remove_relationship_bit(grandfather_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-                    if CommonSimGenealogyUtils.is_grandfather_of_sim_on_fathers_side(grandfather_sim_info, child_sim_info):
+                    if CommonSimGenealogyUtils.is_fathers_father_of(grandfather_sim_info, child_sim_info):
                         CommonSimGenealogyUtils.remove_fathers_father_relation(child_sim_info)
-                    if CommonSimGenealogyUtils.is_grandfather_of_sim_on_mothers_side(grandfather_sim_info, child_sim_info):
+                    if CommonSimGenealogyUtils.is_mothers_father_of(grandfather_sim_info, child_sim_info):
                         CommonSimGenealogyUtils.remove_mothers_father_relation(child_sim_info)
             CommonSimGenealogyUtils.remove_father_relation(sim_info)
 
@@ -203,9 +203,9 @@ class S4CMSetSimAAsAuntOrUncleToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                     self.log.format_with_message('Found child, removing grandmother.', sim=child_sim_info, grandmother=grandmother_sim_info)
                     CommonRelationshipUtils.remove_relationship_bit(child_sim_info, grandmother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
                     CommonRelationshipUtils.remove_relationship_bit(grandmother_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-                    if CommonSimGenealogyUtils.is_grandmother_of_sim_on_fathers_side(grandmother_sim_info, child_sim_info):
+                    if CommonSimGenealogyUtils.is_fathers_mother_of(grandmother_sim_info, child_sim_info):
                         CommonSimGenealogyUtils.remove_fathers_mother_relation(child_sim_info)
-                    if CommonSimGenealogyUtils.is_grandmother_of_sim_on_mothers_side(grandmother_sim_info, child_sim_info):
+                    if CommonSimGenealogyUtils.is_mothers_mother_of(grandmother_sim_info, child_sim_info):
                         CommonSimGenealogyUtils.remove_mothers_mother_relation(child_sim_info)
             CommonSimGenealogyUtils.remove_mother_relation(sim_info)
 
