@@ -9,7 +9,7 @@ from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBit
 from sims4communitylib.testing.common_assertion_utils import CommonAssertionUtils
 from sims4communitylib.testing.common_test_service import CommonTestService
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
-from sims4controlmenu.commonlib.utils.common_sim_family_tree_utils import CommonSimGenealogyUtils
+from sims4controlmenu.commonlib.utils.common_sim_genealogy_utils import CommonSimGenealogyUtils
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.aunt_or_uncle import \
     S4CMSetSimAAsAuntOrUncleToSimBOp
 from sims4controlmenu.modinfo import ModInfo
@@ -298,12 +298,14 @@ class _S4CMSetSimAAsAuntOrUncleToSimBOpTests:
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandfather_three, sim_a_uncle, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Sim A was not a child of Grandfather Three')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandfather_four, sim_a_uncle, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Sim A was not a child of Grandfather Four')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandfather_one, sim_a_uncle, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Sim A was not a child of Grandfather One')
+
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandfather_three, old_child_one, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Cousin One was not a grandchild to Grandfather Three')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandfather_four, old_child_one, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Cousin One was not a grandchild to Grandfather Four')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandfather_one, old_child_one, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Cousin One was not a grandchild to Grandfather One')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandfather_one, old_child_one, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Grandfather One was not a grandparent to Cousin One')
             cousin_one_grandfather_sim_info = CommonSimGenealogyUtils.get_fathers_father_sim_info(old_child_one)
             CommonAssertionUtils.is_true(cousin_one_grandfather_sim_info is new_full_family.grandfather_one, 'Cousin One still had Grandfather One as their biological grandfather')
+
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandfather_three, old_child_two, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Cousin Two was not a grandchild to Grandfather Three')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandfather_four, old_child_two, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Cousin Two was not a grandchild to Grandfather Four')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandfather_one, old_child_two, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Cousin Two was not a grandchild to Grandfather One')
@@ -315,11 +317,13 @@ class _S4CMSetSimAAsAuntOrUncleToSimBOpTests:
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandmother_three, sim_a_uncle, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Sim A was not a child of Grandmother Three')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandmother_four, sim_a_uncle, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Sim A was not a child of Grandmother Four')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandmother_one, sim_a_uncle, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Sim A was not a child of Grandmother One')
+
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandmother_three, old_child_one, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Cousin One was not a grandchild to Grandmother Three')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandmother_four, old_child_one, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Cousin One was not a grandchild to Grandmother Four')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandmother_one, old_child_one, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Cousin One was not a grandchild of Grandmother One')
             cousin_one_grandmother_sim_info = CommonSimGenealogyUtils.get_fathers_mother_sim_info(old_child_one)
             CommonAssertionUtils.is_true(cousin_one_grandmother_sim_info is new_full_family.grandmother_one, 'Cousin One did not have Grandmother One as their biological grandmother')
+
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandmother_three, old_child_two, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Cousin Two was not a grandchild to Grandmother Three')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandmother_four, old_child_two, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Cousin Two was not a grandchild to Grandmother Four')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandmother_one, new_full_family.cousin_two, CommonRelationshipBitId.FAMILY_GRANDCHILD), 'Cousin Two was not a grandchild of Grandmother One')
@@ -333,12 +337,14 @@ class _S4CMSetSimAAsAuntOrUncleToSimBOpTests:
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandfather_one, sim_a_uncle, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Sim A was not a son to Grandfather One')
             sim_a_father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(sim_a_uncle)
             CommonAssertionUtils.is_true(sim_a_father_sim_info is new_full_family.grandfather_one, 'Sim A did not have Grandfather One as their biological father')
+
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_uncle, new_full_family.grandmother_three, CommonRelationshipBitId.FAMILY_PARENT), 'Grandmother Three was not a parent to Sim A')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_uncle, new_full_family.grandmother_four, CommonRelationshipBitId.FAMILY_PARENT), 'Grandmother Four was not a parent to Sim A')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_uncle, new_full_family.grandmother_one, CommonRelationshipBitId.FAMILY_PARENT), 'Grandmother One was not a parent to Sim A')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.grandmother_one, sim_a_uncle, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Sim A was not a son to Grandmother One')
             sim_a_mother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(sim_a_uncle)
             CommonAssertionUtils.is_true(sim_a_mother_sim_info is new_full_family.grandmother_one, 'Sim A did not have Grandmother One as their biological mother')
+
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_uncle, new_full_family.father_one, CommonRelationshipBitId.FAMILY_BROTHER_SISTER), 'Father One was not a sibling to Sim A')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_uncle, new_full_family.uncle_one, CommonRelationshipBitId.FAMILY_BROTHER_SISTER), 'Uncle One new was not a sibling to Sim A')
             CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_uncle, new_full_family.uncle_two, CommonRelationshipBitId.FAMILY_BROTHER_SISTER), 'Uncle Two was not a sibling to Sim A')

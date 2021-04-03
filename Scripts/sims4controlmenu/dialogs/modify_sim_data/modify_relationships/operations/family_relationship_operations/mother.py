@@ -12,7 +12,7 @@ from sims.sim_info import SimInfo
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
-from sims4controlmenu.commonlib.utils.common_sim_family_tree_utils import CommonSimGenealogyUtils
+from sims4controlmenu.commonlib.utils.common_sim_genealogy_utils import CommonSimGenealogyUtils
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.set_sim_a_relation_to_sim_b_operation import \
     S4CMSetSimAAsRelationToSimBOperation
@@ -20,6 +20,11 @@ from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.fa
 
 class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
     """Set Sim A as a mother of Sim B"""
+
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_set_mother'
 
     # noinspection PyMissingOrEmptyDocstring
     @property

@@ -13,7 +13,7 @@ from sims4communitylib.testing.common_test_service import CommonTestService
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
 from sims4communitylib.utils.sims.common_sim_spawn_utils import CommonSimSpawnUtils
-from sims4controlmenu.commonlib.utils.common_sim_family_tree_utils import CommonSimGenealogyUtils
+from sims4controlmenu.commonlib.utils.common_sim_genealogy_utils import CommonSimGenealogyUtils
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.father import \
     S4CMSetSimAAsFatherToSimBOp
 from sims4controlmenu.modinfo import ModInfo

@@ -10,7 +10,7 @@ from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBit
 from sims4communitylib.testing.common_assertion_utils import CommonAssertionUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_spawn_utils import CommonSimSpawnUtils
-from sims4controlmenu.commonlib.utils.common_sim_family_tree_utils import CommonSimGenealogyUtils
+from sims4controlmenu.commonlib.utils.common_sim_genealogy_utils import CommonSimGenealogyUtils
 
 
 class S4CMFullFamily:
