@@ -211,13 +211,31 @@ class S4CMSetSimAAsAuntOrUncleToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
 
         for grandparent_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(sim_info, CommonRelationshipBitId.FAMILY_PARENT, instanced_only=False):
             self.log.format_with_message('Found grandparent. Removing them.', sim=sim_info, grandparent_sim=grandparent_sim_info)
-            CommonRelationshipUtils.remove_relationship_bit(sim_info, grandparent_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
-            CommonRelationshipUtils.remove_relationship_bit(grandparent_sim_info, sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
+            has_step_link = False
             with genealogy_caching():
                 for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
-                    self.log.format_with_message('Found child, removing grandparent.', sim=child_sim_info, grandparent=grandparent_sim_info)
-                    CommonRelationshipUtils.remove_relationship_bit(child_sim_info, grandparent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                    CommonRelationshipUtils.remove_relationship_bit(grandparent_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                    self.log.format_with_message('Found child, checking if has step link.', sim=child_sim_info, grandparent=grandparent_sim_info)
+                    if CommonSimGenealogyUtils.is_mother_of(sim_info, child_sim_info):
+                        if CommonSimGenealogyUtils.is_fathers_father_of(grandparent_sim_info, child_sim_info) or CommonSimGenealogyUtils.is_fathers_mother_of(grandparent_sim_info, child_sim_info):
+                            self.log.format_with_message('Has step link. Keeping step grandparent relations.', sim=child_sim_info, grandparent=grandparent_sim_info)
+                            has_step_link = True
+                            break
+                    if CommonSimGenealogyUtils.is_father_of(sim_info, child_sim_info):
+                        if CommonSimGenealogyUtils.is_mothers_father_of(grandparent_sim_info, child_sim_info) or CommonSimGenealogyUtils.is_mothers_mother_of(grandparent_sim_info, child_sim_info):
+                            self.log.format_with_message('Has step link. Keeping step grandparent relations.', sim=child_sim_info, grandparent=grandparent_sim_info)
+                            has_step_link = True
+                            break
+                    self.log.format_with_message('No step link.', sim=child_sim_info, grandparent=grandparent_sim_info)
+
+            if not has_step_link:
+                with genealogy_caching():
+                    for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
+                        self.log.format_with_message('Found child, removing grandparent.', sim=child_sim_info, grandparent=grandparent_sim_info)
+                        CommonRelationshipUtils.remove_relationship_bit(child_sim_info, grandparent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                        CommonRelationshipUtils.remove_relationship_bit(grandparent_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+
+                CommonRelationshipUtils.remove_relationship_bit(sim_info, grandparent_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
+                CommonRelationshipUtils.remove_relationship_bit(grandparent_sim_info, sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
 
         self.log.format_with_message('Done removing old relations', new_sim=sim_info)
         return True
