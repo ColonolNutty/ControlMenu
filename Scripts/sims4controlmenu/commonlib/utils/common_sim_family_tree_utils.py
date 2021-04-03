@@ -34,8 +34,8 @@ class CommonSimGenealogyUtils:
         return sim_info._genealogy_tracker
 
     @staticmethod
-    def set_as_father_of(sim_info: SimInfo, new_child_sim_info: SimInfo) -> bool:
-        """set_as_father(sim_info, new_child_sim_info)
+    def set_as_father_of(sim_info: SimInfo, new_child_sim_info: SimInfo, propagate: bool=False) -> bool:
+        """set_as_father_of(sim_info, new_child_sim_info, propagate=False)
 
         Set a Sim to be the Father of another Sim.
 
@@ -43,18 +43,23 @@ class CommonSimGenealogyUtils:
         :type sim_info: SimInfo
         :param new_child_sim_info: The new child of Sim A.
         :type new_child_sim_info: SimInfo
+        :param propagate: If set to True, the grandparent relations will also be updated. Default is False.
+        :type propagate: bool, optional
         :return: True, if the relation was set successfully. False, if not.
         :rtype: bool
         """
         genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_child_sim_info)
         if genealogy_tracker is None:
             return False
-        genealogy_tracker.set_and_propagate_family_relation(FamilyRelationshipIndex.FATHER, sim_info)
+        if propagate:
+            genealogy_tracker.set_and_propagate_family_relation(FamilyRelationshipIndex.FATHER, sim_info)
+        else:
+            genealogy_tracker.set_family_relation(FamilyRelationshipIndex.FATHER, CommonSimUtils.get_sim_id(sim_info))
         return True
 
     @staticmethod
-    def set_as_mother_of(sim_info: SimInfo, new_child_sim_info: SimInfo) -> bool:
-        """set_as_mother(sim_info, new_child_sim_info)
+    def set_as_mother_of(sim_info: SimInfo, new_child_sim_info: SimInfo, propagate: bool=False) -> bool:
+        """set_as_mother_of(sim_info, new_child_sim_info, propagate=False)
 
         Set a Sim to be the Mother of another Sim.
 
@@ -62,13 +67,18 @@ class CommonSimGenealogyUtils:
         :type sim_info: SimInfo
         :param new_child_sim_info: The new child of Sim A.
         :type new_child_sim_info: SimInfo
+        :param propagate: If set to True, the grandparent relations will also be updated. Default is False.
+        :type propagate: bool, optional
         :return: True, if the relation was set successfully. False, if not.
         :rtype: bool
         """
         genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_child_sim_info)
         if genealogy_tracker is None:
             return False
-        genealogy_tracker.set_and_propagate_family_relation(FamilyRelationshipIndex.MOTHER, sim_info)
+        if propagate:
+            genealogy_tracker.set_and_propagate_family_relation(FamilyRelationshipIndex.MOTHER, sim_info)
+        else:
+            genealogy_tracker.set_family_relation(FamilyRelationshipIndex.MOTHER, CommonSimUtils.get_sim_id(sim_info))
         return True
 
     @staticmethod
@@ -106,7 +116,7 @@ class CommonSimGenealogyUtils:
         genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_grandchild_sim_info)
         if genealogy_tracker is None:
             return False
-        genealogy_tracker.set_and_propagate_family_relation(FamilyRelationshipIndex.FATHERS_MOM, sim_info)
+        genealogy_tracker.set_family_relation(FamilyRelationshipIndex.FATHERS_MOM, sim_info)
         return True
 
     @staticmethod

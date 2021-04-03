@@ -7,6 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from sims.sim_info import SimInfo
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
+from sims4communitylib.testing.common_assertion_utils import CommonAssertionUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_spawn_utils import CommonSimSpawnUtils
 from sims4controlmenu.commonlib.utils.common_sim_family_tree_utils import CommonSimGenealogyUtils
@@ -67,6 +68,9 @@ class S4CMFullFamily:
         self.step_child_two: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Step Child', last_name='Two')
 
         self._setup_relationships()
+
+        CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(self.child_one, self.mother_one, CommonRelationshipBitId.FAMILY_PARENT), 'Failed not parent')
+        CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(self.mother_one, self.child_one, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), 'Failed not son/daughter')
 
     def _setup_relationships(self) -> None:
         # Father 1 Side:
@@ -361,7 +365,6 @@ class S4CMFullFamily:
         )
 
         father_one_step_siblings = (
-            self.mother_two,
             self.uncle_five,
             self.uncle_six,
             self.uncle_seven,
@@ -941,8 +944,6 @@ class S4CMFullFamily:
         )
 
         father_two_step_nephews = (
-            self.child_one,
-            self.child_two,
             self.cousin_nine,
             self.cousin_ten,
             self.cousin_eleven,
@@ -1461,8 +1462,6 @@ class S4CMFullFamily:
         )
 
         mother_one_step_siblings = (
-            self.father_one,
-            self.father_two,
             self.uncle_one,
             self.uncle_two,
             self.uncle_three,
@@ -1480,10 +1479,10 @@ class S4CMFullFamily:
         )
 
         mother_one_nephews = (
-            self.child_one,
-            self.child_two,
             self.cousin_nine,
-            self.cousin_ten
+            self.cousin_ten,
+            self.cousin_eleven,
+            self.cousin_twelve
         )
 
         mother_one_step_nephews = (
@@ -2006,76 +2005,73 @@ class S4CMFullFamily:
             CommonRelationshipUtils.add_relationship_bit(self.uncle_eight, step_nephew, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
         # Mother 2 (Child of Grandfather 4 and Grandmother 4, Step Child of Grandfather 1 and Grandmother 1, Sibling of Uncle 7 and Uncle 8, Step Sibling of Uncle 1, and Uncle 2, Parent of Step Child 2, Step Parent of Child 1 and Child 2, Aunt of Cousin 13, 14, 15, and 16, Step Aunt of Child 1, Child 2, Cousin 1, 2, 3, and 4)
-        mother_one_parents = (
+        mother_two_parents = (
             self.grandfather_four,
             self.grandmother_four
         )
 
-        mother_one_step_parents = (
+        mother_two_step_parents = (
             self.grandfather_one,
             self.grandmother_one
         )
 
-        mother_one_siblings = (
+        mother_two_siblings = (
             self.uncle_seven,
             self.uncle_eight
         )
 
-        mother_one_step_siblings = (
-            self.father_one,
+        mother_two_step_siblings = (
             self.uncle_one,
             self.uncle_two
         )
 
-        mother_one_children = (
+        mother_two_children = (
             self.step_child_two,
         )
 
-        mother_one_step_children = (
+        mother_two_step_children = (
             self.child_one,
             self.child_two
         )
 
-        mother_one_nephews = (
+        mother_two_nephews = (
             self.cousin_thirteen,
             self.cousin_fourteen,
             self.cousin_fifteen,
             self.cousin_sixteen
         )
 
-        mother_one_step_nephews = (
-            self.child_one,
-            self.child_two,
+        mother_two_step_nephews = (
             self.cousin_one,
             self.cousin_two,
             self.cousin_three,
             self.cousin_four
         )
 
-        for parent in mother_one_parents:
-            CommonRelationshipUtils.add_relationship_bit(self.mother_one, parent, CommonRelationshipBitId.FAMILY_PARENT)
+        for parent in mother_two_parents:
+            CommonRelationshipUtils.add_relationship_bit(self.mother_two, parent, CommonRelationshipBitId.FAMILY_PARENT)
 
-        for step_parent in mother_one_step_parents:
-            CommonRelationshipUtils.add_relationship_bit(self.mother_one, step_parent, CommonRelationshipBitId.FAMILY_PARENT)
+        for step_parent in mother_two_step_parents:
+            CommonRelationshipUtils.add_relationship_bit(self.mother_two, step_parent, CommonRelationshipBitId.FAMILY_PARENT)
 
-        for sibling in mother_one_siblings:
-            CommonRelationshipUtils.add_relationship_bit(self.mother_one, sibling, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
+        for sibling in mother_two_siblings:
+            CommonRelationshipUtils.add_relationship_bit(self.mother_two, sibling, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
 
-        for step_sibling in mother_one_step_siblings:
-            CommonRelationshipUtils.add_relationship_bit(self.mother_one, step_sibling, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
+        for step_sibling in mother_two_step_siblings:
+            CommonRelationshipUtils.add_relationship_bit(self.mother_two, step_sibling, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
 
-        for child in mother_one_children:
-            CommonRelationshipUtils.add_relationship_bit(self.mother_one, child, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
-            CommonSimGenealogyUtils.set_as_mother_of(self.mother_one, child)
+        for child in mother_two_children:
+            CommonRelationshipUtils.add_relationship_bit(self.mother_two, child, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
+            CommonSimGenealogyUtils.set_as_mother_of(self.mother_two, child)
 
-        for step_child in mother_one_step_children:
-            CommonRelationshipUtils.add_relationship_bit(self.mother_one, step_child, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
+        for step_child in mother_two_step_children:
+            CommonRelationshipUtils.add_relationship_bit(self.mother_two, step_child, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
 
-        for nephew in mother_one_nephews:
-            CommonRelationshipUtils.add_relationship_bit(self.mother_one, nephew, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+        for nephew in mother_two_nephews:
+            CommonRelationshipUtils.add_relationship_bit(self.mother_two, nephew, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
-        for step_nephew in mother_one_step_nephews:
-            CommonRelationshipUtils.add_relationship_bit(self.mother_one, step_nephew, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+        for step_nephew in mother_two_step_nephews:
+            CommonRelationshipUtils.add_relationship_bit(self.mother_two, step_nephew, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
         # Cousin 13 (Child of Uncle 7, Sibling of Cousin 14, Cousin of Child 1, Child 2, Step Child 1, Step Child 2, and Cousin 1, 2, 3, 4, 15, and 16, Grandchild of Grandfather 4 and Grandmother 4, Step Grandchild of Grandfather 1 and Grandmother 1, Nephew of Uncle 8 and Mother 2, Step Nephew of Father 1, Uncle 1, and Uncle 2)
         cousin_thirteen_parents = (

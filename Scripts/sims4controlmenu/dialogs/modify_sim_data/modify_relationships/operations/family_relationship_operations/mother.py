@@ -39,12 +39,12 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
     def has_relation(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
         return super().has_relation(sim_info_a, sim_info_b) and CommonSimGenealogyUtils.is_mother_of(sim_info_a, sim_info_b)
 
-    def _update_family_tree(self, new_parent_sim_info: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def _update_family_tree(self, parent_sim_info: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
         try:
-            self.log.format_with_message('Setting Sim A as mother of Sim B', sim_a=new_parent_sim_info, sim_b=sim_info_b)
-            self._remove_old_relation(sim_info_b)
-            self._add_new_relation(sim_info_b, new_parent_sim_info)
-            self.log.format_with_message('Done setting Sim A as mother of Sim B', sim_a=new_parent_sim_info, sim_b=sim_info_b)
+            self.log.format_with_message('Setting Sim A as mother of Sim B', parent=parent_sim_info, sim_b=sim_info_b)
+            self._remove_old_relation(parent_sim_info)
+            # self._add_new_relation(parent_sim_info, sim_info_b)
+            self.log.format_with_message('Done setting Sim A as mother of Sim B', parent=parent_sim_info, sim_b=sim_info_b)
             on_completed(True)
         except Exception as ex:
             self.log.error('Failed to set as mother.', exception=ex)
@@ -52,159 +52,150 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
         return True
 
     def _remove_old_relation(self, sim_info: SimInfo) -> bool:
-        self.log.format_with_message('Removing old mother from Sim', sim=sim_info)
-
-        # Remove old mother.
-        old_mother_sim_info: SimInfo = CommonSimGenealogyUtils.get_mother_sim_info(sim_info)
-        if old_mother_sim_info is not None:
-            self.log.format_with_message('Found an old mother. Removing them.', sim=old_mother_sim_info)
-            CommonRelationshipUtils.remove_relationship_bit(sim_info, old_mother_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
-            CommonRelationshipUtils.remove_relationship_bit(old_mother_sim_info, sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
-            CommonSimGenealogyUtils.remove_mother_relation(sim_info)
-
-            # Remove old Uncles/Aunts
-            uncle_aunt_sim_info_list = list()
-            old_mother_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(old_mother_sim_info)
-            with genealogy_caching():
-                for uncle_aunt_sim_info in old_mother_genealogy_tracker.get_siblings_sim_infos_gen():
-                    self.log.format_with_message('Found an uncle/aunt. Removing them.', sim=uncle_aunt_sim_info)
-                    uncle_aunt_sim_info_list.append(uncle_aunt_sim_info)
-                    CommonRelationshipUtils.remove_relationship_bit(sim_info, uncle_aunt_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
-                    CommonRelationshipUtils.remove_relationship_bit(uncle_aunt_sim_info, sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
-
-            for uncle_aunt_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bits_generator(old_mother_sim_info, (CommonRelationshipBitId.FAMILY_BROTHER_SISTER, CommonRelationshipBitId.FAMILY_STEP_SIBLING), instanced_only=False):
-                if uncle_aunt_sim_info in uncle_aunt_sim_info_list:
+        self.log.format_with_message('Removing parent relations to old family', new_sim=sim_info)
+        genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(sim_info)
+        # Remove Brothers/Sisters
+        brother_sister_sim_info_list = list()
+        with genealogy_caching():
+            for brother_sister_sim_info in genealogy_tracker.get_siblings_sim_infos_gen():
+                self.log.format_with_message('Found brother/sister. Removing them.', sim=sim_info, brother_sister=brother_sister_sim_info)
+                if CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING):
                     continue
-                self.log.format_with_message('Found an uncle/aunt. Removing them.', sim=uncle_aunt_sim_info)
-                uncle_aunt_sim_info_list.append(uncle_aunt_sim_info)
-                CommonRelationshipUtils.remove_relationship_bit(sim_info, uncle_aunt_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
-                CommonRelationshipUtils.remove_relationship_bit(uncle_aunt_sim_info, sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+                brother_sister_sim_info_list.append(brother_sister_sim_info)
+                CommonRelationshipUtils.remove_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
+                CommonRelationshipUtils.remove_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
 
-            # Remove Cousins
-            for uncle_aunt_sim_info in uncle_aunt_sim_info_list:
-                uncle_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(uncle_aunt_sim_info)
-                with genealogy_caching():
-                    for cousin_sim_info in uncle_genealogy_tracker.get_child_sim_infos_gen():
-                        self.log.format_with_message('Found a cousin. Removing them.', sim=cousin_sim_info)
-                        CommonRelationshipUtils.remove_relationship_bit(sim_info, cousin_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
-                        CommonRelationshipUtils.remove_relationship_bit(cousin_sim_info, sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+        for brother_sister_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER, instanced_only=False):
+            if brother_sister_sim_info in brother_sister_sim_info_list:
+                continue
+            self.log.format_with_message('Found brother/sister. Removing them.', sim=sim_info, brother_sister=brother_sister_sim_info)
+            brother_sister_sim_info_list.append(brother_sister_sim_info)
+            CommonRelationshipUtils.remove_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
+            CommonRelationshipUtils.remove_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
 
-            father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(sim_info)
-            old_mother_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(old_mother_sim_info)
+        # Remove Nephews
+        niece_and_nephews_sim_info_list = list()
+        for brother_sister_sim_info in brother_sister_sim_info_list:
+            uncle_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(brother_sister_sim_info)
             with genealogy_caching():
-                for brother_sister_sim_info in old_mother_genealogy_tracker.get_child_sim_infos_gen():
-                    CommonRelationshipUtils.remove_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
-                    CommonRelationshipUtils.remove_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
+                for niece_nephew_sim_info in uncle_genealogy_tracker.get_child_sim_infos_gen():
+                    self.log.format_with_message('Found niece/nephew. Removing them.', sim=sim_info, niece_nephew=niece_nephew_sim_info)
+                    niece_and_nephews_sim_info_list.append(niece_nephew_sim_info)
+                    CommonRelationshipUtils.remove_relationship_bit(sim_info, niece_nephew_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+                    CommonRelationshipUtils.remove_relationship_bit(niece_nephew_sim_info, sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
 
-                    old_brother_father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(brother_sister_sim_info)
-                    if father_sim_info is not None and old_brother_father_sim_info is father_sim_info:
-                        self.log.format_with_message('Found a brother/sister. Changing them to Step Siblings.', sim=brother_sister_sim_info, father_sim_info=father_sim_info, old_brother_father_sim=old_brother_father_sim_info)
-                        CommonRelationshipUtils.add_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
-                        CommonRelationshipUtils.add_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
-                    else:
-                        self.log.format_with_message('Found a brother/sister. Removing them as Siblings.', sim=brother_sister_sim_info, father_sim_info=father_sim_info, old_brother_father_sim=old_brother_father_sim_info)
-                        CommonRelationshipUtils.remove_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
-                        CommonRelationshipUtils.remove_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
+        with genealogy_caching():
+            for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
+                if not CommonSimGenealogyUtils.is_mother_of(sim_info, child_sim_info) and not CommonSimGenealogyUtils.is_father_of(sim_info, child_sim_info):
+                    continue
+                self.log.format_with_message('Found Child of Sim. Updating them.', sim=sim_info, child=child_sim_info)
+                for cousin_sim_info in niece_and_nephews_sim_info_list:
+                    self.log.format_with_message('Found Cousin, removing them.', sim=child_sim_info, cousin=cousin_sim_info)
+                    CommonRelationshipUtils.remove_relationship_bit(child_sim_info, cousin_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+                    CommonRelationshipUtils.remove_relationship_bit(cousin_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
 
-            genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(sim_info)
+                for aunt_or_uncle_sim_info in brother_sister_sim_info_list:
+                    self.log.format_with_message('Found Aunt/Uncle, removing them.', sim=child_sim_info, aunt_or_uncle=aunt_or_uncle_sim_info)
+                    CommonRelationshipUtils.remove_relationship_bit(child_sim_info, aunt_or_uncle_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                    CommonRelationshipUtils.remove_relationship_bit(aunt_or_uncle_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+
+        if CommonSimGenealogyUtils.has_father(sim_info):
+            grandfather_sim_info = CommonSimGenealogyUtils.get_father_sim_info(sim_info)
+            self.log.format_with_message('Found grandfather, removing father.', sim=sim_info, father=grandfather_sim_info)
+            CommonRelationshipUtils.remove_relationship_bit(sim_info, grandfather_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
+            CommonRelationshipUtils.remove_relationship_bit(grandfather_sim_info, sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
             with genealogy_caching():
                 for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
-                    CommonRelationshipUtils.remove_relationship_bit(child_sim_info, old_mother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                    CommonRelationshipUtils.remove_relationship_bit(old_mother_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-                    CommonSimGenealogyUtils.remove_mothers_mother_relation(child_sim_info)
+                    self.log.format_with_message('Found child, removing grandfather.', sim=child_sim_info, grandfather=grandfather_sim_info)
+                    CommonRelationshipUtils.remove_relationship_bit(child_sim_info, grandfather_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                    CommonRelationshipUtils.remove_relationship_bit(grandfather_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                    if CommonSimGenealogyUtils.is_grandfather_of_sim_on_fathers_side(grandfather_sim_info, child_sim_info):
+                        CommonSimGenealogyUtils.remove_fathers_father_relation(child_sim_info)
+                    if CommonSimGenealogyUtils.is_grandfather_of_sim_on_mothers_side(grandfather_sim_info, child_sim_info):
+                        CommonSimGenealogyUtils.remove_mothers_father_relation(child_sim_info)
+            CommonSimGenealogyUtils.remove_father_relation(sim_info)
 
-        # Remove old grandmother
-        old_grandmother_sim_info = CommonSimGenealogyUtils.get_mothers_mother_sim_info(sim_info)
-        if old_grandmother_sim_info is not None:
-            self.log.format_with_message('Found an old grandmother on mothers side. Removing them.', sim=old_grandmother_sim_info)
-            CommonRelationshipUtils.remove_relationship_bit(sim_info, old_grandmother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-            CommonRelationshipUtils.remove_relationship_bit(old_grandmother_sim_info, sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-            CommonSimGenealogyUtils.remove_mothers_mother_relation(sim_info)
-
-        # Remove old grandfather
-        old_grandfather_sim_info = CommonSimGenealogyUtils.get_mothers_father_sim_info(sim_info)
-        if old_grandfather_sim_info is not None:
-            self.log.format_with_message('Found an old grandfather on mothers side. Removing them.', sim=old_grandfather_sim_info)
-            CommonRelationshipUtils.remove_relationship_bit(sim_info, old_grandfather_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-            CommonRelationshipUtils.remove_relationship_bit(old_grandfather_sim_info, sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-            CommonSimGenealogyUtils.remove_mothers_father_relation(sim_info)
+        if CommonSimGenealogyUtils.has_mother(sim_info):
+            grandmother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(sim_info)
+            self.log.format_with_message('Found mother, removing mother.', sim=sim_info, mother=grandmother_sim_info)
+            CommonRelationshipUtils.remove_relationship_bit(sim_info, grandmother_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
+            CommonRelationshipUtils.remove_relationship_bit(grandmother_sim_info, sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
+            with genealogy_caching():
+                for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
+                    self.log.format_with_message('Found child, removing grandmother.', sim=child_sim_info, grandmother=grandmother_sim_info)
+                    CommonRelationshipUtils.remove_relationship_bit(child_sim_info, grandmother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                    CommonRelationshipUtils.remove_relationship_bit(grandmother_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                    if CommonSimGenealogyUtils.is_grandmother_of_sim_on_fathers_side(grandmother_sim_info, child_sim_info):
+                        CommonSimGenealogyUtils.remove_fathers_mother_relation(child_sim_info)
+                    if CommonSimGenealogyUtils.is_grandmother_of_sim_on_mothers_side(grandmother_sim_info, child_sim_info):
+                        CommonSimGenealogyUtils.remove_mothers_mother_relation(child_sim_info)
+            CommonSimGenealogyUtils.remove_mother_relation(sim_info)
 
         self.log.debug('Done removing old mother')
         return True
 
-    def _add_new_relation(self, sim_info: SimInfo, new_parent_sim_info: SimInfo) -> bool:
-        self.log.format_with_message('Adding new mother to Sim', sim=sim_info, new_parent_sim=new_parent_sim_info)
+    def _add_new_relation(self, parent_sim_info: SimInfo, new_child_sim_info: SimInfo) -> bool:
+        self.log.format_with_message('Adding new mother to Sim', sim=new_child_sim_info, parent_sim=parent_sim_info)
         # Add new Mother
-        CommonSimGenealogyUtils.set_as_mother_of(new_parent_sim_info, sim_info)
+        CommonSimGenealogyUtils.set_as_mother_of(parent_sim_info, new_child_sim_info)
 
         # Add new Uncles/Aunts
         uncle_aunt_sim_info_list = list()
-        genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_parent_sim_info)
+        genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(parent_sim_info)
         with genealogy_caching():
             for uncle_aunt_sim_info in genealogy_tracker.get_siblings_sim_infos_gen():
                 uncle_aunt_sim_info_list.append(uncle_aunt_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(sim_info, uncle_aunt_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
-                CommonRelationshipUtils.add_relationship_bit(uncle_aunt_sim_info, sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+                CommonRelationshipUtils.add_relationship_bit(new_child_sim_info, uncle_aunt_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                CommonRelationshipUtils.add_relationship_bit(uncle_aunt_sim_info, new_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
-        for uncle_aunt_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bits_generator(new_parent_sim_info, (CommonRelationshipBitId.FAMILY_BROTHER_SISTER, CommonRelationshipBitId.FAMILY_STEP_SIBLING), instanced_only=False):
+        for uncle_aunt_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bits_generator(parent_sim_info, (CommonRelationshipBitId.FAMILY_BROTHER_SISTER, CommonRelationshipBitId.FAMILY_STEP_SIBLING), instanced_only=False):
             if uncle_aunt_sim_info in uncle_aunt_sim_info_list:
                 continue
-            self.log.format_with_message('Found an uncle/aunt. Adding them as aunt/uncle to sim.', sim=sim_info, new_uncle=uncle_aunt_sim_info)
+            self.log.format_with_message('Found an uncle/aunt. Adding them as aunt/uncle to sim.', sim=new_child_sim_info, new_uncle=uncle_aunt_sim_info)
             uncle_aunt_sim_info_list.append(uncle_aunt_sim_info)
-            CommonRelationshipUtils.add_relationship_bit(sim_info, uncle_aunt_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
-            CommonRelationshipUtils.add_relationship_bit(uncle_aunt_sim_info, sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+            CommonRelationshipUtils.add_relationship_bit(new_child_sim_info, uncle_aunt_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+            CommonRelationshipUtils.add_relationship_bit(uncle_aunt_sim_info, new_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
         # Remove Cousins
         for uncle_aunt_sim_info in uncle_aunt_sim_info_list:
             uncle_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(uncle_aunt_sim_info)
             with genealogy_caching():
                 for cousin_sim_info in uncle_genealogy_tracker.get_child_sim_infos_gen():
-                    self.log.format_with_message('Found a cousin. Adding them as cousins to sim.', sim=sim_info, new_cousin=cousin_sim_info)
-                    CommonRelationshipUtils.add_relationship_bit(sim_info, cousin_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
-                    CommonRelationshipUtils.add_relationship_bit(cousin_sim_info, sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+                    self.log.format_with_message('Found a cousin. Adding them as cousins to sim.', sim=new_child_sim_info, new_cousin=cousin_sim_info)
+                    CommonRelationshipUtils.add_relationship_bit(new_child_sim_info, cousin_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+                    CommonRelationshipUtils.add_relationship_bit(cousin_sim_info, new_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
 
-        father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(sim_info)
-        genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_parent_sim_info)
+        father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(new_child_sim_info)
         with genealogy_caching():
             for brother_sister_sim_info in genealogy_tracker.get_child_sim_infos_gen():
-                if brother_sister_sim_info is sim_info:
+                if brother_sister_sim_info is new_child_sim_info:
                     continue
-                new_brother_father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(brother_sister_sim_info)
-                if new_brother_father_sim_info is father_sim_info:
-                    self.log.format_with_message('Found a brother/sister. Adding them as brother/sister to Sim.', sim=sim_info, brother_sister_sim=brother_sister_sim_info, father=father_sim_info, new_brother_father=new_brother_father_sim_info)
-                    CommonRelationshipUtils.remove_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
-                    CommonRelationshipUtils.remove_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
-                    CommonRelationshipUtils.add_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
-                    CommonRelationshipUtils.add_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
-                else:
-                    self.log.format_with_message('Found a step brother/step sister. Adding them as step brother/step sister to Sim.', sim=sim_info, brother_sister_sim=brother_sister_sim_info, father=father_sim_info, new_brother_father=new_brother_father_sim_info)
-                    CommonRelationshipUtils.remove_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
-                    CommonRelationshipUtils.remove_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
-                    CommonRelationshipUtils.add_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
-                    CommonRelationshipUtils.add_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
+                self.log.format_with_message('Found a brother/sister. Adding them as brother/sister to Sim.', sim=new_child_sim_info, brother_sister_sim=brother_sister_sim_info, father=father_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_child_sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
+                CommonRelationshipUtils.add_relationship_bit(brother_sister_sim_info, new_child_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
 
-        genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(sim_info)
+        new_child_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_child_sim_info)
         with genealogy_caching():
-            for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
-                CommonRelationshipUtils.add_relationship_bit(child_sim_info, new_parent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                CommonRelationshipUtils.add_relationship_bit(new_parent_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-                CommonSimGenealogyUtils.set_as_mothers_mother_of(new_parent_sim_info, child_sim_info)
+            for child_sim_info in new_child_genealogy_tracker.get_child_sim_infos_gen():
+                CommonRelationshipUtils.add_relationship_bit(child_sim_info, parent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                CommonRelationshipUtils.add_relationship_bit(parent_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                CommonSimGenealogyUtils.set_as_mothers_mother_of(parent_sim_info, child_sim_info)
 
         # Add new grandmother
-        new_grandmother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(new_parent_sim_info)
+        new_grandmother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(parent_sim_info)
         if new_grandmother_sim_info is not None:
-            self.log.format_with_message('Found grandmother, adding them as grandmother to sim.', sim=sim_info, new_grandmother=new_grandmother_sim_info)
-            CommonRelationshipUtils.add_relationship_bit(sim_info, new_grandmother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-            CommonRelationshipUtils.add_relationship_bit(new_grandmother_sim_info, sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-            CommonSimGenealogyUtils.set_as_mothers_mother_of(new_grandmother_sim_info, sim_info)
+            self.log.format_with_message('Found grandmother, adding them as grandmother to sim.', sim=new_child_sim_info, new_grandmother=new_grandmother_sim_info)
+            CommonRelationshipUtils.add_relationship_bit(new_child_sim_info, new_grandmother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+            CommonRelationshipUtils.add_relationship_bit(new_grandmother_sim_info, new_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+            CommonSimGenealogyUtils.set_as_mothers_mother_of(new_grandmother_sim_info, new_child_sim_info)
 
         # Add new grandfather
-        new_grandfather_sim_info = CommonSimGenealogyUtils.get_father_sim_info(new_parent_sim_info)
+        new_grandfather_sim_info = CommonSimGenealogyUtils.get_father_sim_info(parent_sim_info)
         if new_grandfather_sim_info is not None:
-            self.log.format_with_message('Found grandfather, adding them as grandfather to sim.', sim=sim_info, new_grandfather=new_grandfather_sim_info)
-            CommonRelationshipUtils.add_relationship_bit(sim_info, new_grandfather_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-            CommonRelationshipUtils.add_relationship_bit(new_grandfather_sim_info, sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-            CommonSimGenealogyUtils.set_as_mothers_father_of(new_grandfather_sim_info, sim_info)
+            self.log.format_with_message('Found grandfather, adding them as grandfather to sim.', sim=new_child_sim_info, new_grandfather=new_grandfather_sim_info)
+            CommonRelationshipUtils.add_relationship_bit(new_child_sim_info, new_grandfather_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+            CommonRelationshipUtils.add_relationship_bit(new_grandfather_sim_info, new_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+            CommonSimGenealogyUtils.set_as_mothers_father_of(new_grandfather_sim_info, new_child_sim_info)
 
-        self.log.format_with_message('Done adding new mother', sim=sim_info, new_mother_sim=new_parent_sim_info)
+        self.log.format_with_message('Done adding new mother', sim=new_child_sim_info, parent=parent_sim_info)
         return True
