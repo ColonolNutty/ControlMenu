@@ -128,116 +128,235 @@ class S4CMSetSimAAsAuntOrUncleToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
         return True
 
     def _remove_old_relation(self, sim_info: SimInfo) -> bool:
-        self.log.format_with_message('Removing aunt/uncle relations to old family', new_sim=sim_info)
+        self.log.format_with_message('Removing relations to old family', new_sim=sim_info)
         genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(sim_info)
-        # Remove Brothers/Sisters
-        brother_sister_sim_info_list = list()
-        with genealogy_caching():
-            for brother_sister_sim_info in genealogy_tracker.get_siblings_sim_infos_gen():
-                self.log.format_with_message('Found brother/sister. Removing them.', sim=sim_info, brother_sister=brother_sister_sim_info)
-                brother_sister_sim_info_list.append(brother_sister_sim_info)
-                CommonRelationshipUtils.remove_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
-                CommonRelationshipUtils.remove_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
 
-        for brother_sister_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bits_generator(sim_info, (CommonRelationshipBitId.FAMILY_BROTHER_SISTER, CommonRelationshipBitId.FAMILY_STEP_SIBLING), instanced_only=False):
-            if brother_sister_sim_info in brother_sister_sim_info_list:
+        # Remove Blood Relations
+        old_blood_siblings_sim_info_list = list()
+        old_blood_family_sim_info_list = list()
+        # Remove Blood Siblings
+        with genealogy_caching():
+            for sibling_sim_info in genealogy_tracker.get_siblings_sim_infos_gen():
+                self.log.format_with_message('Found blood sibling by blood. Removing them.', sim=sim_info, sibling=sibling_sim_info)
+                old_blood_family_sim_info_list.append(sibling_sim_info)
+                old_blood_siblings_sim_info_list.append(sibling_sim_info)
+                CommonRelationshipUtils.remove_relationship_bit(sim_info, sibling_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
+                CommonRelationshipUtils.remove_relationship_bit(sibling_sim_info, sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
+
+        for sibling_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER, instanced_only=False):
+            if sibling_sim_info in old_blood_family_sim_info_list:
                 continue
-            self.log.format_with_message('Found brother/sister. Removing them.', sim=sim_info, brother_sister=brother_sister_sim_info)
-            brother_sister_sim_info_list.append(brother_sister_sim_info)
-            CommonRelationshipUtils.remove_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
-            CommonRelationshipUtils.remove_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
-            CommonRelationshipUtils.remove_relationship_bit(sim_info, brother_sister_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
-            CommonRelationshipUtils.remove_relationship_bit(brother_sister_sim_info, sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
+            self.log.format_with_message('Found blood sibling through relationship bit. Removing them.', sim=sim_info, sibling=sibling_sim_info)
+            old_blood_family_sim_info_list.append(sibling_sim_info)
+            old_blood_siblings_sim_info_list.append(sibling_sim_info)
+            CommonRelationshipUtils.remove_relationship_bit(sim_info, sibling_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
+            CommonRelationshipUtils.remove_relationship_bit(sibling_sim_info, sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
 
-        # Remove Nephews
-        for brother_sister_sim_info in brother_sister_sim_info_list:
-            uncle_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(brother_sister_sim_info)
+        old_blood_family_sim_info_list_temp = list(old_blood_family_sim_info_list)
+        for blood_family_sim_info in old_blood_family_sim_info_list_temp:
+            blood_family_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(blood_family_sim_info)
             with genealogy_caching():
-                for niece_nephew_sim_info in uncle_genealogy_tracker.get_child_sim_infos_gen():
-                    self.log.format_with_message('Found niece/nephew. Removing them.', sim=sim_info, niece_nephew=niece_nephew_sim_info)
-                    CommonRelationshipUtils.remove_relationship_bit(sim_info, niece_nephew_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
-                    CommonRelationshipUtils.remove_relationship_bit(niece_nephew_sim_info, sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                for blood_niece_nephew_sim_info in blood_family_genealogy_tracker.get_child_sim_infos_gen():
+                    if blood_niece_nephew_sim_info in old_blood_family_sim_info_list:
+                        continue
+                    self.log.format_with_message('Found blood niece/nephew. Removing them.', sim=sim_info, niece_nephew=blood_niece_nephew_sim_info)
+                    old_blood_family_sim_info_list.append(blood_niece_nephew_sim_info)
+                    CommonRelationshipUtils.remove_relationship_bit(blood_niece_nephew_sim_info, sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                    CommonRelationshipUtils.remove_relationship_bit(sim_info, blood_niece_nephew_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
-        for niece_nephew_uncle_or_aunt_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bits_generator(sim_info, (CommonRelationshipBitId.FAMILY_NIECE_NEPHEW, CommonRelationshipBitId.FAMILY_AUNT_UNCLE), instanced_only=False):
-            self.log.format_with_message('Found niece/nephew. Removing them.', sim=sim_info, niece_nephew_uncle_or_aunt=niece_nephew_uncle_or_aunt_sim_info)
-            CommonRelationshipUtils.remove_relationship_bit(sim_info, niece_nephew_uncle_or_aunt_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
-            CommonRelationshipUtils.remove_relationship_bit(niece_nephew_uncle_or_aunt_sim_info, sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
-            CommonRelationshipUtils.remove_relationship_bit(niece_nephew_uncle_or_aunt_sim_info, sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
-            CommonRelationshipUtils.remove_relationship_bit(sim_info, niece_nephew_uncle_or_aunt_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
-
-        with genealogy_caching():
-            for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
-                self.log.format_with_message('Found Child of Sim. Updating them.', sim=sim_info, child=child_sim_info)
-                for cousin_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN, instanced_only=False):
-                    self.log.format_with_message('Found Cousin, removing them.', sim=child_sim_info, cousin=cousin_sim_info)
-                    CommonRelationshipUtils.remove_relationship_bit(child_sim_info, cousin_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
-                    CommonRelationshipUtils.remove_relationship_bit(cousin_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
-                for aunt_or_uncle_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(child_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE, instanced_only=False):
-                    self.log.format_with_message('Found Aunt/Uncle, removing them.', sim=child_sim_info, aunt_or_uncle=aunt_or_uncle_sim_info)
-                    CommonRelationshipUtils.remove_relationship_bit(child_sim_info, aunt_or_uncle_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
-                    CommonRelationshipUtils.remove_relationship_bit(aunt_or_uncle_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
-
+        # Remove Blood Grandfather
         if CommonSimGenealogyUtils.has_father(sim_info):
-            grandfather_sim_info = CommonSimGenealogyUtils.get_father_sim_info(sim_info)
-            self.log.format_with_message('Found father, removing father.', sim=sim_info, father=grandfather_sim_info)
-            CommonRelationshipUtils.remove_relationship_bit(sim_info, grandfather_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
-            CommonRelationshipUtils.remove_relationship_bit(grandfather_sim_info, sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
-            with genealogy_caching():
-                for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
-                    self.log.format_with_message('Found child, removing grandfather.', sim=child_sim_info, grandfather=grandfather_sim_info)
-                    CommonRelationshipUtils.remove_relationship_bit(child_sim_info, grandfather_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                    CommonRelationshipUtils.remove_relationship_bit(grandfather_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-                    if CommonSimGenealogyUtils.is_fathers_father_of(grandfather_sim_info, child_sim_info):
-                        CommonSimGenealogyUtils.remove_fathers_father_relation(child_sim_info)
-                    if CommonSimGenealogyUtils.is_mothers_father_of(grandfather_sim_info, child_sim_info):
-                        CommonSimGenealogyUtils.remove_mothers_father_relation(child_sim_info)
+            blood_grandfather_sim_info = CommonSimGenealogyUtils.get_father_sim_info(sim_info)
+            if blood_grandfather_sim_info not in old_blood_family_sim_info_list:
+                old_blood_family_sim_info_list.append(blood_grandfather_sim_info)
+            self.log.format_with_message('Found father. Removing them.', sim=sim_info, father=blood_grandfather_sim_info)
+            CommonRelationshipUtils.remove_relationship_bit(sim_info, blood_grandfather_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
+            CommonRelationshipUtils.remove_relationship_bit(blood_grandfather_sim_info, sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
             CommonSimGenealogyUtils.remove_father_relation(sim_info)
 
+        # Remove Blood Grandmother
         if CommonSimGenealogyUtils.has_mother(sim_info):
-            grandmother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(sim_info)
-            self.log.format_with_message('Found mother, removing mother.', sim=sim_info, mother=grandmother_sim_info)
-            CommonRelationshipUtils.remove_relationship_bit(sim_info, grandmother_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
-            CommonRelationshipUtils.remove_relationship_bit(grandmother_sim_info, sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
-            with genealogy_caching():
-                for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
-                    self.log.format_with_message('Found child, removing grandmother.', sim=child_sim_info, grandmother=grandmother_sim_info)
-                    CommonRelationshipUtils.remove_relationship_bit(child_sim_info, grandmother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                    CommonRelationshipUtils.remove_relationship_bit(grandmother_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-                    if CommonSimGenealogyUtils.is_fathers_mother_of(grandmother_sim_info, child_sim_info):
-                        CommonSimGenealogyUtils.remove_fathers_mother_relation(child_sim_info)
-                    if CommonSimGenealogyUtils.is_mothers_mother_of(grandmother_sim_info, child_sim_info):
-                        CommonSimGenealogyUtils.remove_mothers_mother_relation(child_sim_info)
+            blood_grandmother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(sim_info)
+            if blood_grandmother_sim_info not in old_blood_family_sim_info_list:
+                old_blood_family_sim_info_list.append(blood_grandmother_sim_info)
+            self.log.format_with_message('Found mother. Removing them.', sim=sim_info, mother=blood_grandmother_sim_info)
+            CommonRelationshipUtils.remove_relationship_bit(sim_info, blood_grandmother_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
+            CommonRelationshipUtils.remove_relationship_bit(blood_grandmother_sim_info, sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
             CommonSimGenealogyUtils.remove_mother_relation(sim_info)
 
-        for grandparent_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(sim_info, CommonRelationshipBitId.FAMILY_PARENT, instanced_only=False):
-            self.log.format_with_message('Found grandparent. Removing them.', sim=sim_info, grandparent_sim=grandparent_sim_info)
-            has_step_link = False
+        # Step Relations
+        old_blood_child_sim_info_list = list()
+        alternate_parent_sim_info_list = list()
+        with genealogy_caching():
+            for blood_child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
+                if blood_child_sim_info not in old_blood_child_sim_info_list:
+                    old_blood_child_sim_info_list.append(blood_child_sim_info)
+                alternate_parent_sim_info = None
+                if CommonSimGenealogyUtils.is_father_of(sim_info, blood_child_sim_info):
+                    alternate_parent_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(blood_child_sim_info)
+                if CommonSimGenealogyUtils.is_mother_of(sim_info, blood_child_sim_info):
+                    alternate_parent_sim_info = CommonSimGenealogyUtils.get_father_sim_info(blood_child_sim_info)
+
+                if alternate_parent_sim_info is not None:
+                    if alternate_parent_sim_info in alternate_parent_sim_info_list:
+                        continue
+                    self.log.format_with_message('Found alternate parent.', sim=blood_child_sim_info, alternate_parent=alternate_parent_sim_info)
+                    alternate_parent_sim_info_list.append(alternate_parent_sim_info)
+
+        for old_blood_family_sim_info in old_blood_family_sim_info_list:
             with genealogy_caching():
-                for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
-                    self.log.format_with_message('Found child, checking if has step link.', sim=child_sim_info, grandparent=grandparent_sim_info)
-                    if CommonSimGenealogyUtils.is_mother_of(sim_info, child_sim_info):
-                        if CommonSimGenealogyUtils.is_fathers_father_of(grandparent_sim_info, child_sim_info) or CommonSimGenealogyUtils.is_fathers_mother_of(grandparent_sim_info, child_sim_info):
-                            self.log.format_with_message('Has step link. Keeping step grandparent relations.', sim=child_sim_info, grandparent=grandparent_sim_info)
-                            has_step_link = True
-                            break
-                    if CommonSimGenealogyUtils.is_father_of(sim_info, child_sim_info):
-                        if CommonSimGenealogyUtils.is_mothers_father_of(grandparent_sim_info, child_sim_info) or CommonSimGenealogyUtils.is_mothers_mother_of(grandparent_sim_info, child_sim_info):
-                            self.log.format_with_message('Has step link. Keeping step grandparent relations.', sim=child_sim_info, grandparent=grandparent_sim_info)
-                            has_step_link = True
-                            break
-                    self.log.format_with_message('No step link.', sim=child_sim_info, grandparent=grandparent_sim_info)
+                for blood_child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
+                    self.log.format_with_message('Removing blood family from Child.', sim=blood_child_sim_info, blood_family=old_blood_family_sim_info)
+                    CommonSimGenealogyUtils.remove_family_relations_with(blood_child_sim_info, old_blood_family_sim_info)
+                    CommonSimGenealogyUtils.remove_family_relations_with(old_blood_family_sim_info, blood_child_sim_info)
 
-            if not has_step_link:
+            for alternate_parent_sim_info in alternate_parent_sim_info_list:
+                self.log.format_with_message('Removing unrelated step sibling.', sim=alternate_parent_sim_info, blood_family=old_blood_family_sim_info)
+                CommonSimGenealogyUtils.remove_family_relations_with(alternate_parent_sim_info, old_blood_family_sim_info)
+                CommonSimGenealogyUtils.remove_family_relations_with(old_blood_family_sim_info, alternate_parent_sim_info)
+                alternate_parent_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(alternate_parent_sim_info)
+
+                alt_parent_siblings_sim_info_list = list()
+
                 with genealogy_caching():
-                    for child_sim_info in genealogy_tracker.get_child_sim_infos_gen():
-                        self.log.format_with_message('Found child, removing grandparent.', sim=child_sim_info, grandparent=grandparent_sim_info)
-                        CommonRelationshipUtils.remove_relationship_bit(child_sim_info, grandparent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                        CommonRelationshipUtils.remove_relationship_bit(grandparent_sim_info, child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                    for alt_parent_child_sim_info in alternate_parent_genealogy_tracker.get_child_sim_infos_gen():
+                        self.log.format_with_message('Found step nephew/niece relation. Removing', sim=alt_parent_child_sim_info, step_relation=old_blood_family_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_child_sim_info, old_blood_family_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(old_blood_family_sim_info, alt_parent_child_sim_info)
 
-                CommonRelationshipUtils.remove_relationship_bit(sim_info, grandparent_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
-                CommonRelationshipUtils.remove_relationship_bit(grandparent_sim_info, sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
+                with genealogy_caching():
+                    for alt_parent_sibling_sim_info in alternate_parent_genealogy_tracker.get_siblings_sim_infos_gen():
+                        if alt_parent_sibling_sim_info in alt_parent_siblings_sim_info_list:
+                            continue
+                        self.log.format_with_message('Found step sibling relation. Removing', sim=alt_parent_sibling_sim_info, step_relation=old_blood_family_sim_info)
+                        alt_parent_siblings_sim_info_list.append(alt_parent_sibling_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_sibling_sim_info, old_blood_family_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(old_blood_family_sim_info, alt_parent_sibling_sim_info)
 
-        self.log.format_with_message('Done removing old relations', new_sim=sim_info)
+                with genealogy_caching():
+                    for alt_parent_grandparent_sim_info in alternate_parent_genealogy_tracker.get_grandparent_sim_ids_gen():
+                        self.log.format_with_message('Found step grandparent relation. Removing', sim=alt_parent_grandparent_sim_info, step_relation=old_blood_family_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_grandparent_sim_info, old_blood_family_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(old_blood_family_sim_info, alt_parent_grandparent_sim_info)
+
+                with genealogy_caching():
+                    for alt_parent_parent_sim_info in alternate_parent_genealogy_tracker.get_parent_sim_infos_gen():
+                        self.log.format_with_message('Found step parent relation. Removing', sim=alt_parent_parent_sim_info, step_relation=old_blood_family_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_parent_sim_info, old_blood_family_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(old_blood_family_sim_info, alt_parent_parent_sim_info)
+
+                for alt_parent_sibling_sim_info in alt_parent_siblings_sim_info_list:
+                    alt_parent_sibling_genealogy = CommonSimGenealogyUtils.get_genealogy_tracker(alt_parent_sibling_sim_info)
+                    with genealogy_caching():
+                        for alt_parent_sibling_child_sim_info in alt_parent_sibling_genealogy.get_child_sim_infos_gen():
+                            self.log.format_with_message('Found cousin relation. Removing', sim=alt_parent_sibling_child_sim_info, step_relation=old_blood_family_sim_info)
+                            CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_sibling_child_sim_info, old_blood_family_sim_info)
+                            CommonSimGenealogyUtils.remove_family_relations_with(old_blood_family_sim_info, alt_parent_sibling_child_sim_info)
+
+        old_alternate_blood_sibling_parent_sim_info_list = list()
+        for old_blood_sibling_sim_info in old_blood_siblings_sim_info_list:
+            old_blood_sibling_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(old_blood_sibling_sim_info)
+            with genealogy_caching():
+                for blood_siblings_child_sim_info in old_blood_sibling_genealogy_tracker.get_child_sim_infos_gen():
+                    alternate_blood_sibling_parent_sim_info = None
+                    if CommonSimGenealogyUtils.is_father_of(old_blood_sibling_sim_info, blood_siblings_child_sim_info):
+                        alternate_blood_sibling_parent_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(blood_siblings_child_sim_info)
+                    if CommonSimGenealogyUtils.is_mother_of(old_blood_sibling_sim_info, blood_siblings_child_sim_info):
+                        alternate_blood_sibling_parent_sim_info = CommonSimGenealogyUtils.get_father_sim_info(blood_siblings_child_sim_info)
+
+                    if alternate_blood_sibling_parent_sim_info is not None:
+                        if alternate_blood_sibling_parent_sim_info in alternate_parent_sim_info_list:
+                            continue
+                        self.log.format_with_message('Found alternate parent for blood sibling.', sim=blood_siblings_child_sim_info, alternate_parent=alternate_blood_sibling_parent_sim_info)
+                        old_alternate_blood_sibling_parent_sim_info_list.append(alternate_blood_sibling_parent_sim_info)
+
+        for old_blood_alt_parent_sibling_sim_info in old_alternate_blood_sibling_parent_sim_info_list:
+            self.log.format_with_message('Found unrelated step sibling relation. Removing', sim=sim_info, step_relation=old_blood_alt_parent_sibling_sim_info)
+            alternate_parent_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(old_blood_alt_parent_sibling_sim_info)
+            CommonSimGenealogyUtils.remove_family_relations_with(old_blood_alt_parent_sibling_sim_info, sim_info)
+            CommonSimGenealogyUtils.remove_family_relations_with(sim_info, old_blood_alt_parent_sibling_sim_info)
+
+            alt_parent_siblings_sim_info_list = list()
+
+            with genealogy_caching():
+                for alt_parent_child_sim_info in alternate_parent_genealogy_tracker.get_child_sim_infos_gen():
+                    self.log.format_with_message('Found unrelated step nephew/niece relation. Removing', sim=alt_parent_child_sim_info, step_relation=sim_info)
+                    CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_child_sim_info, sim_info)
+                    CommonSimGenealogyUtils.remove_family_relations_with(sim_info, alt_parent_child_sim_info)
+
+            with genealogy_caching():
+                for alt_parent_sibling_sim_info in alternate_parent_genealogy_tracker.get_siblings_sim_infos_gen():
+                    if alt_parent_sibling_sim_info in alt_parent_siblings_sim_info_list:
+                        continue
+                    self.log.format_with_message('Found unrelated step sibling relation. Removing', sim=alt_parent_sibling_sim_info, step_relation=sim_info)
+                    alt_parent_siblings_sim_info_list.append(alt_parent_sibling_sim_info)
+                    CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_sibling_sim_info, sim_info)
+                    CommonSimGenealogyUtils.remove_family_relations_with(sim_info, alt_parent_sibling_sim_info)
+
+            with genealogy_caching():
+                for alt_parent_grandparent_sim_info in alternate_parent_genealogy_tracker.get_grandparent_sim_ids_gen():
+                    self.log.format_with_message('Found unrelated step grandparent relation. Removing', sim=alt_parent_grandparent_sim_info, step_relation=sim_info)
+                    CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_grandparent_sim_info, sim_info)
+                    CommonSimGenealogyUtils.remove_family_relations_with(sim_info, alt_parent_grandparent_sim_info)
+
+            with genealogy_caching():
+                for alt_parent_parent_sim_info in alternate_parent_genealogy_tracker.get_parent_sim_infos_gen():
+                    self.log.format_with_message('Found unrelated step parent relation. Removing', sim=alt_parent_parent_sim_info, step_relation=sim_info)
+                    CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_parent_sim_info, sim_info)
+                    CommonSimGenealogyUtils.remove_family_relations_with(sim_info, alt_parent_parent_sim_info)
+
+            for alt_parent_sibling_sim_info in alt_parent_siblings_sim_info_list:
+                alt_parent_sibling_genealogy = CommonSimGenealogyUtils.get_genealogy_tracker(alt_parent_sibling_sim_info)
+                with genealogy_caching():
+                    for alt_parent_sibling_child_sim_info in alt_parent_sibling_genealogy.get_child_sim_infos_gen():
+                        self.log.format_with_message('Found unrelated cousin relation. Removing', sim=alt_parent_sibling_child_sim_info, step_relation=sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_sibling_child_sim_info, sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(sim_info, alt_parent_sibling_child_sim_info)
+
+        for old_blood_child_sim_info in old_blood_child_sim_info_list:
+            for old_blood_alt_parent_sibling_sim_info in old_alternate_blood_sibling_parent_sim_info_list:
+                alternate_parent_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(old_blood_alt_parent_sibling_sim_info)
+                CommonSimGenealogyUtils.remove_family_relations_with(old_blood_alt_parent_sibling_sim_info, old_blood_child_sim_info)
+                CommonSimGenealogyUtils.remove_family_relations_with(old_blood_child_sim_info, old_blood_alt_parent_sibling_sim_info)
+
+                alt_parent_siblings_sim_info_list = list()
+
+                with genealogy_caching():
+                    for alt_parent_child_sim_info in alternate_parent_genealogy_tracker.get_child_sim_infos_gen():
+                        self.log.format_with_message('Found unrelated step nephew/niece relation. Removing', sim=alt_parent_child_sim_info, step_relation=old_blood_child_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_child_sim_info, old_blood_child_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(old_blood_child_sim_info, alt_parent_child_sim_info)
+
+                with genealogy_caching():
+                    for alt_parent_sibling_sim_info in alternate_parent_genealogy_tracker.get_siblings_sim_infos_gen():
+                        if alt_parent_sibling_sim_info in alt_parent_siblings_sim_info_list:
+                            continue
+                        self.log.format_with_message('Found unrelated step sibling relation. Removing', sim=alt_parent_sibling_sim_info, step_relation=old_blood_child_sim_info)
+                        alt_parent_siblings_sim_info_list.append(alt_parent_sibling_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_sibling_sim_info, old_blood_child_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(old_blood_child_sim_info, alt_parent_sibling_sim_info)
+
+                with genealogy_caching():
+                    for alt_parent_grandparent_sim_info in alternate_parent_genealogy_tracker.get_grandparent_sim_ids_gen():
+                        self.log.format_with_message('Found unrelated step grandparent relation. Removing', sim=alt_parent_grandparent_sim_info, step_relation=old_blood_child_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_grandparent_sim_info, old_blood_child_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(old_blood_child_sim_info, alt_parent_grandparent_sim_info)
+
+                with genealogy_caching():
+                    for alt_parent_parent_sim_info in alternate_parent_genealogy_tracker.get_parent_sim_infos_gen():
+                        self.log.format_with_message('Found unrelated step parent relation. Removing', sim=alt_parent_parent_sim_info, step_relation=old_blood_child_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_parent_sim_info, old_blood_child_sim_info)
+                        CommonSimGenealogyUtils.remove_family_relations_with(old_blood_child_sim_info, alt_parent_parent_sim_info)
+
+                for alt_parent_sibling_sim_info in alt_parent_siblings_sim_info_list:
+                    alt_parent_sibling_genealogy = CommonSimGenealogyUtils.get_genealogy_tracker(alt_parent_sibling_sim_info)
+                    with genealogy_caching():
+                        for alt_parent_sibling_child_sim_info in alt_parent_sibling_genealogy.get_child_sim_infos_gen():
+                            self.log.format_with_message('Found unrelated cousin relation. Removing', sim=alt_parent_sibling_child_sim_info, step_relation=old_blood_child_sim_info)
+                            CommonSimGenealogyUtils.remove_family_relations_with(alt_parent_sibling_child_sim_info, old_blood_child_sim_info)
+                            CommonSimGenealogyUtils.remove_family_relations_with(old_blood_child_sim_info, alt_parent_sibling_child_sim_info)
+
+        self.log.format_with_message('Done removing relations to old family', new_sim=sim_info)
         return True
 
     def _add_new_relation(self, aunt_or_uncle_sim_info: SimInfo, nephew_or_niece_sim_info: SimInfo, parent_of_nephew_or_niece_sim_info: SimInfo, other_parent_of_nephew_or_niece_sim_info: SimInfo) -> bool:
