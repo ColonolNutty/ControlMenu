@@ -14,3 +14,11 @@ compile_module(
     include_folders=('sims4controlmenu',),
     mod_name='sims4controlmenu'
 )
+
+
+compile_module(
+    root='..\\..\\Release\\Sims4ControlMenuTests',
+    mod_scripts_folder='..',
+    include_folders=('sims4controlmenu_tests',),
+    mod_name='sims4controlmenu_tests'
+)

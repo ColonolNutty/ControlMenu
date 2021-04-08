@@ -16,7 +16,7 @@ from sims4controlmenu.commonlib.utils.common_sim_genealogy_utils import CommonSi
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.mother import \
     S4CMSetSimAAsMotherToSimBOp
 from sims4controlmenu.modinfo import ModInfo
-from sims4controlmenu.tests.operations.modify_sim_data.modify_relationships.operations.full_family import S4CMFullFamily
+from sims4controlmenu_tests.operations.modify_sim_data.modify_relationships.operations.full_family import S4CMFullFamily
 
 
 @CommonTestService.test_class(ModInfo.get_identity())
@@ -373,24 +373,24 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                 old_full_family.cousin_twelve
             )
 
-            new_mother_name = CommonSimNameUtils.get_full_name(sim_a_mother)
+            sim_a_mother_name = CommonSimNameUtils.get_full_name(sim_a_mother)
             # New Mother One is mother of father of new grandchildren.
             for blood_grandchildren_of_previous_mother_one in blood_grandchildren_of_previous_mother_one_list:
                 blood_grandchildren_of_previous_mother_one_name = CommonSimNameUtils.get_full_name(blood_grandchildren_of_previous_mother_one)
-                # Mother
-                CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_grandchildren_of_previous_mother_one, sim_a_mother, CommonRelationshipBitId.FAMILY_GRANDPARENT), f'{blood_grandchildren_of_previous_mother_one_name} was not a grandchild to {new_mother_name}')
-                CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_mother, blood_grandchildren_of_previous_mother_one, CommonRelationshipBitId.FAMILY_GRANDCHILD), f'{new_mother_name} was not a grandparent to {blood_grandchildren_of_previous_mother_one_name}')
+                # Grandmother
+                CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_grandchildren_of_previous_mother_one, sim_a_mother, CommonRelationshipBitId.FAMILY_GRANDPARENT), f'{blood_grandchildren_of_previous_mother_one_name} was not a grandchild to {sim_a_mother_name}')
+                CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_mother, blood_grandchildren_of_previous_mother_one, CommonRelationshipBitId.FAMILY_GRANDCHILD), f'{sim_a_mother_name} was not a grandparent to {blood_grandchildren_of_previous_mother_one_name}')
                 blood_grandmother_grandchildren_of_previous_mother_one = CommonSimGenealogyUtils.get_fathers_mother_sim_info(blood_grandchildren_of_previous_mother_one)
-                CommonAssertionUtils.is_true(blood_grandmother_grandchildren_of_previous_mother_one is sim_a_mother)
+                CommonAssertionUtils.is_true(blood_grandmother_grandchildren_of_previous_mother_one is sim_a_mother, f'{sim_a_mother_name} was not the biological grandparent of {blood_grandchildren_of_previous_mother_one_name}')
 
             # New Mother One is mother of new children.
             for blood_child_of_previous_mother_one in blood_children_of_previous_mother_one_list:
                 blood_child_of_previous_mother_one_name = CommonSimNameUtils.get_full_name(blood_child_of_previous_mother_one)
                 # Mother
-                CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_child_of_previous_mother_one, sim_a_mother, CommonRelationshipBitId.FAMILY_PARENT), f'{blood_child_of_previous_mother_one_name} was not a child to {new_mother_name}')
-                CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_mother, blood_child_of_previous_mother_one, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{new_mother_name} was not a parent to {blood_child_of_previous_mother_one_name}')
+                CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_child_of_previous_mother_one, sim_a_mother, CommonRelationshipBitId.FAMILY_PARENT), f'{blood_child_of_previous_mother_one_name} was not a child to {sim_a_mother_name}')
+                CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_mother, blood_child_of_previous_mother_one, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{sim_a_mother_name} was not a parent to {blood_child_of_previous_mother_one_name}')
                 blood_mother_of_blood_child_of_previous_mother_one = CommonSimGenealogyUtils.get_mother_sim_info(blood_child_of_previous_mother_one)
-                CommonAssertionUtils.is_true(blood_mother_of_blood_child_of_previous_mother_one is sim_a_mother, f'{new_mother_name} was not the biological parent of {blood_child_of_previous_mother_one_name}')
+                CommonAssertionUtils.is_true(blood_mother_of_blood_child_of_previous_mother_one is sim_a_mother, f'{sim_a_mother_name} was not the biological parent of {blood_child_of_previous_mother_one_name}')
 
             # Uncles/Aunts of new mother should be Uncles/Aunts of previous children.
             for uncle_aunt_on_mother_one_side in uncle_aunt_on_mother_one_side_list:
@@ -513,10 +513,6 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                 old_full_family.step_child_one
             )
 
-            step_children_of_new_mother_one_list = (
-                old_full_family.step_child_three,
-            )
-
             step_parent_of_new_children_list = (
                 new_full_family.father_one,
             )
@@ -593,7 +589,6 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                 new_full_family.grandmother_one
             )
 
-            sim_a_mother_name = CommonSimNameUtils.get_full_name(sim_a_mother)
             # Step Children
             for previous_step_children_of_new_mother in previous_step_children_of_new_mother_list:
                 previous_step_children_of_new_mother_name = CommonSimNameUtils.get_full_name(previous_step_children_of_new_mother)

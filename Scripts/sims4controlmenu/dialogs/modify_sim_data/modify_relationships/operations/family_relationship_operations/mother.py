@@ -437,273 +437,273 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
         self.log.format_with_message('Done removing relations to old family', new_sim=previous_parent_sim_info)
         return True
 
-    def _add_new_relation(self, new_mother_sim_info: SimInfo, child_sim_info: SimInfo) -> bool:
-        self.log.format_with_message('Adding relation to Sim', child=child_sim_info, mother=new_mother_sim_info)
+    def _add_new_relation(self, new_parent_sim_info: SimInfo, child_sim_info: SimInfo) -> bool:
+        self.log.format_with_message('Adding relation to Sim', child=child_sim_info, parent=new_parent_sim_info)
 
         child_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(child_sim_info)
-        new_mother_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_mother_sim_info)
+        new_parent_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_parent_sim_info)
 
-        new_mother_blood_siblings_sim_info_list = list()
+        new_parent_blood_siblings_sim_info_list = list()
         with genealogy_caching():
-            for new_sibling_sim_info in new_mother_genealogy_tracker.get_siblings_sim_infos_gen():
-                if new_sibling_sim_info in new_mother_blood_siblings_sim_info_list:
+            for new_sibling_sim_info in new_parent_genealogy_tracker.get_siblings_sim_infos_gen():
+                if new_sibling_sim_info in new_parent_blood_siblings_sim_info_list:
                     self.log.debug('Duplicate 1')
                     continue
-                self.log.format_with_message('Found blood sibling on mother side.', parent=new_mother_sim_info, sibling=new_sibling_sim_info)
-                new_mother_blood_siblings_sim_info_list.append(new_sibling_sim_info)
+                self.log.format_with_message('Found blood sibling on mother side.', parent=new_parent_sim_info, sibling=new_sibling_sim_info)
+                new_parent_blood_siblings_sim_info_list.append(new_sibling_sim_info)
 
-        new_mother_alternate_parent_sim_info_list = list()
-        new_mother_blood_children_sim_info_list = list()
+        new_parent_alternate_parent_sim_info_list = list()
+        new_parent_blood_children_sim_info_list = list()
         with genealogy_caching():
-            for new_child_sim_info in new_mother_genealogy_tracker.get_child_sim_infos_gen():
-                self.log.format_with_message('Found blood child on mother side.', parent=new_mother_sim_info, child=new_child_sim_info)
-                if new_child_sim_info not in new_mother_blood_children_sim_info_list:
-                    new_mother_blood_children_sim_info_list.append(new_child_sim_info)
+            for new_child_sim_info in new_parent_genealogy_tracker.get_child_sim_infos_gen():
+                self.log.format_with_message('Found blood child on mother side.', parent=new_parent_sim_info, child=new_child_sim_info)
+                if new_child_sim_info not in new_parent_blood_children_sim_info_list:
+                    new_parent_blood_children_sim_info_list.append(new_child_sim_info)
                 else:
                     self.log.debug('Duplicate 2')
-                if CommonSimGenealogyUtils.is_father_of(new_mother_sim_info, new_child_sim_info):
+                if CommonSimGenealogyUtils.is_father_of(new_parent_sim_info, new_child_sim_info):
                     new_child_mother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(new_child_sim_info)
-                    if new_child_mother_sim_info is not None and new_child_mother_sim_info not in new_mother_alternate_parent_sim_info_list:
+                    if new_child_mother_sim_info is not None and new_child_mother_sim_info not in new_parent_alternate_parent_sim_info_list:
                         self.log.format_with_message('Found alternative mother', child=new_child_sim_info, mother=new_child_mother_sim_info)
-                        new_mother_alternate_parent_sim_info_list.append(new_child_mother_sim_info)
-                if CommonSimGenealogyUtils.is_mother_of(new_mother_sim_info, new_child_sim_info):
+                        new_parent_alternate_parent_sim_info_list.append(new_child_mother_sim_info)
+                if CommonSimGenealogyUtils.is_mother_of(new_parent_sim_info, new_child_sim_info):
                     new_child_father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(new_child_sim_info)
-                    if new_child_father_sim_info is not None and new_child_father_sim_info not in new_mother_alternate_parent_sim_info_list:
+                    if new_child_father_sim_info is not None and new_child_father_sim_info not in new_parent_alternate_parent_sim_info_list:
                         self.log.format_with_message('Found alternative father', child=new_child_sim_info, father=new_child_father_sim_info)
-                        new_mother_alternate_parent_sim_info_list.append(new_child_father_sim_info)
+                        new_parent_alternate_parent_sim_info_list.append(new_child_father_sim_info)
 
-        new_mother_alternate_parent_parent_sim_info_list = list()
-        new_mother_alternate_parent_siblings_sim_info_list = list()
-        new_mother_alternate_parent_children_sim_info_list = list()
-        for new_mother_alternate_parent_sim_info in new_mother_alternate_parent_sim_info_list:
-            self.log.format_with_message('Alternative parent', alt_parent=new_mother_alternate_parent_sim_info)
-            new_mother_alternate_parent_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_mother_alternate_parent_sim_info)
+        new_parent_alternate_parent_parent_sim_info_list = list()
+        new_parent_alternate_parent_siblings_sim_info_list = list()
+        new_parent_alternate_parent_children_sim_info_list = list()
+        for new_parent_alternate_parent_sim_info in new_parent_alternate_parent_sim_info_list:
+            self.log.format_with_message('Alternative parent', alt_parent=new_parent_alternate_parent_sim_info)
+            new_parent_alternate_parent_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_parent_alternate_parent_sim_info)
             with genealogy_caching():
-                for new_sibling_sim_info in new_mother_alternate_parent_genealogy_tracker.get_siblings_sim_infos_gen():
-                    if new_sibling_sim_info in new_mother_alternate_parent_siblings_sim_info_list:
+                for new_sibling_sim_info in new_parent_alternate_parent_genealogy_tracker.get_siblings_sim_infos_gen():
+                    if new_sibling_sim_info in new_parent_alternate_parent_siblings_sim_info_list:
                         self.log.debug('Duplicate 3')
                         continue
-                    new_mother_alternate_parent_siblings_sim_info_list.append(new_sibling_sim_info)
+                    new_parent_alternate_parent_siblings_sim_info_list.append(new_sibling_sim_info)
 
             with genealogy_caching():
-                for new_step_sibling_sim_info in new_mother_alternate_parent_genealogy_tracker.get_child_sim_infos_gen():
-                    if new_step_sibling_sim_info in new_mother_blood_children_sim_info_list or new_step_sibling_sim_info in new_mother_alternate_parent_children_sim_info_list:
+                for new_step_sibling_sim_info in new_parent_alternate_parent_genealogy_tracker.get_child_sim_infos_gen():
+                    if new_step_sibling_sim_info in new_parent_blood_children_sim_info_list or new_step_sibling_sim_info in new_parent_alternate_parent_children_sim_info_list:
                         self.log.debug('Duplicate 4')
                         continue
-                    new_mother_alternate_parent_children_sim_info_list.append(new_step_sibling_sim_info)
+                    new_parent_alternate_parent_children_sim_info_list.append(new_step_sibling_sim_info)
             with genealogy_caching():
-                for new_grandparent_sim_info in new_mother_alternate_parent_genealogy_tracker.get_parent_sim_infos_gen():
-                    if new_grandparent_sim_info in new_mother_alternate_parent_parent_sim_info_list:
+                for new_grandparent_sim_info in new_parent_alternate_parent_genealogy_tracker.get_parent_sim_infos_gen():
+                    if new_grandparent_sim_info in new_parent_alternate_parent_parent_sim_info_list:
                         self.log.debug('Duplicate 5')
                         continue
-                    new_mother_alternate_parent_parent_sim_info_list.append(new_grandparent_sim_info)
+                    new_parent_alternate_parent_parent_sim_info_list.append(new_grandparent_sim_info)
 
-        new_mother_alternate_parent_cousin_sim_info_list = list()
-        for new_mother_alternate_parent_siblings_sim_info in new_mother_alternate_parent_siblings_sim_info_list:
-            new_mother_alternate_parent_siblings_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_mother_alternate_parent_siblings_sim_info)
+        new_parent_alternate_parent_cousin_sim_info_list = list()
+        for new_parent_alternate_parent_siblings_sim_info in new_parent_alternate_parent_siblings_sim_info_list:
+            new_parent_alternate_parent_siblings_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_parent_alternate_parent_siblings_sim_info)
             with genealogy_caching():
-                for new_step_sibling_sim_info in new_mother_alternate_parent_siblings_genealogy_tracker.get_child_sim_infos_gen():
-                    if new_step_sibling_sim_info in new_mother_alternate_parent_cousin_sim_info_list:
+                for new_step_sibling_sim_info in new_parent_alternate_parent_siblings_genealogy_tracker.get_child_sim_infos_gen():
+                    if new_step_sibling_sim_info in new_parent_alternate_parent_cousin_sim_info_list:
                         self.log.debug('Duplicate 6')
                         continue
-                    new_mother_alternate_parent_cousin_sim_info_list.append(new_step_sibling_sim_info)
+                    new_parent_alternate_parent_cousin_sim_info_list.append(new_step_sibling_sim_info)
 
-        new_mother_alternate_cousin_parent_sim_info_list = list()
-        new_mother_blood_cousins_sim_info_list = list()
-        for new_mother_blood_siblings_sim_info in new_mother_blood_siblings_sim_info_list:
-            new_mother_blood_siblings_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_mother_blood_siblings_sim_info)
+        new_parent_alternate_cousin_parent_sim_info_list = list()
+        new_parent_blood_cousins_sim_info_list = list()
+        for new_parent_blood_siblings_sim_info in new_parent_blood_siblings_sim_info_list:
+            new_parent_blood_siblings_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_parent_blood_siblings_sim_info)
             with genealogy_caching():
-                for new_cousin_sim_info in new_mother_blood_siblings_genealogy_tracker.get_child_sim_infos_gen():
-                    self.log.format_with_message('Found blood cousin on mother side.', parent=new_mother_sim_info, cousin=new_cousin_sim_info)
-                    if new_cousin_sim_info not in new_mother_blood_cousins_sim_info_list:
-                        new_mother_blood_cousins_sim_info_list.append(new_cousin_sim_info)
+                for new_cousin_sim_info in new_parent_blood_siblings_genealogy_tracker.get_child_sim_infos_gen():
+                    self.log.format_with_message('Found blood cousin on mother side.', parent=new_parent_sim_info, cousin=new_cousin_sim_info)
+                    if new_cousin_sim_info not in new_parent_blood_cousins_sim_info_list:
+                        new_parent_blood_cousins_sim_info_list.append(new_cousin_sim_info)
                     else:
                         self.log.debug('Duplicate 7')
-                    if CommonSimGenealogyUtils.is_father_of(new_mother_blood_siblings_sim_info, new_cousin_sim_info):
+                    if CommonSimGenealogyUtils.is_father_of(new_parent_blood_siblings_sim_info, new_cousin_sim_info):
                         new_cousin_mother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(new_cousin_sim_info)
-                        if new_cousin_mother_sim_info is not None and new_cousin_mother_sim_info not in new_mother_alternate_cousin_parent_sim_info_list:
-                            new_mother_alternate_cousin_parent_sim_info_list.append(new_cousin_mother_sim_info)
-                    if CommonSimGenealogyUtils.is_mother_of(new_mother_blood_siblings_sim_info, new_cousin_sim_info):
+                        if new_cousin_mother_sim_info is not None and new_cousin_mother_sim_info not in new_parent_alternate_cousin_parent_sim_info_list:
+                            new_parent_alternate_cousin_parent_sim_info_list.append(new_cousin_mother_sim_info)
+                    if CommonSimGenealogyUtils.is_mother_of(new_parent_blood_siblings_sim_info, new_cousin_sim_info):
                         new_cousin_father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(new_cousin_sim_info)
-                        if new_cousin_father_sim_info is not None and new_cousin_father_sim_info not in new_mother_alternate_cousin_parent_sim_info_list:
-                            new_mother_alternate_cousin_parent_sim_info_list.append(new_cousin_father_sim_info)
+                        if new_cousin_father_sim_info is not None and new_cousin_father_sim_info not in new_parent_alternate_cousin_parent_sim_info_list:
+                            new_parent_alternate_cousin_parent_sim_info_list.append(new_cousin_father_sim_info)
 
-        new_mother_alternate_cousin_parent_parent_sim_info_list = list()
-        new_mother_alternate_cousin_parent_siblings_sim_info_list = list()
-        new_mother_alternate_cousin_parent_children_sim_info_list = list()
-        for new_mother_alternate_cousin_parent_sim_info in new_mother_alternate_cousin_parent_sim_info_list:
-            new_mother_alternate_cousin_parent_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_mother_alternate_cousin_parent_sim_info)
+        new_parent_alternate_cousin_parent_parent_sim_info_list = list()
+        new_parent_alternate_cousin_parent_siblings_sim_info_list = list()
+        new_parent_alternate_cousin_parent_children_sim_info_list = list()
+        for new_parent_alternate_cousin_parent_sim_info in new_parent_alternate_cousin_parent_sim_info_list:
+            new_parent_alternate_cousin_parent_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_parent_alternate_cousin_parent_sim_info)
             with genealogy_caching():
-                for new_cousin_sim_info in new_mother_alternate_cousin_parent_genealogy_tracker.get_child_sim_infos_gen():
-                    if new_cousin_sim_info in new_mother_alternate_cousin_parent_children_sim_info_list:
+                for new_cousin_sim_info in new_parent_alternate_cousin_parent_genealogy_tracker.get_child_sim_infos_gen():
+                    if new_cousin_sim_info in new_parent_alternate_cousin_parent_children_sim_info_list:
                         self.log.debug('Duplicate 8')
                         continue
-                    new_mother_alternate_cousin_parent_children_sim_info_list.append(new_cousin_sim_info)
+                    new_parent_alternate_cousin_parent_children_sim_info_list.append(new_cousin_sim_info)
             with genealogy_caching():
-                for new_uncle_aunt_sim_info in new_mother_alternate_cousin_parent_genealogy_tracker.get_siblings_sim_infos_gen():
-                    if new_uncle_aunt_sim_info in new_mother_alternate_cousin_parent_siblings_sim_info_list:
+                for new_uncle_aunt_sim_info in new_parent_alternate_cousin_parent_genealogy_tracker.get_siblings_sim_infos_gen():
+                    if new_uncle_aunt_sim_info in new_parent_alternate_cousin_parent_siblings_sim_info_list:
                         self.log.debug('Duplicate 9')
                         continue
-                    new_mother_alternate_cousin_parent_siblings_sim_info_list.append(new_uncle_aunt_sim_info)
+                    new_parent_alternate_cousin_parent_siblings_sim_info_list.append(new_uncle_aunt_sim_info)
             with genealogy_caching():
-                for new_grandparent_sim_info in new_mother_alternate_cousin_parent_genealogy_tracker.get_parent_sim_infos_gen():
-                    if new_grandparent_sim_info in new_mother_alternate_cousin_parent_parent_sim_info_list:
+                for new_grandparent_sim_info in new_parent_alternate_cousin_parent_genealogy_tracker.get_parent_sim_infos_gen():
+                    if new_grandparent_sim_info in new_parent_alternate_cousin_parent_parent_sim_info_list:
                         self.log.debug('Duplicate 10')
                         continue
-                    new_mother_alternate_cousin_parent_parent_sim_info_list.append(new_grandparent_sim_info)
+                    new_parent_alternate_cousin_parent_parent_sim_info_list.append(new_grandparent_sim_info)
 
         # Mother One New as Mother of New Child
-        new_mother_father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(new_mother_sim_info)
-        new_mother_mother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(new_mother_sim_info)
+        new_parent_father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(new_parent_sim_info)
+        new_parent_mother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(new_parent_sim_info)
 
-        new_mother_grandparents_sim_info_list = (
-            new_mother_father_sim_info,
-            new_mother_mother_sim_info
+        new_parent_grandparents_sim_info_list = (
+            new_parent_father_sim_info,
+            new_parent_mother_sim_info
         )
 
-        previous_father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(child_sim_info)
+        previous_other_parent_sim_info = CommonSimGenealogyUtils.get_father_sim_info(child_sim_info)
 
         children_sim_info_list = list()
         step_children_sim_info_list = list()
-        if previous_father_sim_info is not None:
-            previous_father_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(previous_father_sim_info)
+        if previous_other_parent_sim_info is not None:
+            previous_other_parent_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(previous_other_parent_sim_info)
             # Grandparents
-            previous_father_blood_parents_sim_info_list = list()
+            previous_other_parent_blood_parents_sim_info_list = list()
             # Uncle/Aunt
-            previous_father_blood_siblings_sim_info_list = list()
+            previous_other_parent_blood_siblings_sim_info_list = list()
             with genealogy_caching():
-                for previous_father_blood_sibling_sim_info in previous_father_genealogy_tracker.get_siblings_sim_infos_gen():
-                    if previous_father_blood_sibling_sim_info in previous_father_blood_siblings_sim_info_list:
+                for previous_other_parent_blood_sibling_sim_info in previous_other_parent_genealogy_tracker.get_siblings_sim_infos_gen():
+                    if previous_other_parent_blood_sibling_sim_info in previous_other_parent_blood_siblings_sim_info_list:
                         self.log.debug('Duplicate 11')
                         continue
-                    previous_father_blood_siblings_sim_info_list.append(previous_father_blood_sibling_sim_info)
+                    previous_other_parent_blood_siblings_sim_info_list.append(previous_other_parent_blood_sibling_sim_info)
             with genealogy_caching():
-                for previous_father_blood_parents_sim_info in previous_father_genealogy_tracker.get_parent_sim_infos_gen():
-                    if previous_father_blood_parents_sim_info in previous_father_blood_parents_sim_info_list:
+                for previous_other_parent_blood_parents_sim_info in previous_other_parent_genealogy_tracker.get_parent_sim_infos_gen():
+                    if previous_other_parent_blood_parents_sim_info in previous_other_parent_blood_parents_sim_info_list:
                         self.log.debug('Duplicate 12')
                         continue
-                    previous_father_blood_parents_sim_info_list.append(previous_father_blood_parents_sim_info)
+                    previous_other_parent_blood_parents_sim_info_list.append(previous_other_parent_blood_parents_sim_info)
 
             # Uncle/Aunt
-            previous_father_blood_alternate_cousin_parent_sim_info_list = list()
+            previous_other_parent_blood_alternate_cousin_parent_sim_info_list = list()
             # Cousin
-            previous_father_blood_sibling_cousin_sim_info_list = list()
-            for previous_father_blood_siblings_sim_info in previous_father_blood_siblings_sim_info_list:
-                previous_father_blood_siblings_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(previous_father_blood_siblings_sim_info)
+            previous_other_parent_blood_sibling_cousin_sim_info_list = list()
+            for previous_other_parent_blood_siblings_sim_info in previous_other_parent_blood_siblings_sim_info_list:
+                previous_other_parent_blood_siblings_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(previous_other_parent_blood_siblings_sim_info)
                 with genealogy_caching():
-                    for previous_father_blood_sibling_cousin_sim_info in previous_father_blood_siblings_genealogy_tracker.get_child_sim_infos_gen():
-                        if previous_father_blood_sibling_cousin_sim_info not in previous_father_blood_sibling_cousin_sim_info_list:
-                            previous_father_blood_sibling_cousin_sim_info_list.append(previous_father_blood_sibling_cousin_sim_info)
+                    for previous_other_parent_blood_sibling_cousin_sim_info in previous_other_parent_blood_siblings_genealogy_tracker.get_child_sim_infos_gen():
+                        if previous_other_parent_blood_sibling_cousin_sim_info not in previous_other_parent_blood_sibling_cousin_sim_info_list:
+                            previous_other_parent_blood_sibling_cousin_sim_info_list.append(previous_other_parent_blood_sibling_cousin_sim_info)
                         else:
                             self.log.debug('Duplicate 13')
-                        if CommonSimGenealogyUtils.is_father_of(previous_father_blood_siblings_sim_info, previous_father_blood_sibling_cousin_sim_info):
-                            previous_father_blood_sibling_cousin_mother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(previous_father_blood_sibling_cousin_sim_info)
-                            if previous_father_blood_sibling_cousin_mother_sim_info is not None and previous_father_blood_sibling_cousin_mother_sim_info not in previous_father_blood_alternate_cousin_parent_sim_info_list:
-                                previous_father_blood_alternate_cousin_parent_sim_info_list.append(previous_father_blood_sibling_cousin_mother_sim_info)
-                        if CommonSimGenealogyUtils.is_mother_of(previous_father_blood_siblings_sim_info, previous_father_blood_sibling_cousin_sim_info):
-                            previous_father_blood_sibling_cousin_father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(previous_father_blood_sibling_cousin_sim_info)
-                            if previous_father_blood_sibling_cousin_father_sim_info is not None and previous_father_blood_sibling_cousin_father_sim_info not in previous_father_blood_alternate_cousin_parent_sim_info_list:
-                                previous_father_blood_alternate_cousin_parent_sim_info_list.append(previous_father_blood_sibling_cousin_father_sim_info)
+                        if CommonSimGenealogyUtils.is_father_of(previous_other_parent_blood_siblings_sim_info, previous_other_parent_blood_sibling_cousin_sim_info):
+                            previous_other_parent_blood_sibling_cousin_mother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(previous_other_parent_blood_sibling_cousin_sim_info)
+                            if previous_other_parent_blood_sibling_cousin_mother_sim_info is not None and previous_other_parent_blood_sibling_cousin_mother_sim_info not in previous_other_parent_blood_alternate_cousin_parent_sim_info_list:
+                                previous_other_parent_blood_alternate_cousin_parent_sim_info_list.append(previous_other_parent_blood_sibling_cousin_mother_sim_info)
+                        if CommonSimGenealogyUtils.is_mother_of(previous_other_parent_blood_siblings_sim_info, previous_other_parent_blood_sibling_cousin_sim_info):
+                            previous_other_parent_blood_sibling_cousin_father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(previous_other_parent_blood_sibling_cousin_sim_info)
+                            if previous_other_parent_blood_sibling_cousin_father_sim_info is not None and previous_other_parent_blood_sibling_cousin_father_sim_info not in previous_other_parent_blood_alternate_cousin_parent_sim_info_list:
+                                previous_other_parent_blood_alternate_cousin_parent_sim_info_list.append(previous_other_parent_blood_sibling_cousin_father_sim_info)
 
             # Grandparents
-            previous_father_blood_alternate_cousin_parent_parents_sim_info_list = list()
+            previous_other_parent_blood_alternate_cousin_parent_parents_sim_info_list = list()
             # Uncle/Aunt
-            previous_father_blood_alternate_cousin_parent_siblings_sim_info_list = list()
+            previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info_list = list()
             # Cousin
-            previous_father_blood_alternate_cousin_parent_cousin_sim_info_list = list()
-            for previous_father_blood_alternate_cousin_parent_sim_info in previous_father_blood_alternate_cousin_parent_sim_info_list:
-                previous_father_blood_alternate_cousin_parent_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(previous_father_blood_alternate_cousin_parent_sim_info)
+            previous_other_parent_blood_alternate_cousin_parent_cousin_sim_info_list = list()
+            for previous_other_parent_blood_alternate_cousin_parent_sim_info in previous_other_parent_blood_alternate_cousin_parent_sim_info_list:
+                previous_other_parent_blood_alternate_cousin_parent_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(previous_other_parent_blood_alternate_cousin_parent_sim_info)
                 with genealogy_caching():
-                    for previous_father_blood_alternate_cousin_parent_cousin_sim_info in previous_father_blood_alternate_cousin_parent_genealogy_tracker.get_child_sim_infos_gen():
-                        if previous_father_blood_alternate_cousin_parent_cousin_sim_info in previous_father_blood_sibling_cousin_sim_info_list or previous_father_blood_alternate_cousin_parent_cousin_sim_info in previous_father_blood_alternate_cousin_parent_cousin_sim_info_list:
+                    for previous_other_parent_blood_alternate_cousin_parent_cousin_sim_info in previous_other_parent_blood_alternate_cousin_parent_genealogy_tracker.get_child_sim_infos_gen():
+                        if previous_other_parent_blood_alternate_cousin_parent_cousin_sim_info in previous_other_parent_blood_sibling_cousin_sim_info_list or previous_other_parent_blood_alternate_cousin_parent_cousin_sim_info in previous_other_parent_blood_alternate_cousin_parent_cousin_sim_info_list:
                             self.log.debug('Duplicate 14')
                             continue
-                        previous_father_blood_alternate_cousin_parent_cousin_sim_info_list.append(previous_father_blood_alternate_cousin_parent_cousin_sim_info)
+                        previous_other_parent_blood_alternate_cousin_parent_cousin_sim_info_list.append(previous_other_parent_blood_alternate_cousin_parent_cousin_sim_info)
                 with genealogy_caching():
-                    for previous_father_blood_alternate_cousin_parent_siblings_sim_info in previous_father_blood_alternate_cousin_parent_genealogy_tracker.get_siblings_sim_infos_gen():
-                        if previous_father_blood_alternate_cousin_parent_siblings_sim_info in previous_father_blood_alternate_cousin_parent_siblings_sim_info_list:
+                    for previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info in previous_other_parent_blood_alternate_cousin_parent_genealogy_tracker.get_siblings_sim_infos_gen():
+                        if previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info in previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info_list:
                             self.log.debug('Duplicate 15')
                             continue
-                        previous_father_blood_alternate_cousin_parent_siblings_sim_info_list.append(previous_father_blood_alternate_cousin_parent_siblings_sim_info)
+                        previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info_list.append(previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info)
                 with genealogy_caching():
-                    for previous_father_blood_alternate_cousin_parent_parents_sim_info in previous_father_blood_alternate_cousin_parent_genealogy_tracker.get_parent_sim_infos_gen():
-                        if previous_father_blood_alternate_cousin_parent_parents_sim_info in previous_father_blood_alternate_cousin_parent_parents_sim_info_list:
+                    for previous_other_parent_blood_alternate_cousin_parent_parents_sim_info in previous_other_parent_blood_alternate_cousin_parent_genealogy_tracker.get_parent_sim_infos_gen():
+                        if previous_other_parent_blood_alternate_cousin_parent_parents_sim_info in previous_other_parent_blood_alternate_cousin_parent_parents_sim_info_list:
                             self.log.debug('Duplicate 16')
                             continue
-                        previous_father_blood_alternate_cousin_parent_parents_sim_info_list.append(previous_father_blood_alternate_cousin_parent_parents_sim_info)
+                        previous_other_parent_blood_alternate_cousin_parent_parents_sim_info_list.append(previous_other_parent_blood_alternate_cousin_parent_parents_sim_info)
 
             # Cousin
-            previous_father_blood_alternate_cousin_parent_siblings_children_sim_info_list = list()
-            for previous_father_blood_alternate_cousin_parent_siblings_sim_info in previous_father_blood_alternate_cousin_parent_siblings_sim_info_list:
-                previous_father_blood_alternate_cousin_parent_siblings_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(previous_father_blood_alternate_cousin_parent_siblings_sim_info)
+            previous_other_parent_blood_alternate_cousin_parent_siblings_children_sim_info_list = list()
+            for previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info in previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info_list:
+                previous_other_parent_blood_alternate_cousin_parent_siblings_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info)
                 with genealogy_caching():
-                    for previous_father_blood_alternate_cousin_parent_siblings_children_sim_info in previous_father_blood_alternate_cousin_parent_siblings_genealogy_tracker.get_child_sim_infos_gen():
-                        if previous_father_blood_alternate_cousin_parent_siblings_children_sim_info in previous_father_blood_alternate_cousin_parent_siblings_children_sim_info_list:
+                    for previous_other_parent_blood_alternate_cousin_parent_siblings_children_sim_info in previous_other_parent_blood_alternate_cousin_parent_siblings_genealogy_tracker.get_child_sim_infos_gen():
+                        if previous_other_parent_blood_alternate_cousin_parent_siblings_children_sim_info in previous_other_parent_blood_alternate_cousin_parent_siblings_children_sim_info_list:
                             self.log.debug('Duplicate 17')
                             continue
-                        previous_father_blood_alternate_cousin_parent_siblings_children_sim_info_list.append(previous_father_blood_alternate_cousin_parent_siblings_children_sim_info)
+                        previous_other_parent_blood_alternate_cousin_parent_siblings_children_sim_info_list.append(previous_other_parent_blood_alternate_cousin_parent_siblings_children_sim_info)
 
             # Previous Father To New Mother
-            for previous_father_blood_siblings_sim_info in previous_father_blood_siblings_sim_info_list:
-                self.log.format_with_message('Setting as step sibling 1', step_sibling=previous_father_blood_siblings_sim_info, parent=new_mother_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(previous_father_blood_siblings_sim_info, new_mother_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_sim_info, previous_father_blood_siblings_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
+            for previous_other_parent_blood_siblings_sim_info in previous_other_parent_blood_siblings_sim_info_list:
+                self.log.format_with_message('Setting as step sibling 1', step_sibling=previous_other_parent_blood_siblings_sim_info, parent=new_parent_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(previous_other_parent_blood_siblings_sim_info, new_parent_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_sim_info, previous_other_parent_blood_siblings_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
 
-            for previous_father_blood_parents_sim_info in previous_father_blood_parents_sim_info_list:
-                self.log.format_with_message('Setting as step parent 1', step_parent=previous_father_blood_parents_sim_info, parent=new_mother_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(previous_father_blood_parents_sim_info, new_mother_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_sim_info, previous_father_blood_parents_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
+            for previous_other_parent_blood_parents_sim_info in previous_other_parent_blood_parents_sim_info_list:
+                self.log.format_with_message('Setting as step parent 1', step_parent=previous_other_parent_blood_parents_sim_info, parent=new_parent_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(previous_other_parent_blood_parents_sim_info, new_parent_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_sim_info, previous_other_parent_blood_parents_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
 
-            for previous_father_blood_sibling_cousin_sim_info in previous_father_blood_sibling_cousin_sim_info_list:
-                self.log.format_with_message('Setting as step niece/nephew 4', step_niece_nephew=previous_father_blood_sibling_cousin_sim_info, parent=new_mother_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(previous_father_blood_sibling_cousin_sim_info, new_mother_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_sim_info, previous_father_blood_sibling_cousin_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+            for previous_other_parent_blood_sibling_cousin_sim_info in previous_other_parent_blood_sibling_cousin_sim_info_list:
+                self.log.format_with_message('Setting as step niece/nephew 4', step_niece_nephew=previous_other_parent_blood_sibling_cousin_sim_info, parent=new_parent_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(previous_other_parent_blood_sibling_cousin_sim_info, new_parent_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_sim_info, previous_other_parent_blood_sibling_cousin_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
             # Previous Father Family To New Mother Children
-            for new_mother_child_sim_info in new_mother_blood_children_sim_info_list:
-                self.log.format_with_message('Setting as step parent 3', parent=previous_father_sim_info, child=new_mother_child_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(previous_father_sim_info, new_mother_child_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_child_sim_info, previous_father_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
+            for new_parent_child_sim_info in new_parent_blood_children_sim_info_list:
+                self.log.format_with_message('Setting as step parent 3', parent=previous_other_parent_sim_info, child=new_parent_child_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(previous_other_parent_sim_info, new_parent_child_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_child_sim_info, previous_other_parent_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
 
-                for previous_father_blood_parents_sim_info in previous_father_blood_parents_sim_info_list:
-                    self.log.format_with_message('Setting as step grandparent 3', grandparent=previous_father_blood_parents_sim_info, child=new_mother_child_sim_info)
-                    CommonRelationshipUtils.add_relationship_bit(previous_father_blood_parents_sim_info, new_mother_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-                    CommonRelationshipUtils.add_relationship_bit(new_mother_child_sim_info, previous_father_blood_parents_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                for previous_other_parent_blood_parents_sim_info in previous_other_parent_blood_parents_sim_info_list:
+                    self.log.format_with_message('Setting as step grandparent 3', grandparent=previous_other_parent_blood_parents_sim_info, child=new_parent_child_sim_info)
+                    CommonRelationshipUtils.add_relationship_bit(previous_other_parent_blood_parents_sim_info, new_parent_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                    CommonRelationshipUtils.add_relationship_bit(new_parent_child_sim_info, previous_other_parent_blood_parents_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
 
-                for previous_father_blood_alternate_cousin_parent_parents_sim_info in previous_father_blood_alternate_cousin_parent_parents_sim_info_list:
-                    self.log.format_with_message('Setting as step grandparent 4', grandparent=previous_father_blood_alternate_cousin_parent_parents_sim_info, child=new_mother_child_sim_info)
-                    CommonRelationshipUtils.add_relationship_bit(previous_father_blood_alternate_cousin_parent_parents_sim_info, new_mother_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-                    CommonRelationshipUtils.add_relationship_bit(new_mother_child_sim_info, previous_father_blood_alternate_cousin_parent_parents_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                for previous_other_parent_blood_alternate_cousin_parent_parents_sim_info in previous_other_parent_blood_alternate_cousin_parent_parents_sim_info_list:
+                    self.log.format_with_message('Setting as step grandparent 4', grandparent=previous_other_parent_blood_alternate_cousin_parent_parents_sim_info, child=new_parent_child_sim_info)
+                    CommonRelationshipUtils.add_relationship_bit(previous_other_parent_blood_alternate_cousin_parent_parents_sim_info, new_parent_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                    CommonRelationshipUtils.add_relationship_bit(new_parent_child_sim_info, previous_other_parent_blood_alternate_cousin_parent_parents_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
 
-                for previous_father_blood_siblings_sim_info in previous_father_blood_siblings_sim_info_list:
-                    self.log.format_with_message('Setting as step aunt/uncle 4', aunt_uncle=previous_father_blood_siblings_sim_info, child=new_mother_child_sim_info)
-                    CommonRelationshipUtils.add_relationship_bit(previous_father_blood_siblings_sim_info, new_mother_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
-                    CommonRelationshipUtils.add_relationship_bit(new_mother_child_sim_info, previous_father_blood_siblings_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                for previous_other_parent_blood_siblings_sim_info in previous_other_parent_blood_siblings_sim_info_list:
+                    self.log.format_with_message('Setting as step aunt/uncle 4', aunt_uncle=previous_other_parent_blood_siblings_sim_info, child=new_parent_child_sim_info)
+                    CommonRelationshipUtils.add_relationship_bit(previous_other_parent_blood_siblings_sim_info, new_parent_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+                    CommonRelationshipUtils.add_relationship_bit(new_parent_child_sim_info, previous_other_parent_blood_siblings_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
 
-                for previous_father_blood_alternate_cousin_parent_sim_info in previous_father_blood_alternate_cousin_parent_sim_info_list:
-                    self.log.format_with_message('Setting as step aunt/uncle 5', aunt_uncle=previous_father_blood_alternate_cousin_parent_sim_info, child=new_mother_child_sim_info)
-                    CommonRelationshipUtils.add_relationship_bit(previous_father_blood_alternate_cousin_parent_sim_info, new_mother_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
-                    CommonRelationshipUtils.add_relationship_bit(new_mother_child_sim_info, previous_father_blood_alternate_cousin_parent_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                for previous_other_parent_blood_alternate_cousin_parent_sim_info in previous_other_parent_blood_alternate_cousin_parent_sim_info_list:
+                    self.log.format_with_message('Setting as step aunt/uncle 5', aunt_uncle=previous_other_parent_blood_alternate_cousin_parent_sim_info, child=new_parent_child_sim_info)
+                    CommonRelationshipUtils.add_relationship_bit(previous_other_parent_blood_alternate_cousin_parent_sim_info, new_parent_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+                    CommonRelationshipUtils.add_relationship_bit(new_parent_child_sim_info, previous_other_parent_blood_alternate_cousin_parent_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
 
-                for previous_father_blood_alternate_cousin_parent_siblings_sim_info in previous_father_blood_alternate_cousin_parent_siblings_sim_info_list:
-                    self.log.format_with_message('Setting as step aunt/uncle 6', aunt_uncle=previous_father_blood_alternate_cousin_parent_siblings_sim_info, child=new_mother_child_sim_info)
-                    CommonRelationshipUtils.add_relationship_bit(previous_father_blood_alternate_cousin_parent_siblings_sim_info, new_mother_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
-                    CommonRelationshipUtils.add_relationship_bit(new_mother_child_sim_info, previous_father_blood_alternate_cousin_parent_siblings_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                for previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info in previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info_list:
+                    self.log.format_with_message('Setting as step aunt/uncle 6', aunt_uncle=previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info, child=new_parent_child_sim_info)
+                    CommonRelationshipUtils.add_relationship_bit(previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info, new_parent_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+                    CommonRelationshipUtils.add_relationship_bit(new_parent_child_sim_info, previous_other_parent_blood_alternate_cousin_parent_siblings_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
 
-                for previous_father_blood_alternate_cousin_parent_siblings_children_sim_info in previous_father_blood_alternate_cousin_parent_siblings_children_sim_info_list:
-                    self.log.format_with_message('Setting as step cousin 6', cousin=previous_father_blood_alternate_cousin_parent_siblings_children_sim_info, child=new_mother_child_sim_info)
-                    CommonRelationshipUtils.add_relationship_bit(previous_father_blood_alternate_cousin_parent_siblings_children_sim_info, new_mother_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
-                    CommonRelationshipUtils.add_relationship_bit(new_mother_child_sim_info, previous_father_blood_alternate_cousin_parent_siblings_children_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+                for previous_other_parent_blood_alternate_cousin_parent_siblings_children_sim_info in previous_other_parent_blood_alternate_cousin_parent_siblings_children_sim_info_list:
+                    self.log.format_with_message('Setting as step cousin 6', cousin=previous_other_parent_blood_alternate_cousin_parent_siblings_children_sim_info, child=new_parent_child_sim_info)
+                    CommonRelationshipUtils.add_relationship_bit(previous_other_parent_blood_alternate_cousin_parent_siblings_children_sim_info, new_parent_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+                    CommonRelationshipUtils.add_relationship_bit(new_parent_child_sim_info, previous_other_parent_blood_alternate_cousin_parent_siblings_children_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
 
-                for previous_father_blood_sibling_cousin_sim_info in previous_father_blood_sibling_cousin_sim_info_list:
-                    self.log.format_with_message('Setting as step cousin 4', cousin=previous_father_blood_sibling_cousin_sim_info, child=new_mother_child_sim_info)
-                    CommonRelationshipUtils.add_relationship_bit(previous_father_blood_sibling_cousin_sim_info, new_mother_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
-                    CommonRelationshipUtils.add_relationship_bit(new_mother_child_sim_info, previous_father_blood_sibling_cousin_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+                for previous_other_parent_blood_sibling_cousin_sim_info in previous_other_parent_blood_sibling_cousin_sim_info_list:
+                    self.log.format_with_message('Setting as step cousin 4', cousin=previous_other_parent_blood_sibling_cousin_sim_info, child=new_parent_child_sim_info)
+                    CommonRelationshipUtils.add_relationship_bit(previous_other_parent_blood_sibling_cousin_sim_info, new_parent_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+                    CommonRelationshipUtils.add_relationship_bit(new_parent_child_sim_info, previous_other_parent_blood_sibling_cousin_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
 
-                for previous_father_blood_alternate_cousin_parent_cousin_sim_info in previous_father_blood_alternate_cousin_parent_cousin_sim_info_list:
-                    self.log.format_with_message('Setting as step cousin 5', cousin=previous_father_blood_alternate_cousin_parent_cousin_sim_info, child=new_mother_child_sim_info)
-                    CommonRelationshipUtils.add_relationship_bit(previous_father_blood_alternate_cousin_parent_cousin_sim_info, new_mother_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
-                    CommonRelationshipUtils.add_relationship_bit(new_mother_child_sim_info, previous_father_blood_alternate_cousin_parent_cousin_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+                for previous_other_parent_blood_alternate_cousin_parent_cousin_sim_info in previous_other_parent_blood_alternate_cousin_parent_cousin_sim_info_list:
+                    self.log.format_with_message('Setting as step cousin 5', cousin=previous_other_parent_blood_alternate_cousin_parent_cousin_sim_info, child=new_parent_child_sim_info)
+                    CommonRelationshipUtils.add_relationship_bit(previous_other_parent_blood_alternate_cousin_parent_cousin_sim_info, new_parent_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+                    CommonRelationshipUtils.add_relationship_bit(new_parent_child_sim_info, previous_other_parent_blood_alternate_cousin_parent_cousin_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
 
             with genealogy_caching():
                 for new_blood_child_sim_info in child_genealogy_tracker.get_siblings_sim_infos_gen():
@@ -712,8 +712,8 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                         continue
                     children_sim_info_list.append(new_blood_child_sim_info)
 
-            for previous_step_child_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(previous_father_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER, instanced_only=False):
-                if previous_step_child_sim_info in children_sim_info_list or previous_step_child_sim_info in step_children_sim_info_list or previous_step_child_sim_info is child_sim_info or previous_step_child_sim_info in new_mother_blood_children_sim_info_list:
+            for previous_step_child_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(previous_other_parent_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER, instanced_only=False):
+                if previous_step_child_sim_info in children_sim_info_list or previous_step_child_sim_info in step_children_sim_info_list or previous_step_child_sim_info is child_sim_info or previous_step_child_sim_info in new_parent_blood_children_sim_info_list:
                     continue
                 self.log.format_with_message('Adding Step Child', step_child=previous_step_child_sim_info)
                 step_children_sim_info_list.append(previous_step_child_sim_info)
@@ -726,7 +726,7 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                 children_sim_info_list.append(new_blood_child_sim_info)
 
             for previous_step_child_sim_info in CommonRelationshipUtils.get_sim_info_of_all_sims_with_relationship_bit_generator(child_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING, instanced_only=False):
-                if previous_step_child_sim_info in children_sim_info_list or previous_step_child_sim_info in step_children_sim_info_list or previous_step_child_sim_info is child_sim_info or previous_step_child_sim_info in new_mother_blood_children_sim_info_list:
+                if previous_step_child_sim_info in children_sim_info_list or previous_step_child_sim_info in step_children_sim_info_list or previous_step_child_sim_info is child_sim_info or previous_step_child_sim_info in new_parent_blood_children_sim_info_list:
                     continue
                 self.log.format_with_message('Adding Step Child', step_child=previous_step_child_sim_info)
                 step_children_sim_info_list.append(previous_step_child_sim_info)
@@ -738,117 +738,117 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
 
         children_children_sim_info_list = list()
         for new_blood_child_sim_info in children_sim_info_list:
-            self.log.format_with_message('Setting as mother', child=new_blood_child_sim_info, mother=new_mother_sim_info)
-            CommonRelationshipUtils.add_relationship_bit(new_mother_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
-            CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
-            CommonSimGenealogyUtils.set_as_mother_of(new_mother_sim_info, new_blood_child_sim_info)
+            self.log.format_with_message('Setting as mother', child=new_blood_child_sim_info, mother=new_parent_sim_info)
+            CommonRelationshipUtils.add_relationship_bit(new_parent_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
+            CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
+            CommonSimGenealogyUtils.set_as_mother_of(new_parent_sim_info, new_blood_child_sim_info)
 
-            for new_mother_blood_siblings_sim_info in new_mother_blood_siblings_sim_info_list:
-                self.log.format_with_message('Setting as aunt/uncle', child=new_blood_child_sim_info, aunt_uncle=new_mother_blood_siblings_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_blood_siblings_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_blood_siblings_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+            for new_parent_blood_siblings_sim_info in new_parent_blood_siblings_sim_info_list:
+                self.log.format_with_message('Setting as aunt/uncle', child=new_blood_child_sim_info, aunt_uncle=new_parent_blood_siblings_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_blood_siblings_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_blood_siblings_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
-            for new_mother_alternate_cousin_parent_sim_info in new_mother_alternate_cousin_parent_sim_info_list:
-                self.log.format_with_message('Setting as aunt/uncle 2', child=new_blood_child_sim_info, aunt_uncle=new_mother_alternate_cousin_parent_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_alternate_cousin_parent_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_alternate_cousin_parent_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+            for new_parent_alternate_cousin_parent_sim_info in new_parent_alternate_cousin_parent_sim_info_list:
+                self.log.format_with_message('Setting as aunt/uncle 2', child=new_blood_child_sim_info, aunt_uncle=new_parent_alternate_cousin_parent_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_alternate_cousin_parent_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_alternate_cousin_parent_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
-            for new_mother_alternate_cousin_parent_siblings_sim_info in new_mother_alternate_cousin_parent_siblings_sim_info_list:
-                self.log.format_with_message('Setting as aunt/uncle 3', child=new_blood_child_sim_info, aunt_uncle=new_mother_alternate_cousin_parent_siblings_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_alternate_cousin_parent_siblings_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_alternate_cousin_parent_siblings_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+            for new_parent_alternate_cousin_parent_siblings_sim_info in new_parent_alternate_cousin_parent_siblings_sim_info_list:
+                self.log.format_with_message('Setting as aunt/uncle 3', child=new_blood_child_sim_info, aunt_uncle=new_parent_alternate_cousin_parent_siblings_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_alternate_cousin_parent_siblings_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_alternate_cousin_parent_siblings_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
-            for new_mother_alternate_cousin_parent_children_sim_info in new_mother_alternate_cousin_parent_children_sim_info_list:
-                self.log.format_with_message('Setting as cousin', child=new_blood_child_sim_info, cousin=new_mother_alternate_cousin_parent_children_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_alternate_cousin_parent_children_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_alternate_cousin_parent_children_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+            for new_parent_alternate_cousin_parent_children_sim_info in new_parent_alternate_cousin_parent_children_sim_info_list:
+                self.log.format_with_message('Setting as cousin', child=new_blood_child_sim_info, cousin=new_parent_alternate_cousin_parent_children_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_alternate_cousin_parent_children_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_alternate_cousin_parent_children_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
 
-            for new_mother_alternate_cousin_parent_parent_sim_info in new_mother_alternate_cousin_parent_parent_sim_info_list:
-                self.log.format_with_message('Setting as step grandparent', child=new_blood_child_sim_info, grandparent=new_mother_alternate_cousin_parent_parent_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_alternate_cousin_parent_parent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_alternate_cousin_parent_parent_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+            for new_parent_alternate_cousin_parent_parent_sim_info in new_parent_alternate_cousin_parent_parent_sim_info_list:
+                self.log.format_with_message('Setting as step grandparent', child=new_blood_child_sim_info, grandparent=new_parent_alternate_cousin_parent_parent_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_alternate_cousin_parent_parent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_alternate_cousin_parent_parent_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
 
-            for new_mother_child_sim_info in new_mother_blood_children_sim_info_list:
-                self.log.format_with_message('Setting as sibling', child=new_blood_child_sim_info, sibling=new_mother_child_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_child_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_child_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
+            for new_parent_child_sim_info in new_parent_blood_children_sim_info_list:
+                self.log.format_with_message('Setting as sibling', child=new_blood_child_sim_info, sibling=new_parent_child_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_child_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_child_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_BROTHER_SISTER)
 
-            for new_mother_blood_cousins_sim_info in new_mother_blood_cousins_sim_info_list:
-                self.log.format_with_message('Setting as cousin 2', child=new_blood_child_sim_info, cousin=new_mother_blood_cousins_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_blood_cousins_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_blood_cousins_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+            for new_parent_blood_cousins_sim_info in new_parent_blood_cousins_sim_info_list:
+                self.log.format_with_message('Setting as cousin 2', child=new_blood_child_sim_info, cousin=new_parent_blood_cousins_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_blood_cousins_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_blood_cousins_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
 
-            for new_mother_alternate_parent_sim_info in new_mother_alternate_parent_sim_info_list:
-                self.log.format_with_message('Setting as step parent', child=new_blood_child_sim_info, parent=new_mother_alternate_parent_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_alternate_parent_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_alternate_parent_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
+            for new_parent_alternate_parent_sim_info in new_parent_alternate_parent_sim_info_list:
+                self.log.format_with_message('Setting as step parent', child=new_blood_child_sim_info, parent=new_parent_alternate_parent_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_alternate_parent_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_alternate_parent_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
 
-            for new_mother_alternate_parent_parent_sim_info in new_mother_alternate_parent_parent_sim_info_list:
-                self.log.format_with_message('Setting as step grandparent', child=new_blood_child_sim_info, grandparent=new_mother_alternate_parent_parent_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_alternate_parent_parent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_alternate_parent_parent_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+            for new_parent_alternate_parent_parent_sim_info in new_parent_alternate_parent_parent_sim_info_list:
+                self.log.format_with_message('Setting as step grandparent', child=new_blood_child_sim_info, grandparent=new_parent_alternate_parent_parent_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_alternate_parent_parent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_alternate_parent_parent_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
 
-            for new_mother_alternate_parent_siblings_sim_info in new_mother_alternate_parent_siblings_sim_info_list:
-                self.log.format_with_message('Setting as step aunt/uncle', child=new_blood_child_sim_info, uncle_aunt=new_mother_alternate_parent_siblings_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_alternate_parent_siblings_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_alternate_parent_siblings_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
+            for new_parent_alternate_parent_siblings_sim_info in new_parent_alternate_parent_siblings_sim_info_list:
+                self.log.format_with_message('Setting as step aunt/uncle', child=new_blood_child_sim_info, uncle_aunt=new_parent_alternate_parent_siblings_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_alternate_parent_siblings_sim_info, CommonRelationshipBitId.FAMILY_AUNT_UNCLE)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_alternate_parent_siblings_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
-            for new_mother_alternate_parent_children_sim_info in new_mother_alternate_parent_children_sim_info_list:
-                self.log.format_with_message('Setting as step sibling', child=new_blood_child_sim_info, step_sibling=new_mother_alternate_parent_children_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_alternate_parent_children_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_alternate_parent_children_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
+            for new_parent_alternate_parent_children_sim_info in new_parent_alternate_parent_children_sim_info_list:
+                self.log.format_with_message('Setting as step sibling', child=new_blood_child_sim_info, step_sibling=new_parent_alternate_parent_children_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_alternate_parent_children_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_alternate_parent_children_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
 
-            for new_mother_alternate_parent_cousin_sim_info in new_mother_alternate_parent_cousin_sim_info_list:
-                self.log.format_with_message('Setting as step cousin', child=new_blood_child_sim_info, cousin=new_mother_alternate_parent_cousin_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_alternate_parent_cousin_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_alternate_parent_cousin_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+            for new_parent_alternate_parent_cousin_sim_info in new_parent_alternate_parent_cousin_sim_info_list:
+                self.log.format_with_message('Setting as step cousin', child=new_blood_child_sim_info, cousin=new_parent_alternate_parent_cousin_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_alternate_parent_cousin_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_alternate_parent_cousin_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
 
-            if new_mother_father_sim_info is not None:
-                self.log.format_with_message('Setting as grandfather', child=new_blood_child_sim_info, grandfather=new_mother_father_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_father_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_father_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-                CommonSimGenealogyUtils.set_as_mothers_father_of(new_mother_father_sim_info, new_blood_child_sim_info)
+            if new_parent_father_sim_info is not None:
+                self.log.format_with_message('Setting as grandfather', child=new_blood_child_sim_info, grandfather=new_parent_father_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_father_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_father_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                CommonSimGenealogyUtils.set_as_mothers_father_of(new_parent_father_sim_info, new_blood_child_sim_info)
 
-            if new_mother_mother_sim_info is not None:
-                self.log.format_with_message('Setting as grandfather', child=new_blood_child_sim_info, grandfather=new_mother_mother_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_mother_mother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_mother_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
-                CommonSimGenealogyUtils.set_as_mothers_mother_of(new_mother_mother_sim_info, new_blood_child_sim_info)
+            if new_parent_mother_sim_info is not None:
+                self.log.format_with_message('Setting as grandfather', child=new_blood_child_sim_info, grandfather=new_parent_mother_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, new_parent_mother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_mother_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                CommonSimGenealogyUtils.set_as_mothers_mother_of(new_parent_mother_sim_info, new_blood_child_sim_info)
 
             new_blood_child_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(new_blood_child_sim_info)
             with genealogy_caching():
                 for new_grandchild_sim_info in new_blood_child_genealogy_tracker.get_child_sim_infos_gen():
                     if new_grandchild_sim_info in children_children_sim_info_list:
                         continue
-                    self.log.format_with_message('Setting as grandmother', grandchild=new_grandchild_sim_info, grandmother=new_mother_sim_info)
-                    CommonRelationshipUtils.add_relationship_bit(new_grandchild_sim_info, new_mother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                    CommonRelationshipUtils.add_relationship_bit(new_mother_sim_info, new_grandchild_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                    self.log.format_with_message('Setting as grandmother', grandchild=new_grandchild_sim_info, grandmother=new_parent_sim_info)
+                    CommonRelationshipUtils.add_relationship_bit(new_grandchild_sim_info, new_parent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                    CommonRelationshipUtils.add_relationship_bit(new_parent_sim_info, new_grandchild_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
                     if CommonSimGenealogyUtils.is_mother_of(new_blood_child_sim_info, new_grandchild_sim_info):
-                        CommonSimGenealogyUtils.set_as_mothers_mother_of(new_mother_sim_info, new_grandchild_sim_info)
+                        CommonSimGenealogyUtils.set_as_mothers_mother_of(new_parent_sim_info, new_grandchild_sim_info)
                     if CommonSimGenealogyUtils.is_father_of(new_blood_child_sim_info, new_grandchild_sim_info):
-                        CommonSimGenealogyUtils.set_as_fathers_mother_of(new_mother_sim_info, new_grandchild_sim_info)
+                        CommonSimGenealogyUtils.set_as_fathers_mother_of(new_parent_sim_info, new_grandchild_sim_info)
 
         for step_child_sim_info in step_children_sim_info_list:
             self.log.format_with_message('Setting as step mother.', step_mother=child_sim_info, child=step_child_sim_info)
-            CommonRelationshipUtils.add_relationship_bit(step_child_sim_info, new_mother_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
-            CommonRelationshipUtils.add_relationship_bit(new_mother_sim_info, step_child_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
+            CommonRelationshipUtils.add_relationship_bit(step_child_sim_info, new_parent_sim_info, CommonRelationshipBitId.FAMILY_PARENT)
+            CommonRelationshipUtils.add_relationship_bit(new_parent_sim_info, step_child_sim_info, CommonRelationshipBitId.FAMILY_SON_DAUGHTER)
 
             for new_blood_child_sim_info in children_sim_info_list:
                 self.log.format_with_message('Setting as step sibling.', step_sibling=new_blood_child_sim_info, child=step_child_sim_info)
                 CommonRelationshipUtils.add_relationship_bit(step_child_sim_info, new_blood_child_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
                 CommonRelationshipUtils.add_relationship_bit(new_blood_child_sim_info, step_child_sim_info, CommonRelationshipBitId.FAMILY_STEP_SIBLING)
 
-            for new_mother_grandparents_sim_info in new_mother_grandparents_sim_info_list:
-                self.log.format_with_message('Setting as Step Grandparent.', grandchild=step_child_sim_info, grandparent=new_mother_grandparents_sim_info)
-                CommonRelationshipUtils.add_relationship_bit(step_child_sim_info, new_mother_grandparents_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                CommonRelationshipUtils.add_relationship_bit(new_mother_grandparents_sim_info, step_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+            for new_parent_grandparents_sim_info in new_parent_grandparents_sim_info_list:
+                self.log.format_with_message('Setting as Step Grandparent.', grandchild=step_child_sim_info, grandparent=new_parent_grandparents_sim_info)
+                CommonRelationshipUtils.add_relationship_bit(step_child_sim_info, new_parent_grandparents_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                CommonRelationshipUtils.add_relationship_bit(new_parent_grandparents_sim_info, step_child_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
 
             step_child_genealogy_tracker = CommonSimGenealogyUtils.get_genealogy_tracker(step_child_sim_info)
             with genealogy_caching():
                 for new_grandchild_sim_info in step_child_genealogy_tracker.get_child_sim_infos_gen():
-                    self.log.format_with_message('Setting as grandmother', grandchild=new_grandchild_sim_info, grandmother=new_mother_sim_info)
-                    CommonRelationshipUtils.add_relationship_bit(new_grandchild_sim_info, new_mother_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
-                    CommonRelationshipUtils.add_relationship_bit(new_mother_sim_info, new_grandchild_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
+                    self.log.format_with_message('Setting as grandmother', grandchild=new_grandchild_sim_info, grandmother=new_parent_sim_info)
+                    CommonRelationshipUtils.add_relationship_bit(new_grandchild_sim_info, new_parent_sim_info, CommonRelationshipBitId.FAMILY_GRANDPARENT)
+                    CommonRelationshipUtils.add_relationship_bit(new_parent_sim_info, new_grandchild_sim_info, CommonRelationshipBitId.FAMILY_GRANDCHILD)
 
                     for new_blood_child_sim_info in children_sim_info_list:
                         self.log.format_with_message('Setting as step uncle/aunt.', uncle_aunt=new_blood_child_sim_info, niece_nephew=new_grandchild_sim_info)
@@ -860,5 +860,5 @@ class S4CMSetSimAAsMotherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
                         CommonRelationshipUtils.add_relationship_bit(new_grandchild_sim_info, children_children_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
                         CommonRelationshipUtils.add_relationship_bit(children_children_sim_info, new_grandchild_sim_info, CommonRelationshipBitId.FAMILY_COUSIN)
 
-        self.log.format_with_message('Done adding relation', child=child_sim_info, mother=new_mother_sim_info)
+        self.log.format_with_message('Done adding relation', child=child_sim_info, mother=new_parent_sim_info)
         return True

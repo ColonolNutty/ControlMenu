@@ -13,7 +13,7 @@ from sims4controlmenu.commonlib.utils.common_sim_genealogy_utils import CommonSi
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.aunt_or_uncle import \
     S4CMSetSimAAsAuntOrUncleToSimBOp
 from sims4controlmenu.modinfo import ModInfo
-from sims4controlmenu.tests.operations.modify_sim_data.modify_relationships.operations.full_family import S4CMFullFamily
+from sims4controlmenu_tests.operations.modify_sim_data.modify_relationships.operations.full_family import S4CMFullFamily
 
 
 @CommonTestService.test_class(ModInfo.get_identity())
