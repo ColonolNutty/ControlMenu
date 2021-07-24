@@ -31,7 +31,7 @@ class S4CMOpenSimControlMenuInteraction(CommonImmediateSuperInteraction):
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 's4cm_change_motives'
+        return 's4cm_open_sim_control_menu'
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod

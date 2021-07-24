@@ -58,7 +58,3 @@ class S4CMChangeOutfitToNudeInteraction(CommonImmediateSuperInteraction):
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
         CommonOutfitUtils.set_current_outfit(target_sim_info, (OutfitCategory.BATHING, 0))
         return True
-
-    @classmethod
-    def _allowed_to_change(cls, sim_info: SimInfo) -> bool:
-        return CommonAgeUtils.is_teen_adult_or_elder(sim_info)

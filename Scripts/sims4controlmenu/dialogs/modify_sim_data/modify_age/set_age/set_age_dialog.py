@@ -9,6 +9,7 @@ from typing import Callable
 
 from sims4communitylib.enums.common_age import CommonAge
 from sims4communitylib.enums.strings_enum import CommonStringId
+from sims4communitylib.utils.sims.common_age_utils import CommonAgeUtils
 from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
     CommonChooseButtonOptionDialog
 from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_button_option import \
@@ -52,69 +53,75 @@ class S4CMSetAgeDialog(S4CMSimControlDialogBase):
 
             operation.run(self._sim_info, on_completed=_on_operation_complete)
 
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'Toddler',
-                CommonAge.TODDLER,
-                CommonDialogResponseOptionContext(
-                    CommonStringId.TODDLER
-                ),
-                on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeToddlerOp())
+        if CommonAgeUtils.is_age_available_for_sim(self._sim_info, CommonAge.TODDLER):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'Toddler',
+                    CommonAge.TODDLER,
+                    CommonDialogResponseOptionContext(
+                        CommonStringId.TODDLER
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeToddlerOp())
+                )
             )
-        )
 
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'Child',
-                CommonAge.CHILD,
-                CommonDialogResponseOptionContext(
-                    CommonStringId.CHILD
-                ),
-                on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeChildOp())
+        if CommonAgeUtils.is_age_available_for_sim(self._sim_info, CommonAge.CHILD):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'Child',
+                    CommonAge.CHILD,
+                    CommonDialogResponseOptionContext(
+                        CommonStringId.CHILD
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeChildOp())
+                )
             )
-        )
 
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'Teen',
-                CommonAge.TEEN,
-                CommonDialogResponseOptionContext(
-                    CommonStringId.TEEN
-                ),
-                on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeTeenOp())
+        if CommonAgeUtils.is_age_available_for_sim(self._sim_info, CommonAge.TEEN):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'Teen',
+                    CommonAge.TEEN,
+                    CommonDialogResponseOptionContext(
+                        CommonStringId.TEEN
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeTeenOp())
+                )
             )
-        )
 
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'YoungAdult',
-                CommonAge.YOUNGADULT,
-                CommonDialogResponseOptionContext(
-                    CommonStringId.YOUNG_ADULT
-                ),
-                on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeYoungAdultOp())
+        if CommonAgeUtils.is_age_available_for_sim(self._sim_info, CommonAge.YOUNGADULT):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'YoungAdult',
+                    CommonAge.YOUNGADULT,
+                    CommonDialogResponseOptionContext(
+                        CommonStringId.YOUNG_ADULT
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeYoungAdultOp())
+                )
             )
-        )
 
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'Adult',
-                CommonAge.ADULT,
-                CommonDialogResponseOptionContext(
-                    CommonStringId.ADULT
-                ),
-                on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeAdultOp())
+        if CommonAgeUtils.is_age_available_for_sim(self._sim_info, CommonAge.ADULT):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'Adult',
+                    CommonAge.ADULT,
+                    CommonDialogResponseOptionContext(
+                        CommonStringId.ADULT
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeAdultOp())
+                )
             )
-        )
 
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'Elder',
-                CommonAge.ELDER,
-                CommonDialogResponseOptionContext(
-                    CommonStringId.ELDER
-                ),
-                on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeElderOp())
+        if CommonAgeUtils.is_age_available_for_sim(self._sim_info, CommonAge.ELDER):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'Elder',
+                    CommonAge.ELDER,
+                    CommonDialogResponseOptionContext(
+                        CommonStringId.ELDER
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(S4CMSetAgeElderOp())
+                )
             )
-        )
         return True
