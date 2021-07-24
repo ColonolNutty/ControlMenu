@@ -1,3 +1,9 @@
+Version 1.2:
+- Added Fox support for the Control Menu
+- The Set Age dialog will now only show the ages available for Sims
+  - i.e. Child, Adult, Elder for Pets, Adult, Elder for Foxes, and all of them for Human Sims.
+- S4CM now requires at least version 1.72tb1 of S4CL
+
 Version 1.1:
 - Added Change Outfit and Change into Nude interactions to Sims.
 - Added a Forget Sims operation that will cause the Target Sim to forget their relationship with Sims of your choosing.
