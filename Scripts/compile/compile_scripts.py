@@ -5,20 +5,20 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from Utilities.compiler import compile_module
+import os
+
+from Utilities.unpyc3_compiler import Unpyc3PythonCompiler
 
 
-compile_module(
-    root='..\\..\\Release\\Sims4ControlMenu',
-    mod_scripts_folder='..',
-    include_folders=('sims4controlmenu',),
-    mod_name='sims4controlmenu'
+Unpyc3PythonCompiler.compile_mod(
+    folder_path_to_output_ts4script_to=os.path.join('..', '..', 'Release', 'Sims4ControlMenu'),
+    names_of_modules_include=('sims4controlmenu',),
+    output_ts4script_name='sims4controlmenu'
 )
 
 
-compile_module(
-    root='..\\..\\Release\\Sims4ControlMenuTests',
-    mod_scripts_folder='..',
-    include_folders=('sims4controlmenu_tests',),
-    mod_name='sims4controlmenu_tests'
+Unpyc3PythonCompiler.compile_mod(
+    folder_path_to_output_ts4script_to=os.path.join('..', '..', 'Release', 'Sims4ControlMenuTests'),
+    names_of_modules_include=('sims4controlmenu_tests',),
+    output_ts4script_name='sims4controlmenu_tests'
 )
