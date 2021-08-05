@@ -10,12 +10,17 @@ from sims.sim_info import SimInfo
 from sims4communitylib.enums.traits_enum import CommonTraitId
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.sims.common_occult_utils import CommonOccultUtils
-from sims4controlmenu.commonlib.utils.common_sim_loot_utils import CommonSimLootActionUtils
+from sims4communitylib.utils.sims.common_sim_loot_action_utils import CommonSimLootActionUtils
 from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
 
 
 class S4CMMermaidAddOp(S4CMSingleSimOperation):
     """Add the Mermaid Occult to a Sim."""
+
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_modify_mermaid'
 
     # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
@@ -24,13 +29,18 @@ class S4CMMermaidAddOp(S4CMSingleSimOperation):
             return False
         # loot_Mermaid_DebugAdd
         add_loot_id = 205399
-        result = CommonSimLootActionUtils.apply_loot_action_to_sim(add_loot_id, sim_info)
+        result = CommonSimLootActionUtils.apply_loot_actions_by_id_to_sim(add_loot_id, sim_info)
         on_completed(result)
         return result
 
 
 class S4CMMermaidRemoveOp(S4CMSingleSimOperation):
     """Remove the Mermaid Occult from a Sim."""
+
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_modify_mermaid'
 
     # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:

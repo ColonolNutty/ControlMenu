@@ -8,8 +8,8 @@ Copyright (c) COLONOLNUTTY
 
 from sims.sim_info import SimInfo
 from sims4communitylib.utils.sims.common_age_utils import CommonAgeUtils
+from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_species_utils import CommonSpeciesUtils
-from sims4controlmenu.commonlib.utils.common_sim_relationship_utils import S4CMSimRelationshipUtils
 
 
 class S4CMSettingUtils:
@@ -34,7 +34,7 @@ class S4CMSettingUtils:
         """Whether or not two Sims are allowed to have a Romantic relationship together."""
         if not S4CMSettingUtils.is_allowed_romantic_relationship(sim_info_a) or not S4CMSettingUtils.is_allowed_romantic_relationship(sim_info_b):
             return False
-        if S4CMSimRelationshipUtils.are_family(sim_info_a, sim_info_b):
+        if CommonRelationshipUtils.are_blood_relatives(sim_info_a, sim_info_b):
             return False
         if not CommonSpeciesUtils.are_same_species(sim_info_a, sim_info_b):
             return False

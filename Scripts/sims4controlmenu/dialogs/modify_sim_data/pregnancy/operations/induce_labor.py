@@ -19,6 +19,11 @@ class S4CMInduceLaborOp(S4CMSingleSimOperation):
     """Induce a pregnant Sim to give birth."""
 
     # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_induce_labor'
+
+    # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
         if not CommonSimPregnancyUtils.is_pregnant(sim_info):
             on_completed(False)

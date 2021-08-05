@@ -11,12 +11,17 @@ from sims.occult.occult_enums import OccultType
 from sims.sim_info import SimInfo
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.sims.common_occult_utils import CommonOccultUtils
-from sims4controlmenu.commonlib.utils.common_sim_loot_utils import CommonSimLootActionUtils
+from sims4communitylib.utils.sims.common_sim_loot_action_utils import CommonSimLootActionUtils
 from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
 
 
 class S4CMAlienAddOp(S4CMSingleSimOperation):
     """Add the Alien Occult to a Sim."""
+
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_modify_alien'
 
     # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
@@ -53,7 +58,7 @@ class S4CMAlienAddOp(S4CMSingleSimOperation):
         genetic_data_b = sim_info.genetic_data
         if hasattr(genetic_data_b, 'SerializeToString'):
             genetic_data_b = genetic_data_b.SerializeToString()
-        result = CommonSimLootActionUtils.apply_loot_actions_to_sim(loot_action_ids, sim_info)
+        result = CommonSimLootActionUtils.apply_loot_actions_by_ids_to_sim(loot_action_ids, sim_info)
         human_sim_info = sim_info.occult_tracker.get_occult_sim_info(OccultType.HUMAN)
         human_sim_info.physique = physique
         human_sim_info.facial_attributes = facial_attributes
@@ -76,6 +81,11 @@ class S4CMAlienAddOp(S4CMSingleSimOperation):
 
 class S4CMAlienRemoveOp(S4CMSingleSimOperation):
     """Remove the Alien Occult from a Sim."""
+
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_modify_alien'
 
     # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:

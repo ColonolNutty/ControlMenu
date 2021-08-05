@@ -10,12 +10,11 @@ from typing import Callable
 from sims4communitylib.enums.common_age import CommonAge
 from sims4communitylib.enums.strings_enum import CommonStringId
 from sims4communitylib.utils.sims.common_age_utils import CommonAgeUtils
-from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
-    CommonChooseButtonOptionDialog
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_button_option import \
-    CommonDialogButtonOption
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
+from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
+    CommonDialogButtonOption
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.adult import S4CMSetAgeAdultOp
@@ -45,7 +44,8 @@ class S4CMSetAgeDialog(S4CMSimControlDialogBase):
         option_dialog: CommonChooseButtonOptionDialog,
         on_close: Callable[[], None],
         on_previous: Callable[[], None],
-        reopen: Callable[[], None]
+        reopen: Callable[[], None],
+        **__
     ) -> bool:
         def _operation_run(operation: S4CMSingleSimOperation):
             def _on_operation_complete(_: bool) -> None:

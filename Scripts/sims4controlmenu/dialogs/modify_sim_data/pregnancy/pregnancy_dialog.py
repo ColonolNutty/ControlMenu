@@ -6,14 +6,14 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Callable
+
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
+    CommonDialogResponseOptionContext
 from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdUtils
 from sims4communitylib.utils.sims.common_sim_pregnancy_utils import CommonSimPregnancyUtils
-from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
-    CommonChooseButtonOptionDialog
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_button_option import \
+from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
-    CommonDialogResponseOptionContext
 from sims4controlmenu.commonlib.utils.common_sim_pregnancy_utils import S4CMSimPregnancyUtils
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.pregnancy.operations.clear_pregnancy import S4CMClearPregnancyOp
@@ -41,7 +41,8 @@ class S4CMPregnancyDialog(S4CMSimControlDialogBase):
         option_dialog: CommonChooseButtonOptionDialog,
         on_close: Callable[[], None],
         on_previous: Callable[[], None],
-        reopen: Callable[[], None]
+        reopen: Callable[[], None],
+        **__
     ) -> bool:
         def _operation_run(operation: S4CMSingleSimOperation):
             def _on_operation_complete(_: bool) -> None:

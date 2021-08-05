@@ -20,6 +20,11 @@ class S4CMServoAddOp(S4CMSingleSimOperation):
     """Add the Servo Occult to a Sim."""
 
     # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_modify_servo'
+
+    # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
         if CommonOccultUtils.is_robot(sim_info):
             on_completed(False)
@@ -44,6 +49,11 @@ class S4CMServoAddOp(S4CMSingleSimOperation):
 
 class S4CMServoRemoveOp(S4CMSingleSimOperation):
     """Remove the Servo Occult from a Sim."""
+
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_modify_servo'
 
     # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:

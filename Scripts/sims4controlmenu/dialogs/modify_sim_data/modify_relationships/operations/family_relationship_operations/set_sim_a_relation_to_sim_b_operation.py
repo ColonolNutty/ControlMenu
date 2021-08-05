@@ -11,18 +11,17 @@ from protocolbuffers.Localization_pb2 import LocalizedString
 from relationships.relationship_bit import RelationshipBit
 from sims.sim_info import SimInfo
 from sims4.resources import Types
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
+    CommonDialogResponseOptionContext
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
 from sims4communitylib.services.common_service import CommonService
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.common_resource_utils import CommonResourceUtils
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
-from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
-    CommonChooseButtonOptionDialog
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_button_option import \
+from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
-    CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.double_sim_operation import S4CMDoubleSimOperation
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.enums.string_identifiers import S4CMStringId

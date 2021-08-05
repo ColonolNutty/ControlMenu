@@ -7,20 +7,12 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Callable
 from sims.sim_info import SimInfo
-from sims4communitylib.logging.has_class_log import HasClassLog
-from sims4communitylib.mod_support.mod_identity import CommonModIdentity
-from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
-    CommonChooseButtonOptionDialog
-from sims4controlmenu.modinfo import ModInfo
+from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
+from sims4controlmenu.logging.has_s4cm_class_log import HasS4CMClassLog
 
 
-class S4CMSimControlDialogBase(HasClassLog):
+class S4CMSimControlDialogBase(HasS4CMClassLog):
     """ A control dialog for Sims. """
-
-    # noinspection PyMissingOrEmptyDocstring
-    @classmethod
-    def get_mod_identity(cls) -> CommonModIdentity:
-        return ModInfo.get_identity()
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
@@ -53,16 +45,19 @@ class S4CMSimControlDialogBase(HasClassLog):
         """Whether or not to include the previous button."""
         return True
 
-    def open(self) -> None:
+    def open(self, **__) -> None:
         """ Open the dialog. """
         def _reopen() -> None:
-            self.open()
+            self.open(**__)
 
         def _on_close() -> None:
             if self._on_close is not None:
                 self._on_close()
 
         def _on_previous() -> None:
+            if any(__):
+                self.open()
+                return
             if self._on_previous is not None:
                 self._on_previous()
 
@@ -75,7 +70,7 @@ class S4CMSimControlDialogBase(HasClassLog):
             on_close=_on_close
         )
 
-        if not self._setup_dialog(option_dialog, _on_close, _on_previous, _reopen):
+        if not self._setup_dialog(option_dialog, _on_close, _on_previous, _reopen, **__):
             _on_previous()
             return
 
@@ -92,6 +87,7 @@ class S4CMSimControlDialogBase(HasClassLog):
         option_dialog: CommonChooseButtonOptionDialog,
         on_close: Callable[[], None],
         on_previous: Callable[[], None],
-        reopen: Callable[[], None]
+        reopen: Callable[[], None],
+        **__
     ) -> bool:
         raise NotImplementedError()

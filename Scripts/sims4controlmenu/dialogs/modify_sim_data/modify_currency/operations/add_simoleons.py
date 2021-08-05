@@ -21,6 +21,11 @@ class S4CMAddSimoleonsOp(S4CMSingleSimOperation):
     """Add simoleons to the household of a Sim."""
 
     # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_add_simoleons'
+
+    # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
         if not CommonHouseholdUtils.has_household(sim_info):
             on_completed(False)

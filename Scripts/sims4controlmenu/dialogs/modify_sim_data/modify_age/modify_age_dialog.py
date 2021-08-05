@@ -6,11 +6,10 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Callable
-from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
-    CommonChooseButtonOptionDialog
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_button_option import \
+from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
@@ -35,7 +34,8 @@ class S4CMModifyAgeDialog(S4CMSimControlDialogBase):
         option_dialog: CommonChooseButtonOptionDialog,
         on_close: Callable[[], None],
         on_previous: Callable[[], None],
-        reopen: Callable[[], None]
+        reopen: Callable[[], None],
+        **__
     ) -> bool:
         option_dialog.add_option(
             CommonDialogButtonOption(

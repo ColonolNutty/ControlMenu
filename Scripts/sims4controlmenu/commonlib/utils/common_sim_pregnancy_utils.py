@@ -53,7 +53,7 @@ class S4CMSimPregnancyUtils:
                 or not S4CMSimPregnancyUtils.can_create_pregnancy(sim_info_b, ignore_gender_options=ignore_gender_options):
             return False
         if not CommonSpeciesUtils.are_same_species(sim_info_a, sim_info_b):
-            # If both Sims are dogs, that is an ok combination.
+            # If both Sims are dogs, that is an ok combination, even though their species do not match.
             if not CommonSpeciesUtils.is_dog(sim_info_a) or not CommonSpeciesUtils.is_dog(sim_info_b):
                 return False
         if not S4CMSettingUtils.is_sim_allowed_to_perform_adult_sim_operations(sim_info_a) or not S4CMSettingUtils.is_sim_allowed_to_perform_adult_sim_operations(sim_info_b):

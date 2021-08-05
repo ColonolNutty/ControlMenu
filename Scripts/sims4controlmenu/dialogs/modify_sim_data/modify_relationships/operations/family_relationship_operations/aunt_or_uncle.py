@@ -10,17 +10,16 @@ from typing import Callable, Any, Union
 from protocolbuffers.Localization_pb2 import LocalizedString
 from sims.genealogy_tracker import genealogy_caching
 from sims.sim_info import SimInfo
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
+    CommonDialogResponseOptionContext
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
-from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
-    CommonChooseButtonOptionDialog
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_button_option import \
+from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
-    CommonDialogResponseOptionContext
-from sims4controlmenu.commonlib.utils.common_sim_genealogy_utils import CommonSimGenealogyUtils
+from sims4communitylib.utils.sims.common_sim_genealogy_utils import CommonSimGenealogyUtils
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.set_sim_a_relation_to_sim_b_operation import \
     S4CMSetSimAAsRelationToSimBOperation

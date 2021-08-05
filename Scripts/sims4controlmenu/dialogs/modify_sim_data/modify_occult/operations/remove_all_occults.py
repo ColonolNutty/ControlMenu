@@ -16,6 +16,11 @@ class S4CMRemoveAllOccultsOp(S4CMSingleSimOperation):
     """Remove All Occult Types from a Sim."""
 
     # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_remove_all_occults'
+
+    # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
         from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.mermaid import S4CMMermaidRemoveOp
         from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.servo import S4CMServoRemoveOp

@@ -10,12 +10,10 @@ from event_testing.results import TestResult
 from interactions.context import InteractionContext
 from sims.outfits.outfit_enums import OutfitCategory
 from sims.sim import Sim
-from sims.sim_info import SimInfo
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.cas.common_outfit_utils import CommonOutfitUtils
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
-from sims4communitylib.utils.sims.common_age_utils import CommonAgeUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4controlmenu.modinfo import ModInfo
 from sims4controlmenu.settings.setting_utils import S4CMSettingUtils
@@ -45,16 +43,21 @@ class S4CMChangeOutfitToNudeInteraction(CommonImmediateSuperInteraction):
             return TestResult.NONE
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
         if not S4CMSettingUtils.is_sim_allowed_to_perform_adult_sim_operations(target_sim_info):
-            cls.get_log().debug('Failed, Target Sim is not enabled for interactions.')
+            cls.get_log().format_with_message('Failed, Target Sim is not enabled for interactions.', target=target_sim_info)
             return TestResult.NONE
         if CommonOutfitUtils.is_wearing_bathing_outfit(target_sim_info):
-            cls.get_log().debug('Failed, Target Sim is already wearing their bathing outfit.')
+            cls.get_log().format_with_message('Failed, Target Sim is already wearing their bathing outfit.', target=target_sim_info)
             return TestResult.NONE
-        cls.get_log().debug('Success, can Change Outfit To Nude.')
+        cls.get_log().format_with_message('Success, can Change Outfit To Nude.', target=target_sim_info)
         return TestResult.TRUE
 
     # noinspection PyMissingOrEmptyDocstring
     def on_started(self, interaction_sim: Sim, interaction_target: Sim) -> bool:
         target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
-        CommonOutfitUtils.set_current_outfit(target_sim_info, (OutfitCategory.BATHING, 0))
+        bathing_outfit_category_and_index = (OutfitCategory.BATHING, 0)
+        if not CommonOutfitUtils.has_outfit(target_sim_info, bathing_outfit_category_and_index):
+            if not CommonOutfitUtils.generate_outfit(target_sim_info, bathing_outfit_category_and_index):
+                self.log.format_with_message('Failed to generate the bathing outfit for Sim.', sim=target_sim_info)
+                return False
+        CommonOutfitUtils.set_current_outfit(target_sim_info, bathing_outfit_category_and_index)
         return True

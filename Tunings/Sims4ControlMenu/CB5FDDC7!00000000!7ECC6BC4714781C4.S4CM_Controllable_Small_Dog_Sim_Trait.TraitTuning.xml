@@ -27,6 +27,12 @@
     <T>6031966473377133127<!--S4CM_Teleport_Sim_To_Active_Sim_Location--></T>
     <T>15781511002124322903<!--S4CM_Despawn_Sim--></T>
   </L>
+  <L n="conflicting_traits">
+    <T>15574809406792376117<!--S4CM_Controllable_Human_Sim_Trait--></T>
+    <T>1879637295353907744<!--S4CM_Controllable_Large_Dog_Sim_Trait--></T>
+    <T>17550349778453834118<!--S4CM_Controllable_Cat_Sim_Trait--></T>
+    <T>1545720938775768037<!--S4CM_Controllable_Fox_Sim_Trait--></T>
+  </L>
   <T n="buffs_add_on_spawn_only">False</T>
   <T n="display_name">0x0EBA1BD9<!--S4CM Controllable--></T>
   <T n="display_name_gender_neutral">0x0EBA1BD9<!--S4CM Controllable--></T>

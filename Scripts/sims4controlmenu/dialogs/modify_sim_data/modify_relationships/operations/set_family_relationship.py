@@ -8,6 +8,8 @@ Copyright (c) COLONOLNUTTY
 from typing import Callable, Any, Tuple
 from sims.sim_info import SimInfo
 from sims4communitylib.dialogs.ok_cancel_dialog import CommonOkCancelDialog
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
+    CommonDialogResponseOptionContext
 from sims4communitylib.dialogs.premade_dialogs.common_premade_choose_sim_option_dialog import \
     CommonPremadeChooseSimOptionDialog
 from sims4communitylib.modinfo import ModInfo
@@ -16,13 +18,10 @@ from sims4communitylib.utils.localization.common_localization_utils import Commo
 from sims4communitylib.utils.localization.common_localized_string_colors import CommonLocalizedStringColor
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
-from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
-    CommonChooseButtonOptionDialog
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_button_option import \
+from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
-    CommonDialogResponseOptionContext
-from sims4controlmenu.commonlib.utils.common_sim_genealogy_utils import CommonSimGenealogyUtils
+from sims4communitylib.utils.sims.common_sim_genealogy_utils import CommonSimGenealogyUtils
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.aunt_or_uncle import \
     S4CMSetSimAAsAuntOrUncleToSimBOp
@@ -62,6 +61,11 @@ from sims4controlmenu.settings.setting_utils import S4CMSettingUtils
 class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
     """Set a relationship level between two Sims."""
 
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_set_family_relations'
+
     @property
     def _relation_operations(self) -> Tuple[S4CMSetSimAAsRelationToSimBOperation]:
         result: Tuple[S4CMSetSimAAsRelationToSimBOperation] = (
@@ -88,89 +92,10 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
             if chosen_sim_info is None:
                 on_completed(False)
                 return
-
-            def _on_none_chosen(_: Any, __: Any):
-                try:
-                    CommonSimGenealogyUtils.remove_family_relations_with(sim_info, chosen_sim_info)
-                    CommonSimGenealogyUtils.remove_family_relations_with(chosen_sim_info, sim_info)
-                except Exception as ex:
-                    self.log.error('Failed to remove family relations', exception=ex)
-                _on_chosen(chosen_sim_info)
-
-            def _on_bit_chosen(_: Any, chosen_operation: S4CMSetSimAAsRelationToSimBOperation):
-                if _ is None or chosen_operation is None:
-                    return
-                if chosen_operation.has_relation(sim_info, chosen_sim_info):
-                    _on_chosen(chosen_sim_info)
-                    return
-
-                def _on_yes_selected(_: Any):
-                    if chosen_operation is None:
-                        _on_chosen(chosen_sim_info)
-
-                    def _on_completed(___: bool):
-                        _on_chosen(chosen_sim_info)
-
-                    chosen_operation.run(sim_info, chosen_sim_info, on_completed=_on_completed)
-
-                def _on_no_selected(_: Any):
-                    _on_chosen(chosen_sim_info)
-
-                confirmation = CommonOkCancelDialog(
-                    S4CMStringId.CONFIRMATION,
-                    S4CMSimControlMenuStringId.SIM_WILL_BECOME_RELATIONSHIP_TO_SIM_CONFIRMATION_TEXT,
-                    description_tokens=(sim_info, chosen_operation.get_display_name(chosen_sim_info, sim_info), chosen_sim_info),
-                    ok_text_identifier=S4CMStringId.YES,
-                    cancel_text_identifier=S4CMStringId.NO
-                )
-                confirmation.show(on_ok_selected=_on_yes_selected, on_cancel_selected=_on_no_selected)
-                return True
-
-            option_dialog = CommonChooseButtonOptionDialog(
-                ModInfo.get_identity(),
-                S4CMSimControlMenuStringId.CHOOSE_FAMILY_RELATION,
-                S4CMSimControlMenuStringId.CHOOSE_WHAT_SIM_WILL_BECOME_TO_SIM,
-                description_tokens=(sim_info, chosen_sim_info),
-                include_previous_button=True,
-                on_previous=lambda: on_completed(False),
-                on_close=lambda: on_completed(False)
-            )
-
-            option_dialog.add_option(
-                CommonDialogButtonOption(
-                    'None',
-                    None,
-                    CommonDialogResponseOptionContext(
-                        S4CMStringId.NONE
-                    ),
-                    on_chosen=_on_none_chosen
-                )
-            )
-
-            for relationship_operation in self._relation_operations:
-                relationship_operation: S4CMSetSimAAsRelationToSimBOperation = relationship_operation
-                display_name = relationship_operation.get_display_name(chosen_sim_info, sim_info)
-                has_relation = relationship_operation.has_relation(sim_info, chosen_sim_info)
-                option_dialog.add_option(
-                    CommonDialogButtonOption(
-                        str(relationship_operation.relationship_bit_id),
-                        relationship_operation,
-                        CommonDialogResponseOptionContext(
-                            CommonLocalizationUtils.colorize(display_name, CommonLocalizedStringColor.GREEN) if has_relation else display_name,
-                            disabled_text_identifier=relationship_operation.get_disabled_text(sim_info, chosen_sim_info)
-                        ),
-                        on_chosen=_on_bit_chosen
-                    )
-                )
-
-            if not option_dialog.has_options():
-                on_completed(False)
-                return
-
-            option_dialog.show(sim_info=sim_info)
+            self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
 
         def _is_allowed(target_sim_info: SimInfo):
-            return sim_info is not target_sim_info and S4CMSettingUtils.are_allowed_family_relationship_bits(sim_info, target_sim_info)
+            return self.can_run_with_sims(sim_info, target_sim_info)
 
         dialog = CommonPremadeChooseSimOptionDialog(
             S4CMSimControlMenuStringId.SET_FAMILY_RELATIONS,
@@ -189,3 +114,97 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
         dialog._internal_dialog._rows = tuple(sorted(dialog._internal_dialog._rows, key=lambda row: CommonSimNameUtils.get_full_name(CommonSimUtils.get_sim_info(row.sim_id))))
         dialog.show(sim_info=sim_info)
         return True
+
+    # noinspection PyMissingOrEmptyDocstring
+    def can_run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
+        return super().can_run_with_sims(sim_info_a, sim_info_b) and sim_info_a is not sim_info_b and S4CMSettingUtils.are_allowed_family_relationship_bits(sim_info_a, sim_info_b)
+
+    # noinspection PyMissingOrEmptyDocstring
+    def run_with_sim(self, sim_info: SimInfo, chosen_sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop):
+        def _on_none_chosen(_: Any, __: Any):
+            try:
+                CommonSimGenealogyUtils.remove_family_relations_with(sim_info, chosen_sim_info)
+                CommonSimGenealogyUtils.remove_family_relations_with(chosen_sim_info, sim_info)
+            except Exception as ex:
+                self.log.error('Failed to remove family relations', exception=ex)
+            self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
+
+        def _on_bit_chosen(_: Any, chosen_operation: S4CMSetSimAAsRelationToSimBOperation):
+            if _ is None or chosen_operation is None:
+                return
+            if chosen_operation.has_relation(sim_info, chosen_sim_info):
+                self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
+                return
+
+            def _on_yes_selected(_: Any):
+                if chosen_operation is None:
+                    self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
+                    return
+
+                def _on_completed(___: bool):
+                    self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
+
+                chosen_operation.run(sim_info, chosen_sim_info, on_completed=_on_completed)
+
+            def _on_no_selected(_: Any):
+                self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
+
+            confirmation = CommonOkCancelDialog(
+                S4CMStringId.CONFIRMATION,
+                S4CMSimControlMenuStringId.SIM_WILL_BECOME_RELATIONSHIP_TO_SIM_CONFIRMATION_TEXT,
+                description_tokens=(sim_info, chosen_operation.get_display_name(chosen_sim_info, sim_info), chosen_sim_info),
+                ok_text_identifier=S4CMStringId.YES,
+                cancel_text_identifier=S4CMStringId.NO
+            )
+            confirmation.show(on_ok_selected=_on_yes_selected, on_cancel_selected=_on_no_selected)
+            return True
+
+        option_dialog = CommonChooseButtonOptionDialog(
+            ModInfo.get_identity(),
+            S4CMSimControlMenuStringId.CHOOSE_FAMILY_RELATION,
+            S4CMSimControlMenuStringId.CHOOSE_WHAT_SIM_WILL_BECOME_TO_SIM,
+            description_tokens=(sim_info, chosen_sim_info),
+            include_previous_button=True,
+            on_previous=lambda: on_completed(False),
+            on_close=lambda: on_completed(False)
+        )
+
+        options = list()
+        has_a_relation = False
+        for relationship_operation in self._relation_operations:
+            relationship_operation: S4CMSetSimAAsRelationToSimBOperation = relationship_operation
+            display_name = relationship_operation.get_display_name(chosen_sim_info, sim_info)
+            has_relation = relationship_operation.has_relation(sim_info, chosen_sim_info)
+            if has_relation:
+                has_a_relation = True
+            options.append(
+                CommonDialogButtonOption(
+                    str(relationship_operation.relationship_bit_id),
+                    relationship_operation,
+                    CommonDialogResponseOptionContext(
+                        CommonLocalizationUtils.colorize(display_name, CommonLocalizedStringColor.GREEN) if has_relation else display_name,
+                        disabled_text_identifier=relationship_operation.get_disabled_text(sim_info, chosen_sim_info)
+                    ),
+                    on_chosen=_on_bit_chosen
+                )
+            )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'None',
+                None,
+                CommonDialogResponseOptionContext(
+                    CommonLocalizationUtils.colorize(S4CMStringId.NONE, CommonLocalizedStringColor.GREEN) if not has_a_relation else S4CMStringId.NONE,
+                ),
+                on_chosen=_on_none_chosen
+            )
+        )
+
+        for option in options:
+            option_dialog.add_option(option)
+
+        if not option_dialog.has_options():
+            on_completed(False)
+            return
+
+        option_dialog.show(sim_info=sim_info)

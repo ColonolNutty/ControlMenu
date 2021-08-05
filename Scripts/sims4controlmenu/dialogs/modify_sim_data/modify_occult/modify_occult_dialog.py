@@ -6,13 +6,13 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Callable
-from sims4communitylib.enums.common_occult_type import CommonOccultType
-from sims4controlmenu.commonlib.dialogs.option_dialogs.common_choose_button_option_dialog import \
-    CommonChooseButtonOptionDialog
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_button_option import \
-    CommonDialogButtonOption
-from sims4controlmenu.commonlib.dialogs.option_dialogs.options.common_dialog_response_option_context import \
+
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
+from sims4communitylib.enums.common_occult_type import CommonOccultType
+from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
+from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
+    CommonDialogButtonOption
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.remove_all_occults import S4CMRemoveAllOccultsOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.servo import S4CMServoAddOp
@@ -43,7 +43,8 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
         option_dialog: CommonChooseButtonOptionDialog,
         on_close: Callable[[], None],
         on_previous: Callable[[], None],
-        reopen: Callable[[], None]
+        reopen: Callable[[], None],
+        **__
     ) -> bool:
         def _operation_run(operation: S4CMSingleSimOperation):
             def _on_operation_complete(_: bool) -> None:

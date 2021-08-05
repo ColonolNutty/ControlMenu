@@ -9,7 +9,7 @@ from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBit
 from sims4communitylib.testing.common_assertion_utils import CommonAssertionUtils
 from sims4communitylib.testing.common_test_service import CommonTestService
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
-from sims4controlmenu.commonlib.utils.common_sim_genealogy_utils import CommonSimGenealogyUtils
+from sims4communitylib.utils.sims.common_sim_genealogy_utils import CommonSimGenealogyUtils
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.aunt_or_uncle import \
     S4CMSetSimAAsAuntOrUncleToSimBOp
 from sims4controlmenu.modinfo import ModInfo

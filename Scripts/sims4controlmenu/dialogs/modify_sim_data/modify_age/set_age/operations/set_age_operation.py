@@ -18,6 +18,11 @@ from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSi
 class S4CMSetAgeOp(S4CMSingleSimOperation):
     """Set the age of a Sim."""
 
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_set_age'
+
     @property
     def age(self) -> CommonAge:
         """The age to set the Sim to when this operation is run."""

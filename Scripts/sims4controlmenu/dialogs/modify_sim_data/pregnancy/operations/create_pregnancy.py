@@ -23,6 +23,11 @@ class S4CMCreatePregnancyOp(S4CMSingleSimOperation):
     """Clear a pregnancy in a Sim."""
 
     # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 's4cm_create_pregnancy'
+
+    # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
         if CommonSimPregnancyUtils.is_pregnant(sim_info):
             on_completed(False)
