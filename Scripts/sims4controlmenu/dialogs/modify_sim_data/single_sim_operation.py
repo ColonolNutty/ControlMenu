@@ -24,7 +24,7 @@ class S4CMSingleSimOperation(HasS4CMLog):
         """Apply the operation."""
         raise NotImplementedError()
 
-    def run_with_sim(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
         """Apply the operation while using a specified Sim."""
         return False
 

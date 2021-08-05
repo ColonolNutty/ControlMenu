@@ -63,7 +63,7 @@ class S4CMSetRelationshipLevelOp(S4CMSingleSimOperation):
                 self.log.format_with_message('No Sim chosen.', sim=sim_info, chosen_sim=chosen_sim_info)
                 on_completed(False)
                 return
-            self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
+            self.run_with_sims(sim_info, chosen_sim_info, on_completed=on_completed)
 
         def _is_allowed(target_sim_info: SimInfo) -> bool:
             return self.can_run_with_sims(sim_info, target_sim_info)
@@ -91,7 +91,7 @@ class S4CMSetRelationshipLevelOp(S4CMSingleSimOperation):
         return super().can_run_with_sims(sim_info_a, sim_info_b) and sim_info_a is not sim_info_b and self._is_allowed_relationship_track(sim_info_a, sim_info_b)
 
     # noinspection PyMissingOrEmptyDocstring
-    def run_with_sim(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop):
+    def run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop):
         relationship_track_id = self._determine_relationship_track(sim_info_a, sim_info_b)
         if relationship_track_id == -1:
             self.log.format_with_message('No relationship track id found between Sims.', sim=sim_info_a, chosen_sim=sim_info_b)

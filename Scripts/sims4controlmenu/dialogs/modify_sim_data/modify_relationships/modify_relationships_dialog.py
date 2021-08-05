@@ -16,6 +16,8 @@ from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_but
     CommonDialogButtonOption
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.forget_sims import S4CMForgetSimsOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.has_met import S4CMAddHasMetSimsOp, \
+    S4CMRemoveHasMetSimsOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.set_family_relationship import \
     S4CMSetFamilyRelationsBitOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.set_friendship_level import \
@@ -54,7 +56,7 @@ class S4CMModifyRelationshipsDialog(S4CMSimControlDialogBase):
                 reopen()
 
             if target_sim_info is not None:
-                operation.run_with_sim(self._sim_info, target_sim_info, on_completed=_on_operation_complete)
+                operation.run_with_sims(self._sim_info, target_sim_info, on_completed=_on_operation_complete)
             else:
                 operation.run(self._sim_info, on_completed=_on_operation_complete)
 
@@ -97,6 +99,30 @@ class S4CMModifyRelationshipsDialog(S4CMSimControlDialogBase):
                         on_chosen=lambda *_, **__: _operation_run(S4CMSetRomanceLevelOp())
                     )
                 )
+
+        if (target_sim_info is None and S4CMAddHasMetSimsOp().can_run_with_sim(self._sim_info)) or S4CMAddHasMetSimsOp().can_run_with_sims(self._sim_info, target_sim_info):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'AddHasMet',
+                    None,
+                    CommonDialogResponseOptionContext(
+                        S4CMSimControlMenuStringId.ADD_HAS_MET,
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(S4CMAddHasMetSimsOp())
+                )
+            )
+
+        if (target_sim_info is None and S4CMRemoveHasMetSimsOp().can_run_with_sim(self._sim_info)) or S4CMRemoveHasMetSimsOp().can_run_with_sims(self._sim_info, target_sim_info):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'RemoveHasMet',
+                    None,
+                    CommonDialogResponseOptionContext(
+                        S4CMSimControlMenuStringId.REMOVE_HAS_MET,
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(S4CMRemoveHasMetSimsOp())
+                )
+            )
 
         if (target_sim_info is None and S4CMSetFamilyRelationsBitOp().can_run_with_sim(self._sim_info)) or S4CMSetFamilyRelationsBitOp().can_run_with_sims(self._sim_info, target_sim_info):
             option_dialog.add_option(

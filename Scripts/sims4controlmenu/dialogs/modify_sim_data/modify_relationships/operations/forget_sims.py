@@ -61,7 +61,7 @@ class S4CMForgetSimsOp(S4CMSingleSimOperation):
         return sim_info_a is not sim_info_b and any(services.relationship_service().get_all_bits(sim_a_id, target_sim_id=sim_b_id)) or any(services.relationship_service().get_all_bits(sim_b_id, target_sim_id=sim_a_id))
 
     # noinspection PyMissingOrEmptyDocstring
-    def run_with_sim(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
         on_completed(self._run_with_sims(sim_info_a, (sim_info_b,)))
         return True
 

@@ -92,7 +92,7 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
             if chosen_sim_info is None:
                 on_completed(False)
                 return
-            self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
+            self.run_with_sims(sim_info, chosen_sim_info, on_completed=on_completed)
 
         def _is_allowed(target_sim_info: SimInfo):
             return self.can_run_with_sims(sim_info, target_sim_info)
@@ -120,34 +120,34 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
         return super().can_run_with_sims(sim_info_a, sim_info_b) and sim_info_a is not sim_info_b and S4CMSettingUtils.are_allowed_family_relationship_bits(sim_info_a, sim_info_b)
 
     # noinspection PyMissingOrEmptyDocstring
-    def run_with_sim(self, sim_info: SimInfo, chosen_sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop):
+    def run_with_sims(self, sim_info: SimInfo, chosen_sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop):
         def _on_none_chosen(_: Any, __: Any):
             try:
                 CommonSimGenealogyUtils.remove_family_relations_with(sim_info, chosen_sim_info)
                 CommonSimGenealogyUtils.remove_family_relations_with(chosen_sim_info, sim_info)
             except Exception as ex:
                 self.log.error('Failed to remove family relations', exception=ex)
-            self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
+            self.run_with_sims(sim_info, chosen_sim_info, on_completed=on_completed)
 
         def _on_bit_chosen(_: Any, chosen_operation: S4CMSetSimAAsRelationToSimBOperation):
             if _ is None or chosen_operation is None:
                 return
             if chosen_operation.has_relation(sim_info, chosen_sim_info):
-                self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
+                self.run_with_sims(sim_info, chosen_sim_info, on_completed=on_completed)
                 return
 
             def _on_yes_selected(_: Any):
                 if chosen_operation is None:
-                    self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
+                    self.run_with_sims(sim_info, chosen_sim_info, on_completed=on_completed)
                     return
 
                 def _on_completed(___: bool):
-                    self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
+                    self.run_with_sims(sim_info, chosen_sim_info, on_completed=on_completed)
 
                 chosen_operation.run(sim_info, chosen_sim_info, on_completed=_on_completed)
 
             def _on_no_selected(_: Any):
-                self.run_with_sim(sim_info, chosen_sim_info, on_completed=on_completed)
+                self.run_with_sims(sim_info, chosen_sim_info, on_completed=on_completed)
 
             confirmation = CommonOkCancelDialog(
                 S4CMStringId.CONFIRMATION,
