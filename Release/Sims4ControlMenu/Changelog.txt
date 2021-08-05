@@ -2,7 +2,12 @@ Version 1.2:
 - Added Fox support for the Control Menu
 - The Set Age dialog will now only show the ages available for Sims
   - i.e. Child, Adult, Elder for Pets, Adult, Elder for Foxes, and all of them for Human Sims.
-- S4CM now requires at least version 1.72tb1 of S4CL
+- Added a Relationship With <Sim> option to the Modify Relationships dialog for quickly modifying relationship things for the Active Sim with the Target Sim
+- When two Sims have no Family Relations to each other, the None option will be shown in green now.
+- When running the Change Into Nude interaction, S4CM will now generate a Bathing outfit for Sims that do not have one already.
+- Forget Sims now removes family relationships as well.
+- Setting friendship levels between Fox Sims and Human Sims now works as it should.
+- S4CM now requires at least version 1.72 of S4CL
 
 Version 1.1:
 - Added Change Outfit and Change into Nude interactions to Sims.
