@@ -133,6 +133,13 @@ class S4CMSimControlMenuStringId(CommonInt):
     # Tokens: {0.String} (Trait Display Name) {1.String} (Trait Id) {2.String} (Trait Tuning Name) from {3.SimFirstName} (Sim)
     ARE_YOU_SURE_YOU_WANT_TO_REMOVE_TRAIT = 0x7C089D5A
 
+    SET_PERSONALITY_TRAITS = 0x20CCE602
+    # Tokens: {0.String} (Max Num Of Personality Traits)
+    SET_PERSONALITY_TRAITS_MAX = 0x84DD2C14
+    SET_PERSONALITY_TRAITS_TITLE = 0xF148D57D
+    # Tokens: {0.SimFirstName} (Sim)
+    SET_PERSONALITY_TRAITS_DESCRIPTION = 0x8DEFA22D
+
     # Buffs
     MODIFY_BUFFS = 0x399E3051
     REMOVE_BUFFS = 0xB7D6BB0B

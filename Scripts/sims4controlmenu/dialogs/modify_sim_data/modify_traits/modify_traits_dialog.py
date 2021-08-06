@@ -12,6 +12,8 @@ from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
+from sims4controlmenu.dialogs.modify_sim_data.modify_traits.operations.set_personality_traits import \
+    S4CMSetPersonalityTraitsSimOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_traits.operations.remove_traits import S4CMRemoveTraitsSimOp
 from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
@@ -43,6 +45,18 @@ class S4CMModifyTraitsDialog(S4CMSimControlDialogBase):
                 reopen()
 
             operation.run(self._sim_info, on_completed=_on_operation_complete)
+
+        if S4CMSetPersonalityTraitsSimOp().can_run_with_sim(self._sim_info):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'AddTraits',
+                    None,
+                    CommonDialogResponseOptionContext(
+                        S4CMSimControlMenuStringId.SET_PERSONALITY_TRAITS
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(S4CMSetPersonalityTraitsSimOp())
+                )
+            )
 
         if S4CMRemoveTraitsSimOp().can_run_with_sim(self._sim_info):
             option_dialog.add_option(

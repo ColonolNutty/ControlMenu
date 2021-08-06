@@ -57,8 +57,8 @@ class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
                 CommonBasicNotification(
                     S4CMSimControlMenuStringId.REMOVED_TRAIT_TITLE,
                     S4CMSimControlMenuStringId.REMOVED_TRAIT_DESCRIPTION,
-                    title_tokens=(chosen_trait.display_name._string_id, str(_trait_id)),
-                    description_tokens=(CommonSimUtils.get_sim_instance(sim_info), chosen_trait.display_name._string_id, str(_trait_id), CommonTraitUtils.get_trait_name(chosen_trait))
+                    title_tokens=(chosen_trait.display_name(sim_info), str(_trait_id)),
+                    description_tokens=(CommonSimUtils.get_sim_instance(sim_info), chosen_trait.display_name(sim_info), str(_trait_id), CommonTraitUtils.get_trait_name(chosen_trait))
                 ).show(icon=IconInfoData(obj_instance=CommonSimUtils.get_sim_instance(sim_info)))
                 _reopen()
 
@@ -69,7 +69,7 @@ class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
             confirmation = CommonOkCancelDialog(
                 S4CMStringId.CONFIRMATION,
                 S4CMSimControlMenuStringId.ARE_YOU_SURE_YOU_WANT_TO_REMOVE_TRAIT,
-                description_tokens=(chosen_trait.display_name._string_id, str(_trait_id), CommonTraitUtils.get_trait_name(chosen_trait), CommonSimUtils.get_sim_instance(sim_info)),
+                description_tokens=(chosen_trait.display_name(sim_info), str(_trait_id), CommonTraitUtils.get_trait_name(chosen_trait), CommonSimUtils.get_sim_instance(sim_info)),
                 ok_text_identifier=S4CMStringId.YES,
                 cancel_text_identifier=S4CMStringId.NO
             )
@@ -90,13 +90,13 @@ class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
                 if not self._is_trait_allowed_for_removal(trait):
                     continue
                 # noinspection PyUnresolvedReferences
-                display_name_id = trait.display_name._string_id
-                if display_name_id == 0:
+                display_name = trait.display_name(sim_info)
+                if display_name.hash == 0:
                     # noinspection PyUnresolvedReferences
                     display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_PAREN_STRING, tokens=(CommonTraitUtils.get_trait_name(trait), trait.trait_type.name))
                 else:
                     # noinspection PyUnresolvedReferences
-                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_PAREN_STRING, tokens=(CommonLocalizationUtils.create_localized_string(display_name_id, tokens=(sim_info,)), trait.trait_type.name))
+                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_PAREN_STRING, tokens=(CommonLocalizationUtils.create_localized_string(display_name, tokens=(sim_info,)), trait.trait_type.name))
                 # noinspection PyUnresolvedReferences
                 description = CommonLocalizationUtils.create_localized_string(trait.trait_description._string_id, tokens=(sim_info,))
                 # noinspection PyUnresolvedReferences
