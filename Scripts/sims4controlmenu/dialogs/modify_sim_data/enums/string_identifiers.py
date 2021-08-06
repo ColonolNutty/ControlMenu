@@ -119,3 +119,19 @@ class S4CMSimControlMenuStringId(CommonInt):
     # Outfit
     CHANGE_OUTFIT = 94181272
     CHOOSE_OUTFIT = 2988267483
+
+    # Traits
+    MODIFY_TRAITS = 0xE11E0436
+    REMOVE_TRAITS = 0xF6CBA3F4
+    # Tokens: {0.String} (Trait Display Name) {1.String} (Trait Id)
+    REMOVED_TRAIT_TITLE = 0xDA729790
+    # Tokens: {0.SimFirstName} (Sim) {1.String} (Trait Display Name) {2.String} (Trait Id) {3.String} (Trait Tuning Name)
+    REMOVED_TRAIT_DESCRIPTION = 0x07FF910B
+    # Tokens: {0.String} ({1.String})
+    STRING_PAREN_STRING = 0x1A406429
+    # Tokens: {0.String} (Trait Display Name) {1.String} (Trait Id) {2.String} (Trait Tuning Name) from {3.SimFirstName} (Sim)
+    ARE_YOU_SURE_YOU_WANT_TO_REMOVE_TRAIT = 0x7C089D5A
+
+    # Buffs
+    MODIFY_BUFFS = 0x399E3051
+    REMOVE_BUFFS = 0xB7D6BB0B

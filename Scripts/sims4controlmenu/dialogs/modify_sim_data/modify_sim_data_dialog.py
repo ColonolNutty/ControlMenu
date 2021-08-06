@@ -17,6 +17,7 @@ from sims4controlmenu.dialogs.modify_sim_data.modify_currency.modify_currency_di
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.modify_occult_dialog import S4CMModifyOccultDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.modify_relationships_dialog import \
     S4CMModifyRelationshipsDialog
+from sims4controlmenu.dialogs.modify_sim_data.modify_traits.modify_traits_dialog import S4CMModifyTraitsDialog
 from sims4controlmenu.dialogs.modify_sim_data.pregnancy.pregnancy_dialog import S4CMPregnancyDialog
 from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
@@ -54,6 +55,18 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
                 on_chosen=lambda *_, **__: S4CMModifyAgeDialog(self._sim_info, on_previous=reopen).open()
             )
         )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'RemoveTraits',
+                None,
+                CommonDialogResponseOptionContext(
+                    S4CMSimControlMenuStringId.MODIFY_TRAITS,
+                ),
+                on_chosen=lambda *_, **__: S4CMModifyTraitsDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+
         option_dialog.add_option(
             CommonDialogButtonOption(
                 'ModifyCurrency',
