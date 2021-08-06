@@ -7,6 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Callable, Any
 
+from buffs.buff import Buff
 from distributor.shared_messages import IconInfoData
 from sims.sim_info import SimInfo
 from sims4communitylib.dialogs.ok_cancel_dialog import CommonOkCancelDialog
@@ -14,28 +15,26 @@ from sims4communitylib.dialogs.option_dialogs.common_choose_object_option_dialog
 from sims4communitylib.dialogs.option_dialogs.options.common_dialog_option_context import CommonDialogOptionContext
 from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_select_option import \
     CommonDialogSelectOption
-from sims4communitylib.enums.traits_enum import CommonTraitId
+from sims4communitylib.enums.buffs_enum import CommonBuffId
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.notifications.common_basic_notification import CommonBasicNotification
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.common_icon_utils import CommonIconUtils
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
-from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
+from sims4communitylib.utils.sims.common_buff_utils import CommonBuffUtils
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
-from sims4controlmenu.enums.trait_ids import S4CMTraitId
-from traits.traits import Trait
 
 
-class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
-    """Set a relationship level between two Sims."""
+class S4CMRemoveBuffsSimOp(S4CMSingleSimOperation):
+    """Remove Buffs from a Sim."""
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def log_identifier(self) -> str:
-        return 's4cm_remove_traits_sim'
+        return 's4cm_remove_buffs_sim'
 
     # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
@@ -46,19 +45,19 @@ class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
             on_completed(False)
 
         @CommonExceptionHandler.catch_exceptions(self.mod_identity, fallback_return=False)
-        def _on_chosen(_trait_id: int, chosen_trait: Trait):
-            if chosen_trait is None:
+        def _on_chosen(_buff_id: int, chosen_buff: Buff):
+            if chosen_buff is None:
                 on_completed(False)
                 return
 
             def _on_yes_selected(_: Any):
-                CommonTraitUtils.remove_trait(sim_info, _trait_id)
+                CommonBuffUtils.remove_buff(sim_info, _buff_id)
                 # noinspection PyUnresolvedReferences
                 CommonBasicNotification(
-                    S4CMSimControlMenuStringId.REMOVED_TRAIT_TITLE,
-                    S4CMSimControlMenuStringId.REMOVED_TRAIT_DESCRIPTION,
-                    title_tokens=(chosen_trait.display_name._string_id, str(_trait_id)),
-                    description_tokens=(CommonSimUtils.get_sim_instance(sim_info), chosen_trait.display_name._string_id, str(_trait_id), CommonTraitUtils.get_trait_name(chosen_trait))
+                    S4CMSimControlMenuStringId.REMOVED_BUFF_TITLE,
+                    S4CMSimControlMenuStringId.REMOVED_BUFF_DESCRIPTION,
+                    title_tokens=(chosen_buff.buff_name(sim_info), str(_buff_id)),
+                    description_tokens=(CommonSimUtils.get_sim_instance(sim_info), chosen_buff.buff_name(sim_info), str(_buff_id), CommonBuffUtils.get_buff_name(chosen_buff))
                 ).show(icon=IconInfoData(obj_instance=CommonSimUtils.get_sim_instance(sim_info)))
                 _reopen()
 
@@ -68,47 +67,47 @@ class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
             # noinspection PyUnresolvedReferences
             confirmation = CommonOkCancelDialog(
                 S4CMStringId.CONFIRMATION,
-                S4CMSimControlMenuStringId.ARE_YOU_SURE_YOU_WANT_TO_REMOVE_TRAIT,
-                description_tokens=(chosen_trait.display_name._string_id, str(_trait_id), CommonTraitUtils.get_trait_name(chosen_trait), CommonSimUtils.get_sim_instance(sim_info)),
+                S4CMSimControlMenuStringId.ARE_YOU_SURE_YOU_WANT_TO_REMOVE_BUFF,
+                description_tokens=(chosen_buff.buff_name(sim_info), str(_buff_id), CommonBuffUtils.get_buff_name(chosen_buff), CommonSimUtils.get_sim_instance(sim_info)),
                 ok_text_identifier=S4CMStringId.YES,
                 cancel_text_identifier=S4CMStringId.NO
             )
             confirmation.show(on_ok_selected=_on_yes_selected, on_cancel_selected=_on_no_selected)
 
         option_dialog = CommonChooseObjectOptionDialog(
-            S4CMSimControlMenuStringId.REMOVE_TRAITS,
+            S4CMSimControlMenuStringId.REMOVE_BUFFS,
             0,
             on_close=_on_close,
             mod_identity=self.mod_identity,
             per_page=20000
         )
 
-        for trait in sorted(CommonTraitUtils.get_traits(sim_info), key=lambda _trait: _trait.trait_type.name):
-            trait: Trait = trait
-            trait_id = CommonTraitUtils.get_trait_id(trait)
+        for buff in sorted(CommonBuffUtils.get_buffs(sim_info), key=lambda _buff: CommonBuffUtils.get_buff_name(_buff)):
+            buff: Buff = buff
+            buff_id = CommonBuffUtils.get_buff_id(buff)
             try:
-                if not self._is_trait_allowed_for_removal(trait_id):
+                if not self._is_buff_allowed_for_removal(buff):
                     continue
                 # noinspection PyUnresolvedReferences
-                display_name_id = trait.display_name._string_id
-                if display_name_id == 0:
+                display_name = buff.buff_name(sim_info)
+                if display_name.hash == 0:
                     # noinspection PyUnresolvedReferences
-                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_PAREN_STRING, tokens=(CommonTraitUtils.get_trait_name(trait), trait.trait_type.name))
+                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_PAREN_STRING, tokens=(CommonBuffUtils.get_buff_name(buff), str(buff_id)))
                 else:
                     # noinspection PyUnresolvedReferences
-                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_PAREN_STRING, tokens=(CommonLocalizationUtils.create_localized_string(display_name_id, tokens=(sim_info,)), trait.trait_type.name))
+                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_PAREN_STRING, tokens=(display_name, str(buff_id)))
                 # noinspection PyUnresolvedReferences
-                description = CommonLocalizationUtils.create_localized_string(trait.trait_description._string_id, tokens=(sim_info,))
+                description = CommonLocalizationUtils.create_localized_string(buff.buff_description, tokens=(sim_info,))
                 # noinspection PyUnresolvedReferences
-                icon = trait.icon or CommonIconUtils.load_question_mark_icon()
+                icon = buff.icon or CommonIconUtils.load_question_mark_icon()
                 # MISSING ICON Identifier
                 _MISSING_IMAGE_ICON_ID = 3526464109639239417
                 if icon.instance == 0 or icon.instance == _MISSING_IMAGE_ICON_ID:
                     icon = CommonIconUtils.load_question_mark_icon()
                 option_dialog.add_option(
                     CommonDialogSelectOption(
-                        trait_id,
-                        trait,
+                        buff_id,
+                        buff,
                         CommonDialogOptionContext(
                             display_name,
                             description,
@@ -118,7 +117,7 @@ class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
                     )
                 )
             except Exception as ex:
-                self.log.format_error_with_message('Failed to display trait.', trait=trait, trait_name=CommonTraitUtils.get_trait_name(trait), trait_id=trait_id, exception=ex)
+                self.log.format_error_with_message('Failed to display buff.', buff=buff, buff_name=CommonBuffUtils.get_buff_name(buff), buff_id=buff_id, exception=ex)
 
         if not option_dialog.has_options():
             on_completed(False)
@@ -126,38 +125,15 @@ class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
         option_dialog.show(sim_info=sim_info)
         return True
 
-    def _is_trait_allowed_for_removal(self, trait_id: int) -> bool:
-        return trait_id not in (
-            CommonTraitId.BABY,
-            CommonTraitId.TODDLER,
-            CommonTraitId.CHILD,
-            CommonTraitId.YOUNG_ADULT,
-            CommonTraitId.ADULT,
-            CommonTraitId.ELDER,
-            CommonTraitId.GENDER_FEMALE,
-            CommonTraitId.GENDER_MALE,
-            CommonTraitId.SPECIES_HUMAN,
-            CommonTraitId.SPECIES_EXTENDED_SMALL_DOGS,
-            CommonTraitId.SPECIES_EXTENDED_LARGE_DOGS,
-            CommonTraitId.SPECIES_DOG,
-            CommonTraitId.SPECIES_CAT,
-            CommonTraitId.SPECIES_FOX,
-            CommonTraitId.OCCULT_MERMAID,
-            CommonTraitId.OCCULT_MERMAID_TYAE,
-            CommonTraitId.OCCULT_NO_OCCULT,
-            CommonTraitId.OCCULT_ROBOT,
-            CommonTraitId.OCCULT_VAMPIRE,
-            CommonTraitId.OCCULT_WITCH,
-            CommonTraitId.OCCULT_ALIEN,
-            CommonTraitId.BATUU_ALIEN,
-            CommonTraitId.S4CL_MAIN_TRAIT_HUMAN,
-            CommonTraitId.S4CL_MAIN_TRAIT_LARGE_DOG,
-            CommonTraitId.S4CL_MAIN_TRAIT_SMALL_DOG,
-            CommonTraitId.S4CL_MAIN_TRAIT_CAT,
-            CommonTraitId.S4CL_MAIN_TRAIT_FOX,
-            S4CMTraitId.S4CM_CONTROLLABLE_HUMAN_SIM,
-            S4CMTraitId.S4CM_CONTROLLABLE_LARGE_DOG_SIM,
-            S4CMTraitId.S4CM_CONTROLLABLE_SMALL_DOG_SIM,
-            S4CMTraitId.S4CM_CONTROLLABLE_CAT_SIM,
-            S4CMTraitId.S4CM_CONTROLLABLE_FOX_SIM
+    def _is_buff_allowed_for_removal(self, buff: Buff) -> bool:
+        buff_id = CommonBuffUtils.get_buff_id(buff)
+        return buff_id not in (
+            CommonBuffId.ALIEN_IS_ALIEN,
+            CommonBuffId.TRAIT_BABY,
+            CommonBuffId.TRAIT_TODDLER,
+            CommonBuffId.TRAIT_CHILD,
+            CommonBuffId.TRAIT_TEEN,
+            CommonBuffId.TRAIT_YOUNG_ADULT,
+            CommonBuffId.TRAIT_ADULT,
+            CommonBuffId.TRAIT_ELDER
         )

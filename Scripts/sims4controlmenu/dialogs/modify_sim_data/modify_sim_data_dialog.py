@@ -13,6 +13,7 @@ from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_res
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
 from sims4controlmenu.dialogs.modify_sim_data.modify_age.modify_age_dialog import S4CMModifyAgeDialog
+from sims4controlmenu.dialogs.modify_sim_data.modify_buffs.modify_buffs_dialog import S4CMModifyBuffsDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_currency.modify_currency_dialog import S4CMModifyCurrencyDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.modify_occult_dialog import S4CMModifyOccultDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.modify_relationships_dialog import \
@@ -58,12 +59,23 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'RemoveTraits',
+                'ModifyTraits',
                 None,
                 CommonDialogResponseOptionContext(
                     S4CMSimControlMenuStringId.MODIFY_TRAITS,
                 ),
                 on_chosen=lambda *_, **__: S4CMModifyTraitsDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'ModifyBuffs',
+                None,
+                CommonDialogResponseOptionContext(
+                    S4CMSimControlMenuStringId.MODIFY_BUFFS,
+                ),
+                on_chosen=lambda *_, **__: S4CMModifyBuffsDialog(self._sim_info, on_previous=reopen).open()
             )
         )
 

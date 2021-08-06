@@ -14,6 +14,9 @@ class S4CMSimControlMenuStringId(CommonInt):
     .. note:: These identifiers point to strings within String Tables within package files.
 
     """
+    # Tokens: {0.String} ({1.String})
+    STRING_PAREN_STRING = 0x1A406429
+
     # Occult
     MODIFY_OCCULT = 879006419
     REMOVE_ALL_OCCULTS = 189227297
@@ -127,11 +130,15 @@ class S4CMSimControlMenuStringId(CommonInt):
     REMOVED_TRAIT_TITLE = 0xDA729790
     # Tokens: {0.SimFirstName} (Sim) {1.String} (Trait Display Name) {2.String} (Trait Id) {3.String} (Trait Tuning Name)
     REMOVED_TRAIT_DESCRIPTION = 0x07FF910B
-    # Tokens: {0.String} ({1.String})
-    STRING_PAREN_STRING = 0x1A406429
     # Tokens: {0.String} (Trait Display Name) {1.String} (Trait Id) {2.String} (Trait Tuning Name) from {3.SimFirstName} (Sim)
     ARE_YOU_SURE_YOU_WANT_TO_REMOVE_TRAIT = 0x7C089D5A
 
     # Buffs
     MODIFY_BUFFS = 0x399E3051
     REMOVE_BUFFS = 0xB7D6BB0B
+    # Tokens: {0.String} (Buff Display Name) {1.String} (Buff Id)
+    REMOVED_BUFF_TITLE = 0x0A91F13F
+    # Tokens: {0.SimFirstName} (Sim) {1.String} (Buff Display Name) {2.String} (Buff Id) {3.String} (Buff Tuning Name)
+    REMOVED_BUFF_DESCRIPTION = 0xEFA4E682
+    # Tokens: {0.String} (Buff Display Name) {1.String} (Buff Id) {2.String} (Buff Tuning Name) from {3.SimFirstName} (Sim)
+    ARE_YOU_SURE_YOU_WANT_TO_REMOVE_BUFF = 0x7C193D8F

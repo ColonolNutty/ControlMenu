@@ -12,23 +12,23 @@ from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
-from sims4controlmenu.dialogs.modify_sim_data.modify_traits.operations.remove_traits import S4CMRemoveTraitsSimOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_buffs.operations.remove_buffs import S4CMRemoveBuffsSimOp
 from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
 
 
-class S4CMModifyTraitsDialog(S4CMSimControlDialogBase):
+class S4CMModifyBuffsDialog(S4CMSimControlDialogBase):
     """ The control dialog for Sims. """
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_log_identifier(cls) -> str:
-        return 's4cm_modify_traits_dialog'
+        return 's4cm_modify_buffs_dialog'
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return S4CMSimControlMenuStringId.MODIFY_TRAITS
+        return S4CMSimControlMenuStringId.MODIFY_BUFFS
 
     def _setup_dialog(
         self,
@@ -44,15 +44,15 @@ class S4CMModifyTraitsDialog(S4CMSimControlDialogBase):
 
             operation.run(self._sim_info, on_completed=_on_operation_complete)
 
-        if S4CMRemoveTraitsSimOp().can_run_with_sim(self._sim_info):
+        if S4CMRemoveBuffsSimOp().can_run_with_sim(self._sim_info):
             option_dialog.add_option(
                 CommonDialogButtonOption(
-                    'RemoveTraits',
+                    'RemoveBuffs',
                     None,
                     CommonDialogResponseOptionContext(
-                        S4CMSimControlMenuStringId.REMOVE_TRAITS
+                        S4CMSimControlMenuStringId.REMOVE_BUFFS
                     ),
-                    on_chosen=lambda *_, **__: _operation_run(S4CMRemoveTraitsSimOp())
+                    on_chosen=lambda *_, **__: _operation_run(S4CMRemoveBuffsSimOp())
                 )
             )
         return True
