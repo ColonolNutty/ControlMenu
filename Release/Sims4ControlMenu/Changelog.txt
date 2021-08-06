@@ -7,7 +7,12 @@ Version 1.2:
 - When running the Change Into Nude interaction, S4CM will now generate a Bathing outfit for Sims that do not have one already.
 - Forget Sims now removes family relationships as well.
 - Setting friendship levels between Fox Sims and Human Sims now works as it should.
-- S4CM now requires at least version 1.72 of S4CL
+- Added 'Add "Has Met"' and 'Remove "Has Met"' options to the relationship dialog
+- Added an interaction to Summon or Teleport Sims to the Active Sim from the Relationship Panel.
+- Added the ability to set the personality traits of a Sim. Modify Sim Data -> Modify Traits -> Set Personality Traits.
+- Added the ability to Remove Traits from Sims via Modify Sim Data -> Modify Traits -> Remove Traits
+- Added the ability to Remove Buffs from Sims via Modify Sim Data -> Modify Buffs -> Remove Buffs
+- S4CM now requires at least version 1.73 of S4CL
 
 Version 1.1:
 - Added Change Outfit and Change into Nude interactions to Sims.
