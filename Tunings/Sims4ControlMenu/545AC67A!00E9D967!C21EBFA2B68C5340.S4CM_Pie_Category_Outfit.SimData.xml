@@ -3,7 +3,7 @@
   <Instances>
     <I name="S4CM_Pie_Category_Outfit" schema="PieMenuCategory" type="Object">
       <T name="_collapsible">1</T>
-      <T name="_display_name">0xE7049E73</T>
+      <T name="_display_name">0xC36073D5</T>
       <T name="_display_priority">2000</T>
       <T name="_icon">00000000-00000000-C3096A2731F2B50A</T>
       <T name="_parent">0</T>
