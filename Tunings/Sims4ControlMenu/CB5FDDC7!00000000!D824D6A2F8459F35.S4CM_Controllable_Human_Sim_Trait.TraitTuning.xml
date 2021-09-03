@@ -26,6 +26,8 @@
     <T>3582704332436874322<!--S4CM_Change_Outfit_To_Nude--></T>
     <T>6031966473377133127<!--S4CM_Teleport_Sim_To_Active_Sim_Location--></T>
     <T>15781511002124322903<!--S4CM_Despawn_Sim--></T>
+    <T>12961205914651314787<!--S4CM_Add_Sim_To_Active_Household--></T>
+    <T>5204233062115170773<!--S4CM_Remove_Sim_From_Active_Household--></T>
   </L>
   <L n="conflicting_traits">
     <T>1879637295353907744<!--S4CM_Controllable_Large_Dog_Sim_Trait--></T>

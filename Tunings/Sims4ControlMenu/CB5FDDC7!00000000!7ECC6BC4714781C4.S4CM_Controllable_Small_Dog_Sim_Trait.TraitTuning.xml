@@ -14,7 +14,7 @@
   </L>
   <L n="actor_mixers">
     <U>
-      <T n="key">12547735952460538970<!--S4CM_Social_Super_petSocial_SimToPet_NonTouching_Sim--></T>
+      <T n="key">12550590284646806940<!--S4CM_Social_Super_petSocial_SimToPet_NonTouching_Pet--></T>
     </U>
     <U>
       <T n="key">163845<!--petSocial_PetToPet_SocialGroup--></T>
@@ -26,6 +26,8 @@
     <T>3582704332436874322<!--S4CM_Change_Outfit_To_Nude--></T>
     <T>6031966473377133127<!--S4CM_Teleport_Sim_To_Active_Sim_Location--></T>
     <T>15781511002124322903<!--S4CM_Despawn_Sim--></T>
+    <T>12961205914651314787<!--S4CM_Add_Sim_To_Active_Household--></T>
+    <T>5204233062115170773<!--S4CM_Remove_Sim_From_Active_Household--></T>
   </L>
   <L n="conflicting_traits">
     <T>15574809406792376117<!--S4CM_Controllable_Human_Sim_Trait--></T>
