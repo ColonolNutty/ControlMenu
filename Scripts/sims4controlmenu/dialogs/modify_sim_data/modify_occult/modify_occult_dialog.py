@@ -14,6 +14,7 @@ from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
+from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.plant_sim import S4CMPlantSimAddOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.remove_all_occults import S4CMRemoveAllOccultsOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.servo import S4CMServoAddOp
 from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
@@ -82,6 +83,17 @@ class S4CMModifyOccultDialog(S4CMSimControlDialogBase):
                     S4CMSimControlMenuStringId.BECOME_MERMAID
                 ),
                 on_chosen=lambda *_, **__: _operation_run(S4CMMermaidAddOp())
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'PlantSimAdd',
+                CommonOccultType.PLANT_SIM,
+                CommonDialogResponseOptionContext(
+                    S4CMSimControlMenuStringId.BECOME_PLANT_SIM
+                ),
+                on_chosen=lambda *_, **__: _operation_run(S4CMPlantSimAddOp())
             )
         )
 

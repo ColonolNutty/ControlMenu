@@ -87,8 +87,6 @@ class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
             trait: Trait = trait
             trait_id = CommonTraitUtils.get_trait_id(trait)
             try:
-                if not self._is_trait_allowed_for_removal(trait):
-                    continue
                 # noinspection PyUnresolvedReferences
                 display_name = trait.display_name(sim_info)
                 if display_name.hash == 0:
@@ -112,7 +110,8 @@ class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
                         CommonDialogOptionContext(
                             display_name,
                             description,
-                            icon=icon
+                            icon=icon,
+                            is_enabled=self._is_trait_allowed_for_removal(trait)
                         ),
                         on_chosen=_on_chosen
                     )
