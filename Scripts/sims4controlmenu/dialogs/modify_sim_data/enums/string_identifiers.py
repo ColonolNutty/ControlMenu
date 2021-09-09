@@ -15,7 +15,10 @@ class S4CMSimControlMenuStringId(CommonInt):
 
     """
     # Tokens: {0.String} ({1.String})
-    STRING_PAREN_STRING = 0x1A406429
+    STRING_SPACE_PAREN_STRING = 0x1A406429
+    # Tokens: {0.String}: {1.String}
+    STRING_COLON_SPACE_STRING = 0x6284ACBA
+    HIDDEN = 0xD7E16575
 
     # Occult
     MODIFY_OCCULT = 879006419

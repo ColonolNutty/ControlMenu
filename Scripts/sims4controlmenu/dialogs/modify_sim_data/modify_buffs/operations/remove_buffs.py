@@ -70,7 +70,8 @@ class S4CMRemoveBuffsSimOp(S4CMSingleSimOperation):
                 S4CMSimControlMenuStringId.ARE_YOU_SURE_YOU_WANT_TO_REMOVE_BUFF,
                 description_tokens=(chosen_buff.buff_name(sim_info), str(_buff_id), CommonBuffUtils.get_buff_name(chosen_buff), CommonSimUtils.get_sim_instance(sim_info)),
                 ok_text_identifier=S4CMStringId.YES,
-                cancel_text_identifier=S4CMStringId.NO
+                cancel_text_identifier=S4CMStringId.NO,
+                mod_identity=self.mod_identity
             )
             confirmation.show(on_ok_selected=_on_yes_selected, on_cancel_selected=_on_no_selected)
 
@@ -86,16 +87,14 @@ class S4CMRemoveBuffsSimOp(S4CMSingleSimOperation):
             buff: Buff = buff
             buff_id = CommonBuffUtils.get_buff_id(buff)
             try:
-                if not self._is_buff_allowed_for_removal(buff):
-                    continue
                 # noinspection PyUnresolvedReferences
                 display_name = buff.buff_name(sim_info)
                 if display_name.hash == 0:
                     # noinspection PyUnresolvedReferences
-                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_PAREN_STRING, tokens=(CommonBuffUtils.get_buff_name(buff), str(buff_id)))
+                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(CommonBuffUtils.get_buff_name(buff), str(buff_id)))
                 else:
                     # noinspection PyUnresolvedReferences
-                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_PAREN_STRING, tokens=(display_name, str(buff_id)))
+                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(display_name, str(buff_id)))
                 # noinspection PyUnresolvedReferences
                 description = CommonLocalizationUtils.create_localized_string(buff.buff_description, tokens=(sim_info,))
                 # noinspection PyUnresolvedReferences
@@ -111,7 +110,8 @@ class S4CMRemoveBuffsSimOp(S4CMSingleSimOperation):
                         CommonDialogOptionContext(
                             display_name,
                             description,
-                            icon=icon
+                            icon=icon,
+                            is_enabled=self._is_buff_allowed_for_removal(buff)
                         ),
                         on_chosen=_on_chosen
                     )

@@ -18,6 +18,8 @@ from sims4controlmenu.dialogs.modify_sim_data.modify_currency.modify_currency_di
 from sims4controlmenu.dialogs.modify_sim_data.modify_occult.modify_occult_dialog import S4CMModifyOccultDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.modify_relationships_dialog import \
     S4CMModifyRelationshipsDialog
+from sims4controlmenu.dialogs.modify_sim_data.modify_skills.enums.string_ids import S4CMSimModifySkillsStringId
+from sims4controlmenu.dialogs.modify_sim_data.modify_skills.modify_skills_dialog import S4CMModifySkillsDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_traits.modify_traits_dialog import S4CMModifyTraitsDialog
 from sims4controlmenu.dialogs.modify_sim_data.pregnancy.pregnancy_dialog import S4CMPregnancyDialog
 from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
@@ -89,6 +91,7 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
                 on_chosen=lambda *_, **__: S4CMModifyCurrencyDialog(self._sim_info, on_previous=reopen).open()
             )
         )
+
         option_dialog.add_option(
             CommonDialogButtonOption(
                 'ModifyOccult',
@@ -99,6 +102,7 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
                 on_chosen=lambda *_, **__: S4CMModifyOccultDialog(self._sim_info, on_previous=reopen).open()
             )
         )
+
         option_dialog.add_option(
             CommonDialogButtonOption(
                 'ModifyRelationships',
@@ -109,6 +113,18 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
                 on_chosen=lambda *_, **__: S4CMModifyRelationshipsDialog(self._sim_info, on_previous=reopen).open()
             )
         )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'ModifySkills',
+                None,
+                CommonDialogResponseOptionContext(
+                    S4CMSimModifySkillsStringId.MODIFY_SKILLS,
+                ),
+                on_chosen=lambda *_, **__: S4CMModifySkillsDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+
         if S4CMSettingUtils.is_sim_allowed_to_perform_adult_sim_operations(self._sim_info):
             option_dialog.add_option(
                 CommonDialogButtonOption(

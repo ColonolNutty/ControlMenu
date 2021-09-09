@@ -82,10 +82,10 @@ class S4CMSetPersonalityTraitsSimOp(S4CMSingleSimOperation):
                 display_name = trait.display_name(sim_info)
                 if display_name.hash == 0:
                     # noinspection PyUnresolvedReferences
-                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_PAREN_STRING, tokens=(CommonTraitUtils.get_trait_name(trait), trait.trait_type.name))
+                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(CommonTraitUtils.get_trait_name(trait), trait.trait_type.name))
                 else:
                     # noinspection PyUnresolvedReferences
-                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_PAREN_STRING, tokens=(CommonLocalizationUtils.create_localized_string(display_name, tokens=(sim_info,)), trait.trait_type.name))
+                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(CommonLocalizationUtils.create_localized_string(display_name, tokens=(sim_info,)), trait.trait_type.name))
                 display_name = CommonLocalizationUtils.colorize(display_name, CommonLocalizedStringColor.GREEN) if CommonTraitUtils.has_trait(sim_info, trait_id) else display_name
                 # noinspection PyUnresolvedReferences
                 description = CommonLocalizationUtils.create_localized_string(trait.trait_description._string_id, tokens=(sim_info,))
