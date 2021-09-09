@@ -17,4 +17,9 @@ class S4CMGameWorldControlMenuStringId(CommonInt):
     # Clock
     SET_CLOCK_SPEED_SCALE = 370557946
     # Tokens: {0.String} (Min) {1.String} (Max) {2.String} (Default)
-    SET_CLOCK_SPEED_SCALE_DESCRIPTION = 739478065
+    SET_CLOCK_SPEED_SCALE_DESCRIPTION = 0xE46D940D
+    # Clock
+    SET_CLOCK_SPEED = 0xBCD717D4
+    SET_CLOCK_SPEED_STRING = 0x90807B2E
+    # Tokens: {0.String} (Min) {1.String} (Max) {2.String} (Default)
+    SET_CLOCK_SPEED_DESCRIPTION = 0xEC724B9E

@@ -12,6 +12,7 @@ from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_but
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.game_world_dialog.enums.string_identifiers import S4CMGameWorldControlMenuStringId
+from sims4controlmenu.dialogs.game_world_dialog.game_clock.set_clock_speed import S4CMSetClockSpeedOp
 from sims4controlmenu.dialogs.game_world_dialog.game_clock.set_clock_speed_scale_multiplier import \
     S4CMSetClockSpeedScaleMultiplierOp
 from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
@@ -39,6 +40,16 @@ class S4CMModifyGameWorldDataDialog(S4CMSimControlDialogBase):
         reopen: Callable[[], None],
         **__
     ) -> bool:
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'SetClockSpeed',
+                None,
+                CommonDialogResponseOptionContext(
+                    S4CMGameWorldControlMenuStringId.SET_CLOCK_SPEED,
+                ),
+                on_chosen=lambda *_, **__: None if S4CMSetClockSpeedOp().run(on_completed=lambda *_, **__: reopen()) else None
+            )
+        )
         option_dialog.add_option(
             CommonDialogButtonOption(
                 'SetClockSpeedScale',
