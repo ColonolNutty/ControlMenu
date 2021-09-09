@@ -4,7 +4,7 @@ Version 1.3:
 - Added the ability to change your Sim into a Plant Sim
 - Updated the S4CM pie menu icon
 - Added the ability to set the Skill level of a Sim
-- Added the ability to remove all Skills or max all Skills of a Sim.
+- Added the ability to remove all Skills, max all Skills, or randomize all Skills of a Sim.
 - Added an operation to set the clock speed (Without having an effect on animation speed)
 
 Version 1.2:
