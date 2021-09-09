@@ -5,6 +5,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+import random
 from typing import Callable, Any
 
 from distributor.shared_messages import IconInfoData
@@ -22,13 +23,13 @@ from sims4controlmenu.enums.string_identifiers import S4CMStringId
 from statistics.skill import Skill
 
 
-class S4CMMaxAllSkillsSimOp(S4CMSingleSimOperation):
-    """Set All Skills of a Sim to their Maximum level."""
+class S4CMRandomizeAllSkillsSimOp(S4CMSingleSimOperation):
+    """Set All Skills of a Sim to a random level."""
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def log_identifier(self) -> str:
-        return 's4cm_set_all_skills_max_for_sim'
+        return 's4cm_set_all_skills_random_for_sim'
 
     # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
@@ -47,11 +48,17 @@ class S4CMMaxAllSkillsSimOp(S4CMSingleSimOperation):
                 if not skill.can_add(sim):
                     self.verbose_log.format_with_message('Failed, Skill is not allowed for Sim.', skill=skill, sim=sim_info)
                     continue
-                CommonSimSkillUtils.set_current_skill_level(sim_info, skill, int(skill.max_level))
+                skill_levels = tuple(range(0, skill.max_level + 1))
+                chosen_skill_level = random.choice(skill_levels)
+                if chosen_skill_level == 0:
+                    if CommonSimSkillUtils.has_skill(sim_info, skill):
+                        CommonSimSkillUtils.remove_skill(sim_info, skill)
+                else:
+                    CommonSimSkillUtils.set_current_skill_level(sim_info, skill, int(chosen_skill_level))
 
             CommonBasicNotification(
-                S4CMSimModifySkillsStringId.MAXED_ALL_SKILLS_TITLE,
-                S4CMSimModifySkillsStringId.MAXED_ALL_SKILLS_DESCRIPTION,
+                S4CMSimModifySkillsStringId.RANDOMIZED_SKILL_LEVELS_OF_SIM_TITLE,
+                S4CMSimModifySkillsStringId.RANDOMIZED_SKILL_LEVELS_OF_SIM_DESCRIPTION,
                 title_tokens=(sim,),
                 description_tokens=(sim,)
             ).show(icon=IconInfoData(obj_instance=sim))
@@ -62,7 +69,7 @@ class S4CMMaxAllSkillsSimOp(S4CMSingleSimOperation):
 
         confirmation = CommonOkCancelDialog(
             S4CMStringId.CONFIRMATION,
-            S4CMSimModifySkillsStringId.ARE_YOU_SURE_YOU_WANT_TO_MAX_ALL_SKILLS_FOR_SIM,
+            S4CMSimModifySkillsStringId.ARE_YOU_SURE_YOU_WANT_TO_RANDOMIZE_ALL_SKILLS_FOR_SIM,
             description_tokens=(CommonSimUtils.get_sim_instance(sim_info),),
             ok_text_identifier=S4CMStringId.YES,
             cancel_text_identifier=S4CMStringId.NO,

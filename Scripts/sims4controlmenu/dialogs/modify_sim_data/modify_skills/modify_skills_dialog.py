@@ -13,6 +13,8 @@ from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_but
     CommonDialogButtonOption
 from sims4controlmenu.dialogs.modify_sim_data.modify_skills.enums.string_ids import S4CMSimModifySkillsStringId
 from sims4controlmenu.dialogs.modify_sim_data.modify_skills.operations.max_all_skills import S4CMMaxAllSkillsSimOp
+from sims4controlmenu.dialogs.modify_sim_data.modify_skills.operations.randomize_all_skills import \
+    S4CMRandomizeAllSkillsSimOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_skills.operations.remove_all_skills import S4CMRemoveAllSkillsSimOp
 from sims4controlmenu.dialogs.modify_sim_data.modify_skills.operations.set_skill_level import S4CMSetSkillLevelsSimOp
 from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
@@ -66,6 +68,17 @@ class S4CMModifySkillsDialog(S4CMSimControlDialogBase):
                         S4CMSimModifySkillsStringId.MAX_ALL_SKILLS
                     ),
                     on_chosen=lambda *_, **__: _operation_run(S4CMMaxAllSkillsSimOp())
+                )
+            )
+
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'RandomizeAllSkills',
+                    None,
+                    CommonDialogResponseOptionContext(
+                        S4CMSimModifySkillsStringId.RANDOMIZE_SKILL_LEVELS_TITLE
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(S4CMRandomizeAllSkillsSimOp())
                 )
             )
 
