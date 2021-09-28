@@ -83,15 +83,20 @@ class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
             per_page=20000
         )
 
-        for trait in sorted(CommonTraitUtils.get_traits(sim_info), key=lambda _trait: _trait.trait_type.name):
+        for trait in CommonTraitUtils.get_traits(sim_info):
             trait: Trait = trait
             trait_id = CommonTraitUtils.get_trait_id(trait)
+            if trait_id is None:
+                self.log.format_with_message('Missing trait id for Trait.', trait=trait)
+                continue
             try:
                 # noinspection PyUnresolvedReferences
                 display_name = trait.display_name(sim_info)
                 if display_name.hash == 0:
+                    trait_name = CommonTraitUtils.get_trait_name(trait) or 'Unknown Trait Name'
+                    trait_name = trait_name[0].upper() + trait_name[1:]
                     # noinspection PyUnresolvedReferences
-                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(CommonTraitUtils.get_trait_name(trait), trait.trait_type.name))
+                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(trait_name, trait.trait_type.name))
                 else:
                     # noinspection PyUnresolvedReferences
                     display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(CommonLocalizationUtils.create_localized_string(display_name, tokens=(sim_info,)), trait.trait_type.name))
@@ -122,11 +127,14 @@ class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
         if not option_dialog.has_options():
             on_completed(False)
             return False
-        option_dialog.show(sim_info=sim_info)
+        option_dialog.show(sim_info=sim_info, sort_options=True)
         return True
 
     def _is_trait_allowed_for_removal(self, trait: Trait) -> bool:
         trait_id = CommonTraitUtils.get_trait_id(trait)
+        if trait_id is None:
+            self.log.format_with_message('Missing trait id for Trait.', trait=trait)
+            return False
         return trait_id not in (
             CommonTraitId.BABY,
             CommonTraitId.TODDLER,

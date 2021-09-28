@@ -66,6 +66,9 @@ class S4CMSetSkillLevelsSimOp(S4CMSingleSimOperation):
         for skill in skill_manager.get_ordered_types(only_subclasses_of=Skill):
             skill: Skill = skill
             skill_id = CommonSkillUtils.get_skill_id(skill)
+            if skill_id is None:
+                self.log.format_with_message('Missing skill id for Skill.', skill=skill)
+                continue
             try:
                 self.verbose_log.format_with_message('Attempting to display skill', skill=skill, skill_id=skill_id, sim=sim_info)
                 if not skill.can_add(sim):
@@ -81,7 +84,9 @@ class S4CMSetSkillLevelsSimOp(S4CMSingleSimOperation):
                     # noinspection PyUnresolvedReferences
                     display_name = skill.stat_name
                 else:
-                    display_name = LocalizationHelperTuning.get_raw_text(skill.__name__)
+                    skill_name = skill.__name__ or 'Unknown Skill Name'
+                    skill_name = skill_name[0].upper() + skill_name[1:]
+                    display_name = LocalizationHelperTuning.get_raw_text(skill_name)
 
                 # noinspection PyUnresolvedReferences
                 if skill.hidden:

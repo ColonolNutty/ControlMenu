@@ -83,15 +83,20 @@ class S4CMRemoveBuffsSimOp(S4CMSingleSimOperation):
             per_page=20000
         )
 
-        for buff in sorted(CommonBuffUtils.get_buffs(sim_info), key=lambda _buff: CommonBuffUtils.get_buff_name(_buff)):
+        for buff in CommonBuffUtils.get_buffs(sim_info):
             buff: Buff = buff
             buff_id = CommonBuffUtils.get_buff_id(buff)
+            if buff_id is None:
+                self.log.format_with_message('Missing buff id for Buff.', buff=buff)
+                continue
             try:
                 # noinspection PyUnresolvedReferences
                 display_name = buff.buff_name(sim_info)
                 if display_name.hash == 0:
+                    buff_name = CommonBuffUtils.get_buff_name(buff) or 'Unknown Buff Name'
+                    buff_name = buff_name[0].upper() + buff_name[1:]
                     # noinspection PyUnresolvedReferences
-                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(CommonBuffUtils.get_buff_name(buff), str(buff_id)))
+                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(buff_name, str(buff_id)))
                 else:
                     # noinspection PyUnresolvedReferences
                     display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(display_name, str(buff_id)))
@@ -122,11 +127,14 @@ class S4CMRemoveBuffsSimOp(S4CMSingleSimOperation):
         if not option_dialog.has_options():
             on_completed(False)
             return False
-        option_dialog.show(sim_info=sim_info)
+        option_dialog.show(sim_info=sim_info, sort_options=True)
         return True
 
     def _is_buff_allowed_for_removal(self, buff: Buff) -> bool:
         buff_id = CommonBuffUtils.get_buff_id(buff)
+        if buff_id is None:
+            self.log.format_with_message('Missing buff id for Buff.', buff=buff)
+            return False
         return buff_id not in (
             CommonBuffId.ALIEN_IS_ALIEN,
             CommonBuffId.TRAIT_BABY,

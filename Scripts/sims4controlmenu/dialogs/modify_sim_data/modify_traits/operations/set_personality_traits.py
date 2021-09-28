@@ -77,12 +77,17 @@ class S4CMSetPersonalityTraitsSimOp(S4CMSingleSimOperation):
         for trait in sorted(all_traits, key=lambda _trait: CommonTraitUtils.get_trait_name(_trait).lower()):
             trait: Trait = trait
             trait_id = CommonTraitUtils.get_trait_id(trait)
+            if trait_id is None:
+                self.log.format_with_message('Missing trait id for Trait.', trait=trait)
+                continue
             try:
                 # noinspection PyUnresolvedReferences
                 display_name = trait.display_name(sim_info)
                 if display_name.hash == 0:
+                    trait_name = CommonTraitUtils.get_trait_name(trait) or 'Unknown Trait Name'
+                    trait_name = trait_name[0].upper() + trait_name[1:]
                     # noinspection PyUnresolvedReferences
-                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(CommonTraitUtils.get_trait_name(trait), trait.trait_type.name))
+                    display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(trait_name, trait.trait_type.name))
                 else:
                     # noinspection PyUnresolvedReferences
                     display_name = CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.STRING_SPACE_PAREN_STRING, tokens=(CommonLocalizationUtils.create_localized_string(display_name, tokens=(sim_info,)), trait.trait_type.name))

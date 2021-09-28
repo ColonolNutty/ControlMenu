@@ -8,6 +8,7 @@ Copyright (c) COLONOLNUTTY
 from typing import Callable, Any
 from sims.sim_info import SimInfo
 from sims4communitylib.dialogs.ok_cancel_dialog import CommonOkCancelDialog
+from sims4communitylib.enums.traits_enum import CommonTraitId
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.sims.common_occult_utils import CommonOccultUtils
 from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
@@ -32,7 +33,7 @@ class S4CMServoAddOp(S4CMSingleSimOperation):
 
         def _on_ok_selected(_: Any):
             # trait_Humanoid_Robots_MainTrait
-            trait_id = 218444
+            trait_id = CommonTraitId.OCCULT_ROBOT
             result = CommonTraitUtils.add_trait(sim_info, trait_id)
             on_completed(result)
 
@@ -61,7 +62,7 @@ class S4CMServoRemoveOp(S4CMSingleSimOperation):
             on_completed(False)
             return False
         # trait_Humanoid_Robots_MainTrait
-        trait_id = 218444
+        trait_id = CommonTraitId.OCCULT_ROBOT
         result = CommonTraitUtils.remove_trait(sim_info, trait_id)
         on_completed(result)
         return result
