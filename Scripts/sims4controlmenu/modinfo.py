@@ -14,7 +14,7 @@ class ModInfo(CommonModInfo):
 
     @property
     def _name(self) -> str:
-        return 'Sims4ControlMenu'
+        return 'ControlMenu'
 
     @property
     def _author(self) -> str:
@@ -30,4 +30,4 @@ class ModInfo(CommonModInfo):
 
     @property
     def _version(self) -> str:
-        return '1.3'
+        return '1.4'
