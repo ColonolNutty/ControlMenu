@@ -13,6 +13,7 @@
       </U>
     </V>
   </V>
+  <V n="content_score" t="disabled" />
   <U n="progress_bar_enabled">
     <T n="bar_enabled">False</T>
   </U>

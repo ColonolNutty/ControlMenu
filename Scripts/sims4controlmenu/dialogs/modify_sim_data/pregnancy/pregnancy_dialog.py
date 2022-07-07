@@ -36,6 +36,13 @@ class S4CMPregnancyDialog(S4CMSimControlDialogBase):
     def title(self) -> int:
         return S4CMSimControlMenuStringId.PREGNANCY
 
+    @property
+    def description(self) -> int:
+        """The title of the dialog."""
+        if CommonSimPregnancyUtils.is_pregnant(self._sim_info):
+            return 0
+        return 0
+
     def _setup_dialog(
         self,
         option_dialog: CommonChooseButtonOptionDialog,

@@ -28,7 +28,7 @@ class S4CMAlienAddOp(S4CMSingleSimOperation):
         if CommonOccultUtils.is_alien(sim_info):
             on_completed(False)
             return False
-        loot_action_ids: Tuple[int] = (
+        loot_action_ids: Tuple[int, ...] = (
             # loot_Occult_AlienAdd
             103256,
             # loot_Occult_AlienSwitch

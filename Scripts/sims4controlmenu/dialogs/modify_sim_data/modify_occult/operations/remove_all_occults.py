@@ -9,6 +9,7 @@ from typing import Callable
 
 from sims.sim_info import SimInfo
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
+from sims4communitylib.utils.sims.common_occult_utils import CommonOccultUtils
 from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
 
 
@@ -21,20 +22,7 @@ class S4CMRemoveAllOccultsOp(S4CMSingleSimOperation):
         return 's4cm_remove_all_occults'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
-        from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.alien import S4CMAlienRemoveOp
-        from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.mermaid import S4CMMermaidRemoveOp
-        from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.plant_sim import S4CMPlantSimRemoveOp
-        from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.servo import S4CMServoRemoveOp
-        from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.skeleton import S4CMSkeletonRemoveOp
-        from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.vampire import S4CMVampireRemoveOp
-        from sims4controlmenu.dialogs.modify_sim_data.modify_occult.operations.witch import S4CMWitchRemoveOp
-        S4CMAlienRemoveOp().run(sim_info)
-        S4CMMermaidRemoveOp().run(sim_info)
-        S4CMPlantSimRemoveOp().run(sim_info)
-        S4CMServoRemoveOp().run(sim_info)
-        S4CMSkeletonRemoveOp().run(sim_info)
-        S4CMVampireRemoveOp().run(sim_info)
-        S4CMWitchRemoveOp().run(sim_info)
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
+        CommonOccultUtils.remove_all_occults(sim_info)
         on_completed(True)
         return True

@@ -32,6 +32,22 @@ class S4CMSimControlMenuStringId(CommonInt):
     BECOME_VAMPIRE = 909949252
     BECOME_WITCH = 1524706587
 
+    # Tokens: {0.String} (Value)
+    ADD_STRING = 0xC156E3A9
+    # Tokens: {0.String} (Value)
+    REMOVE_STRING = 0x197C2798
+    # Tokens: {0.String} (Value)
+    SWITCH_TO_STRING_FORM = 0x7890F3D3
+
+    # Tokens: {0.SimFirstName}
+    SIM_ALREADY_HAS_THIS_OCCULT = 0x7780F5C9
+    # Tokens: {0.SimFirstName}
+    SIM_DOES_NOT_HAVE_THIS_OCCULT = 0xB01467DB
+    # Tokens: {0.SimFirstName}
+    SIM_IS_ALREADY_IN_THIS_FORM = 0x4958758A
+    CANNOT_ADD_ROBOT_OCCULT_TYPE_TO_SIM_WITH_OTHER_OCCULT_TYPES = 0x9E8E69B1
+    CANNOT_ADD_THIS_OCCULT_TYPE_TO_A_ROBOT_SIM = 0x269E8F6A
+
     # Age
     MODIFY_AGE = 3924124514
     SET_AGE = 3005632386
