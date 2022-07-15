@@ -1,3 +1,8 @@
+Version 1.4:
+- Updated the Occult menu to allow removing specific occult types as well as being able to switch Sims to and from their occult forms.
+- Added the Werewolf occult to the occult types menu.
+- Control Menu now requires at least version 1.79 of Sims 4 Community Library
+
 Version 1.3:
 - Change Outfits to Instant Outfits
 - Added interactions to Add and Remove Sims from the Active Household
