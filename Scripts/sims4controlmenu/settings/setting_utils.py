@@ -60,6 +60,16 @@ class S4CMSettingUtils:
         return S4CMSettingUtils._get_value(CMSetting.PREGNANCY_SPEED)
 
     @staticmethod
+    def get_real_milliseconds_per_sim_second() -> int:
+        """Retrieve the number of real milliseconds per sim second."""
+        return S4CMSettingUtils._get_value(CMSetting.REAL_MILLISECONDS_PER_SIM_SECOND)
+
+    @staticmethod
+    def get_clock_speed_multiplier() -> int:
+        """Retrieve the multiplier for clock speed."""
+        return S4CMSettingUtils._get_value(CMSetting.CLOCK_SPEED_MULTIPLIER)
+
+    @staticmethod
     def _get_value(key: str) -> Any:
         from sims4controlmenu.persistence.cm_data_manager_utils import CMMainDataManagerUtils
         return CMMainDataManagerUtils().get_main_mod_settings_data_store().get_value_by_key(key)

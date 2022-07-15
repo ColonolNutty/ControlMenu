@@ -11,5 +11,7 @@ class CMSetting:
     """ Settings. """
     PREGNANCY_SPEED = 'cm_pregnancy_speed'
     MAXIMUM_HOUSEHOLD_SIZE = 'cm_maximum_household_size'
+    REAL_MILLISECONDS_PER_SIM_SECOND = 'cm_real_milliseconds_per_sim_second'
+    CLOCK_SPEED_MULTIPLIER = 'cm_clock_speed_multiplier'
 
     VERSION = 'version'

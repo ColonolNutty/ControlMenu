@@ -7,6 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any, Dict
 
+import date_and_time
 from sims.household import Household
 from sims.pregnancy.pregnancy_tracker import PregnancyTracker
 from sims4communitylib.persistence.data_stores.common_data_store import CommonDataStore
@@ -33,5 +34,7 @@ class CMMainSettingsDataStore(CommonDataStore):
             CMSetting.VERSION: self._version,
 
             CMSetting.PREGNANCY_SPEED: PregnancyTracker.PREGNANCY_RATE,
-            CMSetting.MAXIMUM_HOUSEHOLD_SIZE: Household.MAXIMUM_SIZE
+            CMSetting.MAXIMUM_HOUSEHOLD_SIZE: Household.MAXIMUM_SIZE,
+            CMSetting.REAL_MILLISECONDS_PER_SIM_SECOND: date_and_time.REAL_MILLISECONDS_PER_SIM_SECOND,
+            CMSetting.CLOCK_SPEED_MULTIPLIER: 1.0
         }.copy()

@@ -9,49 +9,63 @@ from typing import Callable, Any
 
 from clock import GameClock
 from sims4communitylib.dialogs.common_choice_outcome import CommonChoiceOutcome
-from sims4communitylib.dialogs.common_input_float_dialog import CommonInputFloatDialog
-from sims4communitylib.services.common_service import CommonService
+from sims4communitylib.dialogs.option_dialogs.options.common_dialog_option_context import CommonDialogOptionContext
+from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_input_option import \
+    CommonDialogInputFloatOption
+from sims4communitylib.enums.strings_enum import CommonStringId
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.common_injection_utils import CommonInjectionUtils
+from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4controlmenu.dialogs.game_world_dialog.enums.string_identifiers import S4CMGameWorldControlMenuStringId
+from sims4controlmenu.enums.string_identifiers import S4CMStringId
 from sims4controlmenu.modinfo import ModInfo
+from sims4controlmenu.settings.settings import CMSetting
 
 
-class S4CMSetClockSpeedScaleMultiplierOp(CommonService):
+class S4CMSetClockSpeedScaleMultiplierOp:
     """Set the clock speed scale multiplier of the Game Clock."""
     _DEFAULT_CLOCK_SPEED_SCALE_MULTIPLIER = 1.0
     _DEFAULT_CLOCK_SPEED_SCALE_MULTIPLIER_MIN = 0.1
     _DEFAULT_CLOCK_SPEED_SCALE_MULTIPLIER_MAX = 9999.0
 
-    def __init__(self) -> None:
-        self._clock_speed_multiplier = 1.0
-
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
-        def _on_submit(_new_speed: float, outcome: CommonChoiceOutcome):
-            if _new_speed is None or CommonChoiceOutcome.is_error_or_cancel(outcome):
-                on_completed(False)
+    def run(self, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
+        from sims4controlmenu.persistence.cm_data_manager_utils import CMMainDataManagerUtils
+
+        def _on_input_setting_changed(setting_name: str, setting_value: float, outcome: CommonChoiceOutcome):
+            if setting_value is None or CommonChoiceOutcome.is_error_or_cancel(outcome):
+                on_completed(True)
                 return
-            self._clock_speed_multiplier = _new_speed
+            data_store.set_value_by_key(setting_name, setting_value)
             on_completed(True)
 
-        dialog = CommonInputFloatDialog(
-            S4CMGameWorldControlMenuStringId.SET_CLOCK_SPEED_SCALE,
-            S4CMGameWorldControlMenuStringId.SET_CLOCK_SPEED_SCALE_DESCRIPTION,
-            self._clock_speed_multiplier,
-            description_tokens=(
-                str(S4CMSetClockSpeedScaleMultiplierOp._DEFAULT_CLOCK_SPEED_SCALE_MULTIPLIER_MIN),
-                str(S4CMSetClockSpeedScaleMultiplierOp._DEFAULT_CLOCK_SPEED_SCALE_MULTIPLIER_MAX),
-                str(S4CMSetClockSpeedScaleMultiplierOp._DEFAULT_CLOCK_SPEED_SCALE_MULTIPLIER)
+        data_store = CMMainDataManagerUtils().get_main_mod_settings_data_store()
+        CommonDialogInputFloatOption(
+            CMSetting.CLOCK_SPEED_MULTIPLIER,
+            data_store.get_value_by_key(
+                CMSetting.CLOCK_SPEED_MULTIPLIER
+            ),
+            CommonDialogOptionContext(
+                CommonStringId.STRING_COLON_SPACE_STRING,
+                CommonStringId.STRING_SPACE_STRING,
+                title_tokens=(
+                    S4CMGameWorldControlMenuStringId.SET_CLOCK_SPEED_SCALE,
+                    str(data_store.get_value_by_key(CMSetting.CLOCK_SPEED_MULTIPLIER)),
+                ),
+                description_tokens=(
+                    S4CMGameWorldControlMenuStringId.SET_CLOCK_SPEED_SCALE_DESCRIPTION,
+                    CommonLocalizationUtils.create_localized_string(
+                        S4CMStringId.DEFAULT_MIN_MAX,
+                        tokens=(
+                            str(data_store.get_default_value_by_key(CMSetting.CLOCK_SPEED_MULTIPLIER)),
+                            '0.0',
+                            '9999.0'
+                        )
+                    )
+                )
             ),
             min_value=S4CMSetClockSpeedScaleMultiplierOp._DEFAULT_CLOCK_SPEED_SCALE_MULTIPLIER_MIN,
-            max_value=S4CMSetClockSpeedScaleMultiplierOp._DEFAULT_CLOCK_SPEED_SCALE_MULTIPLIER_MAX
-        )
-
-        dialog.show(on_submit=_on_submit)
+            max_value=S4CMSetClockSpeedScaleMultiplierOp._DEFAULT_CLOCK_SPEED_SCALE_MULTIPLIER_MAX,
+            on_chosen=_on_input_setting_changed
+        ).choose()
         return True
-
-
-@CommonInjectionUtils.inject_safely_into(ModInfo.get_identity(), GameClock, GameClock.current_clock_speed_scale.__name__)
-def _s4cm_get_current_clock_speed_scale(original, self) -> Any:
-    return original(self) * S4CMSetClockSpeedScaleMultiplierOp()._clock_speed_multiplier
