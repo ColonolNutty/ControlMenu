@@ -5,11 +5,13 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from typing import Callable
+from typing import Callable, Union
 
+from protocolbuffers.Localization_pb2 import LocalizedString
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
 from sims4communitylib.enums.strings_enum import CommonStringId
+from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdUtils
 from sims4communitylib.utils.sims.common_sim_pregnancy_utils import CommonSimPregnancyUtils
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
@@ -40,10 +42,18 @@ class S4CMPregnancyDialog(S4CMSimControlDialogBase):
         return S4CMSimControlMenuStringId.PREGNANCY
 
     @property
-    def description(self) -> int:
+    def description(self) -> Union[int, str, LocalizedString]:
         """The title of the dialog."""
         if CommonSimPregnancyUtils.is_pregnant(self._sim_info):
-            return 0
+            other_parent_sim_info = CommonSimPregnancyUtils.get_pregnancy_partner(self._sim_info)
+            if other_parent_sim_info is None:
+                return 0
+            return CommonLocalizationUtils.create_localized_string(
+                S4CMSimControlMenuStringId.OTHER_PARENT,
+                tokens=(
+                    other_parent_sim_info,
+                )
+            )
         return 0
 
     def _setup_dialog(

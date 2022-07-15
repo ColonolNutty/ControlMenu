@@ -5,7 +5,9 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from typing import Callable
+from typing import Callable, Union
+
+from protocolbuffers.Localization_pb2 import LocalizedString
 from sims.sim_info import SimInfo
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
 from sims4controlmenu.logging.has_s4cm_class_log import HasS4CMClassLog
@@ -22,8 +24,8 @@ class S4CMSimControlDialogBase(HasS4CMClassLog):
     def __init__(
         self,
         sim_info: SimInfo,
-        on_close: Callable[[], None]=None,
-        on_previous: Callable[[], None]=None
+        on_close: Callable[[], None] = None,
+        on_previous: Callable[[], None] = None
     ):
         super().__init__()
         self._sim_info = sim_info
@@ -36,13 +38,13 @@ class S4CMSimControlDialogBase(HasS4CMClassLog):
         raise NotImplementedError()
 
     @property
-    def description(self) -> int:
+    def description(self) -> Union[int, str, LocalizedString]:
         """The title of the dialog."""
         return 0
 
     @property
     def include_previous_button(self) -> bool:
-        """Whether or not to include the previous button."""
+        """Determine if the previous button should be included on the first page of the dialog."""
         return True
 
     def open(self, **__) -> None:
