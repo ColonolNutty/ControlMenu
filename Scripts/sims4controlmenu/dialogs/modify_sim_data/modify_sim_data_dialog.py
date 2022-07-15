@@ -12,6 +12,7 @@ from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_but
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4CMSimControlMenuStringId
+from sims4controlmenu.dialogs.modify_sim_data.household.household_dialog import S4CMHouseholdDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_age.modify_age_dialog import S4CMModifyAgeDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_buffs.modify_buffs_dialog import S4CMModifyBuffsDialog
 from sims4controlmenu.dialogs.modify_sim_data.modify_currency.modify_currency_dialog import S4CMModifyCurrencyDialog
@@ -122,6 +123,17 @@ class S4CMModifySimDataDialog(S4CMSimControlDialogBase):
                     S4CMSimModifySkillsStringId.MODIFY_SKILLS,
                 ),
                 on_chosen=lambda *_, **__: S4CMModifySkillsDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'Household',
+                None,
+                CommonDialogResponseOptionContext(
+                    S4CMSimControlMenuStringId.HOUSEHOLD,
+                ),
+                on_chosen=lambda *_, **__: S4CMHouseholdDialog(self._sim_info, on_previous=reopen).open()
             )
         )
 

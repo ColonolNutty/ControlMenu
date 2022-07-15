@@ -5,3 +5,11 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+
+
+class CMSetting:
+    """ Settings. """
+    PREGNANCY_SPEED = 'cm_pregnancy_speed'
+    MAXIMUM_HOUSEHOLD_SIZE = 'cm_maximum_household_size'
+
+    VERSION = 'version'

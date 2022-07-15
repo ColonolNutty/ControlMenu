@@ -9,6 +9,7 @@ from typing import Callable
 
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
+from sims4communitylib.enums.strings_enum import CommonStringId
 from sims4communitylib.utils.sims.common_household_utils import CommonHouseholdUtils
 from sims4communitylib.utils.sims.common_sim_pregnancy_utils import CommonSimPregnancyUtils
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
@@ -19,8 +20,10 @@ from sims4controlmenu.dialogs.modify_sim_data.enums.string_identifiers import S4
 from sims4controlmenu.dialogs.modify_sim_data.pregnancy.operations.clear_pregnancy import S4CMClearPregnancyOp
 from sims4controlmenu.dialogs.modify_sim_data.pregnancy.operations.create_pregnancy import S4CMCreatePregnancyOp
 from sims4controlmenu.dialogs.modify_sim_data.pregnancy.operations.induce_labor import S4CMInduceLaborOp
+from sims4controlmenu.dialogs.modify_sim_data.pregnancy.operations.set_pregnancy_speed import S4CMSetPregnancySpeedOp
 from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.dialogs.modify_sim_data.single_sim_operation import S4CMSingleSimOperation
+from sims4controlmenu.settings.setting_utils import S4CMSettingUtils
 
 
 class S4CMPregnancyDialog(S4CMSimControlDialogBase):
@@ -79,6 +82,21 @@ class S4CMPregnancyDialog(S4CMSimControlDialogBase):
                     disabled_text_tokens=(self._sim_info,)
                 ),
                 on_chosen=lambda *_, **__: _operation_run(S4CMCreatePregnancyOp())
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'SetPregnancySpeed',
+                None,
+                CommonDialogResponseOptionContext(
+                    CommonStringId.STRING_COLON_SPACE_STRING,
+                    text_tokens=(
+                        S4CMSimControlMenuStringId.SET_PREGNANCY_SPEED,
+                        str(S4CMSettingUtils.get_pregnancy_speed_modifier()),
+                    )
+                ),
+                on_chosen=lambda *_, **__: _operation_run(S4CMSetPregnancySpeedOp())
             )
         )
 

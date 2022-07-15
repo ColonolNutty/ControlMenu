@@ -67,6 +67,8 @@ class S4CMSimControlMenuStringId(CommonInt):
     WHO_WILL_BE_THE_OTHER_PARENT = 3284252776
     # Tokens: {0.SimFirstName}
     WHO_WILL_IMPREGNATE_SIM = 451291308
+    SET_PREGNANCY_SPEED = 0x6920C40F
+    SET_PREGNANCY_SPEED_DESCRIPTION = 0x335F7272
 
     # Money
     MODIFY_CURRENCY = 3134381468
@@ -169,3 +171,8 @@ class S4CMSimControlMenuStringId(CommonInt):
     REMOVED_BUFF_DESCRIPTION = 0xEFA4E682
     # Tokens: {0.String} (Buff Display Name) {1.String} (Buff Id) {2.String} (Buff Tuning Name) from {3.SimFirstName} (Sim)
     ARE_YOU_SURE_YOU_WANT_TO_REMOVE_BUFF = 0x7C193D8F
+
+    # Household
+    HOUSEHOLD = 0x846D3A8C
+    SET_MAXIMUM_HOUSEHOLD_SIZE = 0x874F35A5
+    SET_MAXIMUM_HOUSEHOLD_SIZE_DESCRIPTION = 0x3EB6C306

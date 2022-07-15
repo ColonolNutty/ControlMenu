@@ -31,3 +31,6 @@ class S4CMStringId(CommonInt):
 
     # Spawn
     CHOOSE_SIMS_TO_SPAWN = 487599508
+
+    # Tokens: {0.String} (Default) {1.String} (Min) {2.String} (Max)
+    DEFAULT_MIN_MAX = 0x1DFBED1C

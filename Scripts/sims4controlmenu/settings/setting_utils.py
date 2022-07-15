@@ -5,11 +5,13 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+from typing import Any
 
 from sims.sim_info import SimInfo
 from sims4communitylib.utils.sims.common_age_utils import CommonAgeUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_species_utils import CommonSpeciesUtils
+from sims4controlmenu.settings.settings import CMSetting
 
 
 class S4CMSettingUtils:
@@ -46,3 +48,23 @@ class S4CMSettingUtils:
         # If the Sims are not Adults, they can be assumed to be either a Young Adult, Adult, or Elder
         return CommonAgeUtils.is_adult_or_elder(sim_info_a)\
                and CommonAgeUtils.is_adult_or_elder(sim_info_b)
+
+    @staticmethod
+    def get_maximum_household_size() -> int:
+        """Retrieve the maximum size for households."""
+        return S4CMSettingUtils._get_value(CMSetting.MAXIMUM_HOUSEHOLD_SIZE)
+
+    @staticmethod
+    def get_pregnancy_speed_modifier() -> int:
+        """Retrieve the speed modifier for pregnancy."""
+        return S4CMSettingUtils._get_value(CMSetting.PREGNANCY_SPEED)
+
+    @staticmethod
+    def _get_value(key: str) -> Any:
+        from sims4controlmenu.persistence.cm_data_manager_utils import CMMainDataManagerUtils
+        return CMMainDataManagerUtils().get_main_mod_settings_data_store().get_value_by_key(key)
+
+    @staticmethod
+    def _set_value(key: str, value: Any) -> Any:
+        from sims4controlmenu.persistence.cm_data_manager_utils import CMMainDataManagerUtils
+        return CMMainDataManagerUtils().get_main_mod_settings_data_store().set_value_by_key(key, value)
