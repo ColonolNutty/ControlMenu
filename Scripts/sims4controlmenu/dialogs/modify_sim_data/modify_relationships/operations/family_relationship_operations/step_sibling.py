@@ -34,7 +34,7 @@ class S4CMSetSimAAsStepSiblingToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
     def opposite_relationship_bit_id(self) -> CommonRelationshipBitId:
         return CommonRelationshipBitId.FAMILY_STEP_SIBLING
 
-    def _update_family_tree(self, step_sibling_sim_info_a: SimInfo, step_sibling_sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def _update_family_tree(self, step_sibling_sim_info_a: SimInfo, step_sibling_sim_info_b: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         def _on_selected(_: str, operation: Any):
             if operation is None:
                 on_completed(False)
@@ -74,7 +74,7 @@ class S4CMSetSimAAsStepSiblingToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
         option_dialog.show()
         return True
 
-    def _share_mother(self, step_sibling_sim_info_a: SimInfo, step_sibling_sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def _share_mother(self, step_sibling_sim_info_a: SimInfo, step_sibling_sim_info_b: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.mother import \
             S4CMSetSimAAsMotherToSimBOp
         mother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(step_sibling_sim_info_b)
@@ -83,7 +83,7 @@ class S4CMSetSimAAsStepSiblingToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
             return False
         return S4CMSetSimAAsMotherToSimBOp().run(mother_sim_info, step_sibling_sim_info_a, on_completed=on_completed)
 
-    def _share_father(self, step_sibling_sim_info_a: SimInfo, step_sibling_sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def _share_father(self, step_sibling_sim_info_a: SimInfo, step_sibling_sim_info_b: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.father import \
             S4CMSetSimAAsFatherToSimBOp
         father_sim_info = CommonSimGenealogyUtils.get_father_sim_info(step_sibling_sim_info_b)

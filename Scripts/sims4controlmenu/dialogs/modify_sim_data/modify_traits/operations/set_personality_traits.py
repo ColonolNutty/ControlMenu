@@ -38,7 +38,7 @@ class S4CMSetPersonalityTraitsSimOp(S4CMSingleSimOperation):
         return 's4cm_add_personality_traits_sim'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop, current_page: int=1) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop, current_page: int = 1) -> bool:
         def _reopen() -> None:
             self.run(sim_info, on_completed=on_completed, current_page=option_dialog.current_page)
 

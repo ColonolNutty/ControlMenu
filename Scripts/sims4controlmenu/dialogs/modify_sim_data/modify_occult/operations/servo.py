@@ -7,6 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Callable, Any
 from sims.sim_info import SimInfo
+from sims4communitylib.classes.testing.common_execution_result import CommonExecutionResult
 from sims4communitylib.dialogs.ok_cancel_dialog import CommonOkCancelDialog
 from sims4communitylib.enums.traits_enum import CommonTraitId
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
@@ -26,9 +27,9 @@ class S4CMServoAddOp(S4CMSingleSimOperation):
         return 's4cm_modify_servo'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[CommonExecutionResult], None] = CommonFunctionUtils.noop) -> bool:
         if CommonOccultUtils.is_robot(sim_info):
-            on_completed(False)
+            on_completed(CommonExecutionResult(False, reason=f'{sim_info} is already a Robot.'))
             return False
 
         def _on_ok_selected(_: Any):
@@ -38,7 +39,7 @@ class S4CMServoAddOp(S4CMSingleSimOperation):
             on_completed(result)
 
         def _on_cancel_selected(_: Any):
-            on_completed(False)
+            on_completed(CommonExecutionResult(False, reason='Cancelled to change.'))
 
         confirmation = CommonOkCancelDialog(
             S4CMStringId.CONFIRMATION,
@@ -57,12 +58,12 @@ class S4CMServoRemoveOp(S4CMSingleSimOperation):
         return 's4cm_modify_servo'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[CommonExecutionResult], None] = CommonFunctionUtils.noop) -> bool:
         if not CommonOccultUtils.is_robot(sim_info):
-            on_completed(False)
+            on_completed(CommonExecutionResult(False, reason=f'{sim_info} is not a robot.'))
             return False
         # trait_Humanoid_Robots_MainTrait
         trait_id = CommonTraitId.OCCULT_ROBOT
         result = CommonTraitUtils.remove_trait(sim_info, trait_id)
         on_completed(result)
-        return result
+        return result.result

@@ -5,6 +5,8 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+from typing import Union
+
 from sims.sim_info import SimInfo
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
@@ -15,76 +17,76 @@ from sims4communitylib.utils.sims.common_sim_genealogy_utils import CommonSimGen
 class S4CMFullFamily:
     """A Full Family"""
 
-    def __init__(self, suffix: str='1') -> None:
+    def __init__(self, suffix: str = '1') -> None:
         self._destroyed = False
         # Father 1 Side:
-        self.grandfather_one: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='One' + suffix)
-        self.grandmother_one: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='One' + suffix)
-        self.uncle_one: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='One' + suffix)
-        self.uncle_two: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Two' + suffix)
-        self.father_one: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Father', last_name='One' + suffix)
-        self.cousin_one: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='One' + suffix)
-        self.cousin_two: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Two' + suffix)
-        self.cousin_three: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Three' + suffix)
-        self.cousin_four: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Four' + suffix)
+        self.grandfather_one: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='One' + suffix)
+        self.grandmother_one: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='One' + suffix)
+        self.uncle_one: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='One' + suffix)
+        self.uncle_two: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Two' + suffix)
+        self.father_one: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Father', last_name='One' + suffix)
+        self.cousin_one: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='One' + suffix)
+        self.cousin_two: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Two' + suffix)
+        self.cousin_three: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Three' + suffix)
+        self.cousin_four: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Four' + suffix)
 
         # Father 2 Side:
-        self.grandfather_two: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='Two' + suffix)
-        self.grandmother_two: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='Two' + suffix)
-        self.uncle_three: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Three' + suffix)
-        self.uncle_four: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Four' + suffix)
-        self.father_two: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Father', last_name='Two' + suffix)
-        self.cousin_five: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Five' + suffix)
-        self.cousin_six: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Six' + suffix)
-        self.cousin_seven: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Seven' + suffix)
-        self.cousin_eight: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Eight' + suffix)
+        self.grandfather_two: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='Two' + suffix)
+        self.grandmother_two: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='Two' + suffix)
+        self.uncle_three: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Three' + suffix)
+        self.uncle_four: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Four' + suffix)
+        self.father_two: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Father', last_name='Two' + suffix)
+        self.cousin_five: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Five' + suffix)
+        self.cousin_six: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Six' + suffix)
+        self.cousin_seven: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Seven' + suffix)
+        self.cousin_eight: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Eight' + suffix)
 
         # Mother 1 Side:
-        self.grandfather_three: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='Three' + suffix)
-        self.grandmother_three: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='Three' + suffix)
-        self.uncle_five: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Five' + suffix)
-        self.uncle_six: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Six' + suffix)
-        self.mother_one: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Mother', last_name='One' + suffix)
-        self.cousin_nine: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Nine' + suffix)
-        self.cousin_ten: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Ten' + suffix)
-        self.cousin_eleven: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Eleven' + suffix)
-        self.cousin_twelve: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Twelve' + suffix)
+        self.grandfather_three: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='Three' + suffix)
+        self.grandmother_three: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='Three' + suffix)
+        self.uncle_five: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Five' + suffix)
+        self.uncle_six: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Six' + suffix)
+        self.mother_one: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Mother', last_name='One' + suffix)
+        self.cousin_nine: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Nine' + suffix)
+        self.cousin_ten: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Ten' + suffix)
+        self.cousin_eleven: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Eleven' + suffix)
+        self.cousin_twelve: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Twelve' + suffix)
 
         # Mother 1 Side:
-        self.grandfather_four: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='Four' + suffix)
-        self.grandmother_four: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='Four' + suffix)
-        self.uncle_seven: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Seven' + suffix)
-        self.uncle_eight: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Eight' + suffix)
-        self.mother_two: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Mother', last_name='Two' + suffix)
-        self.cousin_thirteen: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Thirteen' + suffix)
-        self.cousin_fourteen: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Fourteen' + suffix)
-        self.cousin_fifteen: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Fifteen' + suffix)
-        self.cousin_sixteen: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Sixteen' + suffix)
+        self.grandfather_four: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='Four' + suffix)
+        self.grandmother_four: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='Four' + suffix)
+        self.uncle_seven: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Seven' + suffix)
+        self.uncle_eight: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Uncle', last_name='Eight' + suffix)
+        self.mother_two: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Mother', last_name='Two' + suffix)
+        self.cousin_thirteen: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Thirteen' + suffix)
+        self.cousin_fourteen: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Fourteen' + suffix)
+        self.cousin_fifteen: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Fifteen' + suffix)
+        self.cousin_sixteen: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Sixteen' + suffix)
 
         # Aunt 1 Side:
-        self.grandfather_five: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='Five' + suffix)
-        self.grandmother_five: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='Five' + suffix)
-        self.aunt_two: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Aunt', last_name='Two' + suffix)
-        self.aunt_one: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Aunt', last_name='One' + suffix)
-        self.cousin_seventeen: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Seventeen' + suffix)
-        self.cousin_eighteen: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Eighteen' + suffix)
+        self.grandfather_five: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='Five' + suffix)
+        self.grandmother_five: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='Five' + suffix)
+        self.aunt_two: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Aunt', last_name='Two' + suffix)
+        self.aunt_one: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Aunt', last_name='One' + suffix)
+        self.cousin_seventeen: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Seventeen' + suffix)
+        self.cousin_eighteen: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Eighteen' + suffix)
 
         # Aunt 3 Side:
-        self.grandfather_six: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='Six' + suffix)
-        self.grandmother_six: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='Six' + suffix)
-        self.aunt_three: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Aunt', last_name='Three' + suffix)
-        self.aunt_four: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Aunt', last_name='Four' + suffix)
-        self.cousin_nineteen: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Nineteen' + suffix)
-        self.cousin_twenty: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Twenty' + suffix)
+        self.grandfather_six: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandfather', last_name='Six' + suffix)
+        self.grandmother_six: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandmother', last_name='Six' + suffix)
+        self.aunt_three: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Aunt', last_name='Three' + suffix)
+        self.aunt_four: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Aunt', last_name='Four' + suffix)
+        self.cousin_nineteen: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Nineteen' + suffix)
+        self.cousin_twenty: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Cousin', last_name='Twenty' + suffix)
 
         # Children:
-        self.child_one: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Child', last_name='One' + suffix)
-        self.child_two: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Child', last_name='Two' + suffix)
-        self.grand_child_one: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandchild', last_name='One' + suffix)
-        self.grand_child_two: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandchild', last_name='Two' + suffix)
-        self.step_child_one: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Step Child', last_name='One' + suffix)
-        self.step_child_two: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Step Child', last_name='Two' + suffix)
-        self.step_child_three: SimInfo = CommonSimSpawnUtils.create_human_sim_info(first_name='Step Child', last_name='Three' + suffix)
+        self.child_one: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Child', last_name='One' + suffix)
+        self.child_two: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Child', last_name='Two' + suffix)
+        self.grand_child_one: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandchild', last_name='One' + suffix)
+        self.grand_child_two: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Grandchild', last_name='Two' + suffix)
+        self.step_child_one: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Step Child', last_name='One' + suffix)
+        self.step_child_two: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Step Child', last_name='Two' + suffix)
+        self.step_child_three: Union[SimInfo, None] = CommonSimSpawnUtils.create_human_sim_info(first_name='Step Child', last_name='Three' + suffix)
 
         self._setup_relationships()
 
@@ -1008,7 +1010,7 @@ class S4CMFullFamily:
         for step_nephew in uncle_four_step_nephews:
             CommonRelationshipUtils.add_relationship_bit(self.uncle_four, step_nephew, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW)
 
-        # Father 2 (Child of Grandfather 2 and Grandmother 2, Step Child of Grandfather 3 and Grandmother 3, Sibling of Uncle 3 and Uncle 4, Step Sibling of Uncle 5 and Uncle 6, Parent of Step Child 1, Step parent of Child 1 and Child 2, Uncle of Cousin 5, 6, 7, and 8, Step Uncle of Cousin 9, 10, 11, and 12)
+        # Father 2 (Child of Grandfather 2 and Grandmother 2, Step Child of Grandfather 3 and Grandmother 3, Sibling of Uncle 3 and Uncle 4, Step Sibling of Uncle 5 and Uncle 6, Parent of Step Child 1, Step Parent of Child 1 and Child 2, Uncle of Cousin 5, 6, 7, and 8, Step Uncle of Cousin 9, 10, 11, and 12)
         father_two_parents = (
             self.grandfather_two,
             self.grandmother_two
@@ -3731,72 +3733,72 @@ class S4CMFullFamily:
         CommonSimSpawnUtils.delete_sim(self.step_child_three, cause='S4CM: testing cleanup')
 
         # Father 1 Side:
-        self.grandfather_one: SimInfo = None
-        self.grandmother_one: SimInfo = None
-        self.uncle_one: SimInfo = None
-        self.uncle_two: SimInfo = None
-        self.father_one: SimInfo = None
-        self.cousin_one: SimInfo = None
-        self.cousin_two: SimInfo = None
-        self.cousin_three: SimInfo = None
-        self.cousin_four: SimInfo = None
+        self.grandfather_one: Union[SimInfo, None] = None
+        self.grandmother_one: Union[SimInfo, None] = None
+        self.uncle_one: Union[SimInfo, None] = None
+        self.uncle_two: Union[SimInfo, None] = None
+        self.father_one: Union[SimInfo, None] = None
+        self.cousin_one: Union[SimInfo, None] = None
+        self.cousin_two: Union[SimInfo, None] = None
+        self.cousin_three: Union[SimInfo, None] = None
+        self.cousin_four: Union[SimInfo, None] = None
         
         # Father 2 Side:
-        self.grandfather_two: SimInfo = None
-        self.grandmother_two: SimInfo = None
-        self.uncle_three: SimInfo = None
-        self.uncle_four: SimInfo = None
-        self.father_two: SimInfo = None
-        self.cousin_five: SimInfo = None
-        self.cousin_six: SimInfo = None
-        self.cousin_seven: SimInfo = None
-        self.cousin_eight: SimInfo = None
+        self.grandfather_two: Union[SimInfo, None] = None
+        self.grandmother_two: Union[SimInfo, None] = None
+        self.uncle_three: Union[SimInfo, None] = None
+        self.uncle_four: Union[SimInfo, None] = None
+        self.father_two: Union[SimInfo, None] = None
+        self.cousin_five: Union[SimInfo, None] = None
+        self.cousin_six: Union[SimInfo, None] = None
+        self.cousin_seven: Union[SimInfo, None] = None
+        self.cousin_eight: Union[SimInfo, None] = None
         
         # Mother 1 Side:
-        self.grandfather_three: SimInfo = None
-        self.grandmother_three: SimInfo = None
-        self.uncle_five: SimInfo = None
-        self.uncle_six: SimInfo = None
-        self.mother_one: SimInfo = None
-        self.cousin_nine: SimInfo = None
-        self.cousin_ten: SimInfo = None
-        self.cousin_eleven: SimInfo = None
-        self.cousin_twelve: SimInfo = None
+        self.grandfather_three: Union[SimInfo, None] = None
+        self.grandmother_three: Union[SimInfo, None] = None
+        self.uncle_five: Union[SimInfo, None] = None
+        self.uncle_six: Union[SimInfo, None] = None
+        self.mother_one: Union[SimInfo, None] = None
+        self.cousin_nine: Union[SimInfo, None] = None
+        self.cousin_ten: Union[SimInfo, None] = None
+        self.cousin_eleven: Union[SimInfo, None] = None
+        self.cousin_twelve: Union[SimInfo, None] = None
         
         # Mother 1 Side:
-        self.grandfather_four: SimInfo = None
-        self.grandmother_four: SimInfo = None
-        self.uncle_seven: SimInfo = None
-        self.uncle_eight: SimInfo = None
-        self.mother_two: SimInfo = None
-        self.cousin_thirteen: SimInfo = None
-        self.cousin_fourteen: SimInfo = None
-        self.cousin_fifteen: SimInfo = None
-        self.cousin_sixteen: SimInfo = None
+        self.grandfather_four: Union[SimInfo, None] = None
+        self.grandmother_four: Union[SimInfo, None] = None
+        self.uncle_seven: Union[SimInfo, None] = None
+        self.uncle_eight: Union[SimInfo, None] = None
+        self.mother_two: Union[SimInfo, None] = None
+        self.cousin_thirteen: Union[SimInfo, None] = None
+        self.cousin_fourteen: Union[SimInfo, None] = None
+        self.cousin_fifteen: Union[SimInfo, None] = None
+        self.cousin_sixteen: Union[SimInfo, None] = None
         
         # Aunt 1 Side:
-        self.grandfather_five: SimInfo = None
-        self.grandmother_five: SimInfo = None
-        self.aunt_two: SimInfo = None
-        self.aunt_one: SimInfo = None
-        self.cousin_seventeen: SimInfo = None
-        self.cousin_eighteen: SimInfo = None
+        self.grandfather_five: Union[SimInfo, None] = None
+        self.grandmother_five: Union[SimInfo, None] = None
+        self.aunt_two: Union[SimInfo, None] = None
+        self.aunt_one: Union[SimInfo, None] = None
+        self.cousin_seventeen: Union[SimInfo, None] = None
+        self.cousin_eighteen: Union[SimInfo, None] = None
 
         # Aunt 3 Side:
-        self.grandfather_six: SimInfo = None
-        self.grandmother_six: SimInfo = None
-        self.aunt_three: SimInfo = None
-        self.aunt_four: SimInfo = None
-        self.cousin_nineteen: SimInfo = None
-        self.cousin_twenty: SimInfo = None
+        self.grandfather_six: Union[SimInfo, None] = None
+        self.grandmother_six: Union[SimInfo, None] = None
+        self.aunt_three: Union[SimInfo, None] = None
+        self.aunt_four: Union[SimInfo, None] = None
+        self.cousin_nineteen: Union[SimInfo, None] = None
+        self.cousin_twenty: Union[SimInfo, None] = None
 
         # Children:
-        self.child_one: SimInfo = None
-        self.child_two: SimInfo = None
-        self.grand_child_one: SimInfo = None
-        self.grand_child_two: SimInfo = None
-        self.step_child_one: SimInfo = None
-        self.step_child_two: SimInfo = None
-        self.step_child_three: SimInfo = None
+        self.child_one: Union[SimInfo, None] = None
+        self.child_two: Union[SimInfo, None] = None
+        self.grand_child_one: Union[SimInfo, None] = None
+        self.grand_child_two: Union[SimInfo, None] = None
+        self.step_child_one: Union[SimInfo, None] = None
+        self.step_child_two: Union[SimInfo, None] = None
+        self.step_child_three: Union[SimInfo, None] = None
 
         setattr(self, '_destroyed', True)

@@ -26,7 +26,7 @@ class S4CMAddSimoleonsOp(S4CMSingleSimOperation):
         return 's4cm_add_simoleons'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         if not CommonHouseholdUtils.has_household(sim_info):
             on_completed(False)
             return False

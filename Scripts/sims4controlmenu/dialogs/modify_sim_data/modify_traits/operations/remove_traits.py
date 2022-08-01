@@ -38,7 +38,7 @@ class S4CMRemoveTraitsSimOp(S4CMSingleSimOperation):
         return 's4cm_remove_traits_sim'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         def _reopen() -> None:
             self.run(sim_info, on_completed=on_completed)
 

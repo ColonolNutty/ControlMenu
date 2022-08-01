@@ -38,7 +38,7 @@ class S4CMSetSimAAsNieceOrNephewToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
         return super().get_disabled_text(new_niece_or_nephew_sim_info, new_aunt_or_uncle_sim_info)
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, new_niece_or_nephew_sim_info: SimInfo, new_aunt_or_uncle_sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, new_niece_or_nephew_sim_info: SimInfo, new_aunt_or_uncle_sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.aunt_or_uncle import \
             S4CMSetSimAAsAuntOrUncleToSimBOp
         return S4CMSetSimAAsAuntOrUncleToSimBOp().run(new_aunt_or_uncle_sim_info, new_niece_or_nephew_sim_info, on_completed=on_completed)

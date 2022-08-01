@@ -31,7 +31,7 @@ class S4CMRemoveAllSkillsSimOp(S4CMSingleSimOperation):
         return 's4cm_remove_all_skills_of_sim'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         def _on_close() -> None:
             on_completed(False)
 

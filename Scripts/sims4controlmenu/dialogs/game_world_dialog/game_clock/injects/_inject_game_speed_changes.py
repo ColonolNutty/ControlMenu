@@ -25,5 +25,5 @@ def _cm_adjust_game_clock_on_zone_load(original, self, *_, **__) -> Any:
 
 
 @CommonInjectionUtils.inject_safely_into(ModInfo.get_identity(), GameClock, GameClock.current_clock_speed_scale.__name__)
-def _s4cm_get_current_clock_speed_scale(original, self) -> Any:
+def _cm_get_current_clock_speed_scale(original, self) -> Any:
     return original(self) * S4CMSettingUtils().get_clock_speed_multiplier()

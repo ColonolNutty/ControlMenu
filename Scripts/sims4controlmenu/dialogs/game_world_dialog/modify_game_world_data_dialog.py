@@ -12,9 +12,8 @@ from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_but
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
 from sims4controlmenu.dialogs.game_world_dialog.enums.string_identifiers import S4CMGameWorldControlMenuStringId
-from sims4controlmenu.dialogs.game_world_dialog.game_clock.set_clock_speed import S4CMSetClockSpeedOp
-from sims4controlmenu.dialogs.game_world_dialog.game_clock.set_clock_speed_scale_multiplier import \
-    S4CMSetClockSpeedScaleMultiplierOp
+from sims4controlmenu.dialogs.game_world_dialog.game_clock.modify_game_clock_dialog import S4CMModifyGameClockDialog
+from sims4controlmenu.dialogs.game_world_dialog.lots.modify_lot_data_dialog import S4CMModifyLotDataDialog
 from sims4controlmenu.dialogs.sim_control_dialog_base import S4CMSimControlDialogBase
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
 
@@ -42,22 +41,23 @@ class S4CMModifyGameWorldDataDialog(S4CMSimControlDialogBase):
     ) -> bool:
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'SetClockSpeed',
+                'ModifyGameClock',
                 None,
                 CommonDialogResponseOptionContext(
-                    S4CMGameWorldControlMenuStringId.SET_CLOCK_SPEED,
+                    S4CMGameWorldControlMenuStringId.MODIFY_GAME_CLOCK,
                 ),
-                on_chosen=lambda *_, **__: None if S4CMSetClockSpeedOp().run(on_completed=lambda *_, **__: reopen()) else None
+                on_chosen=lambda *_, **__: S4CMModifyGameClockDialog(self._sim_info, on_previous=reopen).open()
             )
         )
+
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'SetClockSpeedScale',
+                'ModifyLotData',
                 None,
                 CommonDialogResponseOptionContext(
-                    S4CMGameWorldControlMenuStringId.SET_CLOCK_SPEED_SCALE,
+                    S4CMGameWorldControlMenuStringId.MODIFY_LOT_DATA,
                 ),
-                on_chosen=lambda *_, **__: None if S4CMSetClockSpeedScaleMultiplierOp().run(on_completed=lambda *_, **__: reopen()) else None
+                on_chosen=lambda *_, **__: S4CMModifyLotDataDialog(self._sim_info, on_previous=reopen).open()
             )
         )
         return True

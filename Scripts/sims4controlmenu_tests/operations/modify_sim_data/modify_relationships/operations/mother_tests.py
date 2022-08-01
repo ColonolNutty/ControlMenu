@@ -105,7 +105,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_child_of_previous_mother_one, blood_cousin_of_previous_mother_one, CommonRelationshipBitId.FAMILY_COUSIN), f'{blood_child_of_previous_mother_one_name} was still a cousin to {blood_cousin_of_previous_mother_one_name}')
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_cousin_of_previous_mother_one, blood_child_of_previous_mother_one, CommonRelationshipBitId.FAMILY_COUSIN), f'{blood_cousin_of_previous_mother_one_name} was still a cousin to {blood_child_of_previous_mother_one_name}')
 
-            # Parents of previous mother one children should no longer be the grandparents of new children.
+            # Parents of previous Mother One children should no longer be the grandparents of new children.
             blood_grandfather_previous_mother_one = new_full_family.grandfather_three
             blood_grandmother_previous_mother_one = new_full_family.grandmother_three
             blood_grandfather_previous_mother_one_name = CommonSimNameUtils.get_full_name(blood_grandfather_previous_mother_one)
@@ -232,21 +232,21 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                 new_full_family.cousin_twelve
             )
 
-            # Previous Father One no longer step parent of Step Child One new.
+            # Previous Father One no longer Step Parent of Step Child One new.
             previous_father_one_name = CommonSimNameUtils.get_full_name(new_full_family.father_one)
             previous_step_child_one_name = CommonSimNameUtils.get_full_name(new_full_family.step_child_one)
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.father_one, new_full_family.step_child_one, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{previous_step_child_one_name} was still a step child to {previous_father_one_name}')
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.step_child_one, new_full_family.father_one, CommonRelationshipBitId.FAMILY_PARENT), f'{previous_father_one_name} was still a step parent to {previous_step_child_one_name}')
 
-            # Previous Mother One no longer step parent of Step Child Two new.
+            # Previous Mother One no longer Step Parent of Step Child Two new.
             previous_step_child_two_name = CommonSimNameUtils.get_full_name(new_full_family.step_child_two)
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(previous_mother_one, new_full_family.step_child_two, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{previous_step_child_two_name} was still a step child to {previous_mother_name}')
-            CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.step_child_two, previous_mother_one, CommonRelationshipBitId.FAMILY_PARENT), f'{previous_mother_name} was still a step parent to {previous_step_child_two_name}')
+            CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.step_child_two, previous_mother_one, CommonRelationshipBitId.FAMILY_PARENT), f'{previous_mother_name} was still a Step Parent to {previous_step_child_two_name}')
 
-            # Previous Mother One no longer step parent of Step Child Three new.
+            # Previous Mother One no longer Step Parent of Step Child Three new.
             previous_step_child_three_name = CommonSimNameUtils.get_full_name(new_full_family.step_child_three)
             CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(previous_mother_one, new_full_family.step_child_three, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{previous_step_child_three_name} was still a step child to {previous_mother_name}')
-            CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.step_child_three, previous_mother_one, CommonRelationshipBitId.FAMILY_PARENT), f'{previous_mother_name} was still a step parent to {previous_step_child_three_name}')
+            CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(new_full_family.step_child_three, previous_mother_one, CommonRelationshipBitId.FAMILY_PARENT), f'{previous_mother_name} was still a Step Parent to {previous_step_child_three_name}')
 
             # Previous Father One siblings no longer step siblings of Mother One.
             for step_siblings_of_previous_father_one in step_siblings_of_previous_father_one_list:
@@ -262,7 +262,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_cousin_of_previous_mother_one, step_siblings_of_previous_father_one, CommonRelationshipBitId.FAMILY_AUNT_UNCLE), f'{step_siblings_of_previous_father_one_name} was still a step aunt/uncle to {blood_cousin_of_previous_mother_one_name}')
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(step_siblings_of_previous_father_one, blood_cousin_of_previous_mother_one, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW), f'{blood_cousin_of_previous_mother_one_name} was still a step niece/nephew to {step_siblings_of_previous_father_one_name}')
 
-            # Previous Father One siblings no longer step Aunt/Uncle of Mother One step children.
+            # Previous Father One siblings no longer Step Aunt/Uncle of Mother One's Step Children.
             for step_siblings_of_previous_father_one in step_siblings_of_previous_father_one_list:
                 step_siblings_of_previous_father_one_name = CommonSimNameUtils.get_full_name(step_siblings_of_previous_father_one)
                 for step_children_of_previous_mother_one in step_children_of_previous_mother_one_list:
@@ -270,23 +270,23 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(step_children_of_previous_mother_one, step_siblings_of_previous_father_one, CommonRelationshipBitId.FAMILY_AUNT_UNCLE), f'{step_siblings_of_previous_father_one_name} was still a step aunt/uncle to {step_children_of_previous_mother_one_name}')
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(step_siblings_of_previous_father_one, step_children_of_previous_mother_one, CommonRelationshipBitId.FAMILY_NIECE_NEPHEW), f'{step_children_of_previous_mother_one_name} was still a step niece/nephew to {step_siblings_of_previous_father_one_name}')
 
-            # Previous Father One siblings no longer step Children of Mother One parents.
+            # Previous Father One siblings no longer Step Children of Mother One parents.
             for blood_parents_of_previous_mother_one in blood_parents_of_previous_mother_one_list:
                 blood_parents_of_previous_mother_one_name = CommonSimNameUtils.get_full_name(blood_parents_of_previous_mother_one)
                 for step_siblings_of_previous_father_one in step_siblings_of_previous_father_one_list:
                     step_siblings_of_previous_father_one_name = CommonSimNameUtils.get_full_name(step_siblings_of_previous_father_one)
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(step_siblings_of_previous_father_one, blood_parents_of_previous_mother_one, CommonRelationshipBitId.FAMILY_PARENT), f'{step_siblings_of_previous_father_one_name} was still a step child to {blood_parents_of_previous_mother_one_name}')
-                    CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_parents_of_previous_mother_one, step_siblings_of_previous_father_one, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{blood_parents_of_previous_mother_one_name} was still a step parent to {step_siblings_of_previous_father_one_name}')
+                    CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_parents_of_previous_mother_one, step_siblings_of_previous_father_one, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{blood_parents_of_previous_mother_one_name} was still a Step Parent to {step_siblings_of_previous_father_one_name}')
 
-            # Previous Father One parents no longer step parents of Mother One siblings.
+            # Previous Father One parents no longer Step Parents of Mother One siblings.
             for step_parent_of_previous_father_one in step_parent_of_previous_father_one_list:
                 step_parent_of_previous_father_one_name = CommonSimNameUtils.get_full_name(step_parent_of_previous_father_one)
                 for blood_uncle_aunt_of_previous_mother_one in blood_uncle_aunt_of_previous_mother_one_list:
                     blood_uncle_aunt_of_previous_mother_one_name = CommonSimNameUtils.get_full_name(blood_uncle_aunt_of_previous_mother_one)
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_uncle_aunt_of_previous_mother_one, step_parent_of_previous_father_one, CommonRelationshipBitId.FAMILY_PARENT), f'{blood_uncle_aunt_of_previous_mother_one_name} was still a step child to {step_parent_of_previous_father_one_name}')
-                    CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(step_parent_of_previous_father_one, blood_uncle_aunt_of_previous_mother_one, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{step_parent_of_previous_father_one_name} was still a step parent to {blood_uncle_aunt_of_previous_mother_one_name}')
+                    CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(step_parent_of_previous_father_one, blood_uncle_aunt_of_previous_mother_one, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{step_parent_of_previous_father_one_name} was still a Step Parent to {blood_uncle_aunt_of_previous_mother_one_name}')
 
-            # Previous Father One parents no longer step grandparents of Mother One Cousins.
+            # Previous Father One parents no longer Step Grandparents of Mother One Cousins.
             for step_parent_of_previous_father_one in step_parent_of_previous_father_one_list:
                 step_parent_of_previous_father_one_name = CommonSimNameUtils.get_full_name(step_parent_of_previous_father_one)
                 for blood_cousin_of_previous_mother_one in blood_cousin_of_previous_mother_one_list:
@@ -294,7 +294,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_cousin_of_previous_mother_one, step_parent_of_previous_father_one, CommonRelationshipBitId.FAMILY_GRANDPARENT), f'{blood_cousin_of_previous_mother_one_name} was still a step grandchild to {step_parent_of_previous_father_one_name}')
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(step_parent_of_previous_father_one, blood_cousin_of_previous_mother_one, CommonRelationshipBitId.FAMILY_GRANDCHILD), f'{step_parent_of_previous_father_one_name} was still a step grandparent to {blood_cousin_of_previous_mother_one_name}')
 
-            # Previous Mother One parents no longer step grandparents of Father One Cousins.
+            # Previous Mother One parents no longer Step Grandparents of Father One Cousins.
             for blood_parents_of_previous_mother_one in blood_parents_of_previous_mother_one_list:
                 blood_parents_of_previous_mother_one_name = CommonSimNameUtils.get_full_name(blood_parents_of_previous_mother_one)
                 for step_cousins_of_previous_father_one in step_cousins_of_previous_father_one_list:
@@ -302,7 +302,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(step_cousins_of_previous_father_one, blood_parents_of_previous_mother_one, CommonRelationshipBitId.FAMILY_GRANDPARENT), f'{step_cousins_of_previous_father_one_name} was still a step grandchild to {blood_parents_of_previous_mother_one_name}')
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_parents_of_previous_mother_one, step_cousins_of_previous_father_one, CommonRelationshipBitId.FAMILY_GRANDCHILD), f'{blood_parents_of_previous_mother_one_name} was still a step grandparent to {step_cousins_of_previous_father_one_name}')
 
-            # Previous Mother One parents no longer step grandparents of Father One Step Children.
+            # Previous Mother One parents no longer Step Grandparents of Father One's Step Children.
             for blood_parents_of_previous_mother_one in blood_parents_of_previous_mother_one_list:
                 blood_parents_of_previous_mother_one_name = CommonSimNameUtils.get_full_name(blood_parents_of_previous_mother_one)
                 for step_children_of_previous_father_one in step_children_of_previous_father_one_list:
@@ -310,7 +310,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(step_children_of_previous_father_one, blood_parents_of_previous_mother_one, CommonRelationshipBitId.FAMILY_GRANDPARENT), f'{step_children_of_previous_father_one_name} was still a step grandchild to {blood_parents_of_previous_mother_one_name}')
                     CommonAssertionUtils.is_false(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_parents_of_previous_mother_one, step_children_of_previous_father_one, CommonRelationshipBitId.FAMILY_GRANDCHILD), f'{blood_parents_of_previous_mother_one_name} was still a step grandparent to {step_children_of_previous_father_one_name}')
 
-            # Previous Father One parents no longer step grandparents of Mother One Step Children.
+            # Previous Father One parents no longer Step Grandparents of Mother One's Step Children.
             for step_parent_of_previous_father_one in step_parent_of_previous_father_one_list:
                 step_parent_of_previous_father_one_name = CommonSimNameUtils.get_full_name(step_parent_of_previous_father_one)
                 for step_children_of_previous_mother_one in step_children_of_previous_mother_one_list:
@@ -416,7 +416,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                     CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_child_of_previous_mother_one, blood_step_child_mother_one_side, CommonRelationshipBitId.FAMILY_BROTHER_SISTER), f'{blood_step_child_mother_one_side_name} was not a sibling to {blood_child_of_previous_mother_one_name}')
                     CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_step_child_mother_one_side, blood_child_of_previous_mother_one, CommonRelationshipBitId.FAMILY_BROTHER_SISTER), f'{blood_child_of_previous_mother_one_name} was not a sibling to {blood_step_child_mother_one_side_name}')
 
-            # Cousins of new mother one children should become cousins of new children.
+            # Cousins of new Mother One children should become cousins of new children.
             for cousin_on_mother_one_side in cousins_on_mother_one_side_list:
                 cousin_on_mother_one_side_name = CommonSimNameUtils.get_full_name(cousin_on_mother_one_side)
                 for blood_child_of_previous_mother_one in blood_children_of_previous_mother_one_list:
@@ -424,7 +424,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                     CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_child_of_previous_mother_one, cousin_on_mother_one_side, CommonRelationshipBitId.FAMILY_COUSIN), f'{cousin_on_mother_one_side_name} was not a cousin to {blood_child_of_previous_mother_one_name}')
                     CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(cousin_on_mother_one_side, blood_child_of_previous_mother_one, CommonRelationshipBitId.FAMILY_COUSIN), f'{blood_child_of_previous_mother_one_name} was not a cousin to {cousin_on_mother_one_side_name}')
 
-            # Parents of new mother one children should become grandparents of new children.
+            # Parents of new Mother One children should become grandparents of new children.
             grandfather_on_mother_one_side = old_full_family.grandfather_three
             grandmother_on_mother_one_side = old_full_family.grandmother_three
             grandfather_on_mother_one_side_name = CommonSimNameUtils.get_full_name(grandfather_on_mother_one_side)
@@ -478,7 +478,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                 step_parent_of_new_children_name = CommonSimNameUtils.get_full_name(step_parent_of_new_children)
                 for blood_child_of_previous_mother_one in blood_children_of_previous_mother_one_list:
                     blood_child_of_previous_mother_one_name = CommonSimNameUtils.get_full_name(blood_child_of_previous_mother_one)
-                    CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_child_of_previous_mother_one, step_parent_of_new_children, CommonRelationshipBitId.FAMILY_PARENT), f'{step_parent_of_new_children_name} was not a step parent to {blood_child_of_previous_mother_one_name}')
+                    CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_child_of_previous_mother_one, step_parent_of_new_children, CommonRelationshipBitId.FAMILY_PARENT), f'{step_parent_of_new_children_name} was not a Step Parent to {blood_child_of_previous_mother_one_name}')
                     CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(step_parent_of_new_children, blood_child_of_previous_mother_one, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{blood_child_of_previous_mother_one_name} was not a step child to {step_parent_of_new_children_name}')
 
             # Step Uncle
@@ -539,7 +539,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
                 step_parent_of_new_children_name = CommonSimNameUtils.get_full_name(step_parent_of_new_children)
                 for blood_children_of_new_mother_one in blood_children_of_new_mother_one_list:
                     blood_children_of_new_mother_one_name = CommonSimNameUtils.get_full_name(blood_children_of_new_mother_one)
-                    CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_children_of_new_mother_one, step_parent_of_new_children, CommonRelationshipBitId.FAMILY_PARENT), f'{step_parent_of_new_children_name} was not a step parent to {blood_children_of_new_mother_one_name}')
+                    CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(blood_children_of_new_mother_one, step_parent_of_new_children, CommonRelationshipBitId.FAMILY_PARENT), f'{step_parent_of_new_children_name} was not a Step Parent to {blood_children_of_new_mother_one_name}')
                     CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(step_parent_of_new_children, blood_children_of_new_mother_one, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{blood_children_of_new_mother_one_name} was not a step child to {step_parent_of_new_children_name}')
 
             # Step Uncle
@@ -592,7 +592,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
             # Step Children
             for previous_step_children_of_new_mother in previous_step_children_of_new_mother_list:
                 previous_step_children_of_new_mother_name = CommonSimNameUtils.get_full_name(previous_step_children_of_new_mother)
-                CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(previous_step_children_of_new_mother, sim_a_mother, CommonRelationshipBitId.FAMILY_PARENT), f'{sim_a_mother_name} was not a step parent to {previous_step_children_of_new_mother_name}')
+                CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(previous_step_children_of_new_mother, sim_a_mother, CommonRelationshipBitId.FAMILY_PARENT), f'{sim_a_mother_name} was not a Step Parent to {previous_step_children_of_new_mother_name}')
                 CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_mother, previous_step_children_of_new_mother, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{previous_step_children_of_new_mother_name} was not a step child to {sim_a_mother_name}')
 
             # Step Siblings
@@ -611,7 +611,7 @@ class _S4CMSetSimAAsMotherToSimBOpTests:
             for step_parent_of_new_mother in step_parent_of_new_mother_list:
                 step_parent_of_new_mother_name = CommonSimNameUtils.get_full_name(step_parent_of_new_mother)
                 CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(step_parent_of_new_mother, sim_a_mother, CommonRelationshipBitId.FAMILY_SON_DAUGHTER), f'{sim_a_mother_name} was not a step child to {step_parent_of_new_mother_name}')
-                CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_mother, step_parent_of_new_mother, CommonRelationshipBitId.FAMILY_PARENT), f'{step_parent_of_new_mother_name} was not a step parent to {sim_a_mother_name}')
+                CommonAssertionUtils.is_true(CommonRelationshipUtils.has_relationship_bit_with_sim(sim_a_mother, step_parent_of_new_mother, CommonRelationshipBitId.FAMILY_PARENT), f'{step_parent_of_new_mother_name} was not a Step Parent to {sim_a_mother_name}')
         finally:
             new_full_family.destroy()
             old_full_family.destroy()

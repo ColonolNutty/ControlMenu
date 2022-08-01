@@ -13,7 +13,6 @@ from sims4communitylib.dialogs.option_dialogs.options.common_dialog_option_conte
 from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_input_integer_option import \
     CommonDialogInputIntegerOption
 from sims4communitylib.enums.strings_enum import CommonStringId
-from sims4communitylib.services.common_service import CommonService
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4controlmenu.dialogs.game_world_dialog.enums.string_identifiers import S4CMGameWorldControlMenuStringId
@@ -29,13 +28,16 @@ class S4CMSetClockSpeedOp(HasS4CMLog):
     _DEFAULT_CLOCK_SPEED_MAX = 9999
 
     # noinspection PyMissingOrEmptyDocstring
+    @property
+    def log_identifier(self) -> str:
+        return 'set_clock_speed_op'
+
+    # noinspection PyMissingOrEmptyDocstring
     def run(self, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         def _on_input_setting_changed(setting_name: str, setting_value: float, outcome: CommonChoiceOutcome):
             if setting_value is None or CommonChoiceOutcome.is_error_or_cancel(outcome):
                 on_completed(True)
                 return
-            # from sims4.commands import execute
-            # execute('clock._set_milliseconds_per_sim_second {0}'.format(setting_value), None)
             date_and_time.REAL_MILLISECONDS_PER_SIM_SECOND = setting_value
             data_store.set_value_by_key(setting_name, setting_value)
             on_completed(True)

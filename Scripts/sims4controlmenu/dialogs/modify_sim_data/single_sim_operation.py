@@ -20,18 +20,18 @@ class S4CMSingleSimOperation(HasS4CMLog):
     def log_identifier(self) -> str:
         raise NotImplementedError()
 
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         """Apply the operation."""
         raise NotImplementedError()
 
-    def run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         """Apply the operation while using a specified Sim."""
         return False
 
     def can_run_with_sim(self, sim_info: SimInfo) -> bool:
-        """Determine whether or not this operation can run using the specified Sim."""
+        """Determine if this operation can run using the specified Sim."""
         return sim_info is not None
 
     def can_run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        """Determine whether or not this operation can run using the specified Sims."""
+        """Determine if this operation can run using the specified Sims."""
         return self.can_run_with_sim(sim_info_a) and self.can_run_with_sim(sim_info_b)

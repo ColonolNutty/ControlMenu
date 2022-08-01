@@ -15,7 +15,7 @@ from sims4controlmenu.settings.setting_utils import S4CMSettingUtils
 class S4CMSimPregnancyUtils:
     """Utilities for pregnancy. """
     @staticmethod
-    def can_create_pregnancy(sim_info: SimInfo, ignore_gender_options: bool=False) -> bool:
+    def can_create_pregnancy(sim_info: SimInfo, ignore_gender_options: bool = False) -> bool:
         """can_create_pregnancy(sim_info, ignore_gender_options=False)
 
         Determine if a Sim is able to create a pregnancy.

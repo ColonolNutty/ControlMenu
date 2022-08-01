@@ -44,7 +44,7 @@ class S4CMSetSimAAsFatherToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
     def has_relation(self, new_parent_sim_info: SimInfo, child_sim_info: SimInfo) -> bool:
         return super().has_relation(new_parent_sim_info, child_sim_info) and CommonSimGenealogyUtils.is_father_of(new_parent_sim_info, child_sim_info)
 
-    def _update_family_tree(self, parent_sim_info: SimInfo, child_sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def _update_family_tree(self, parent_sim_info: SimInfo, child_sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         try:
             self.log.format_with_message('Setting Sim A as father of Sim B', sim_a=parent_sim_info, sim_b=child_sim_info)
             if CommonSimGenealogyUtils.has_father(child_sim_info):

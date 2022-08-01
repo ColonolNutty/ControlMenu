@@ -57,7 +57,7 @@ class S4CMSetRelationshipLevelOp(S4CMSingleSimOperation):
         raise NotImplementedError()
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         def _on_chosen(chosen_sim_info: SimInfo) -> None:
             if chosen_sim_info is None:
                 self.log.format_with_message('No Sim chosen.', sim=sim_info, chosen_sim=chosen_sim_info)
@@ -91,7 +91,7 @@ class S4CMSetRelationshipLevelOp(S4CMSingleSimOperation):
         return super().can_run_with_sims(sim_info_a, sim_info_b) and sim_info_a is not sim_info_b and self._is_allowed_relationship_track(sim_info_a, sim_info_b)
 
     # noinspection PyMissingOrEmptyDocstring
-    def run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop):
+    def run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop):
         relationship_track_id = self._determine_relationship_track(sim_info_a, sim_info_b)
         if relationship_track_id == -1:
             self.log.format_with_message('No relationship track id found between Sims.', sim=sim_info_a, chosen_sim=sim_info_b)
@@ -162,7 +162,7 @@ class S4CMSetRelationshipLevelOp(S4CMSingleSimOperation):
                 minimum_value = bit_set_item.add_value
                 relationship_options[bit_display_name] = S4CMRelationshipOption(bit_display_name, minimum_value)
         if relationship_options:
-            result: Tuple[S4CMRelationshipOption] = (
+            result: Tuple[S4CMRelationshipOption, ...] = (
                 S4CMRelationshipOption(S4CMSimControlMenuStringId.MAXIMUM, 100.0),
                 S4CMRelationshipOption(S4CMSimControlMenuStringId.MINIMUM, -100.0),
                 *relationship_options.values()

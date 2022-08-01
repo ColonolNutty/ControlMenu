@@ -10,7 +10,7 @@ from sims4controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.set_
 
 
 class S4CMSetAgeAdultOp(S4CMSetAgeOp):
-    """Set the age of a Sim to a Adult."""
+    """Set the age of a Sim to an Adult."""
 
     # noinspection PyMissingOrEmptyDocstring
     @property

@@ -28,7 +28,7 @@ class S4CMSetSimAAsSiblingToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
     def opposite_relationship_bit_id(self) -> CommonRelationshipBitId:
         return CommonRelationshipBitId.FAMILY_BROTHER_SISTER
 
-    def _update_family_tree(self, new_brother_or_sister_sim_info: SimInfo, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def _update_family_tree(self, new_brother_or_sister_sim_info: SimInfo, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.mother import \
             S4CMSetSimAAsMotherToSimBOp
         from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.father import \

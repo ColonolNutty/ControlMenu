@@ -34,7 +34,7 @@ class S4CMSetSimAAsChildToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
         return CommonRelationshipBitId.FAMILY_PARENT
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info_a: SimInfo, new_parent_sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info_a: SimInfo, new_parent_sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         def _on_selected(_: str, operation: Any):
             if operation is None:
                 on_completed(False)
@@ -74,12 +74,12 @@ class S4CMSetSimAAsChildToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
         option_dialog.show()
         return True
 
-    def _as_mother(self, child_sim_info: SimInfo, parent_sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def _as_mother(self, child_sim_info: SimInfo, parent_sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.mother import \
             S4CMSetSimAAsMotherToSimBOp
         return S4CMSetSimAAsMotherToSimBOp().run(parent_sim_info, child_sim_info, on_completed=on_completed)
 
-    def _as_father(self, child_sim_info: SimInfo, parent_sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def _as_father(self, child_sim_info: SimInfo, parent_sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.father import \
             S4CMSetSimAAsFatherToSimBOp
         return S4CMSetSimAAsFatherToSimBOp().run(parent_sim_info, child_sim_info, on_completed=on_completed)

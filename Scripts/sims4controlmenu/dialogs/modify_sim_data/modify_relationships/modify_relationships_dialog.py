@@ -48,7 +48,7 @@ class S4CMModifyRelationshipsDialog(S4CMSimControlDialogBase):
         on_close: Callable[[], None],
         on_previous: Callable[[], None],
         reopen: Callable[[], None],
-        target_sim_info: SimInfo=None,
+        target_sim_info: SimInfo = None,
         **__
     ) -> bool:
         def _operation_run(operation: S4CMSingleSimOperation):

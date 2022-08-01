@@ -27,7 +27,7 @@ class S4CMAddHasMetSimsOp(S4CMSingleSimOperation):
         return 's4cm_has_met'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         def _on_submit(chosen_sim_info_list: Tuple[SimInfo]) -> None:
             if chosen_sim_info_list is None or not chosen_sim_info_list:
                 on_completed(False)
@@ -58,7 +58,7 @@ class S4CMAddHasMetSimsOp(S4CMSingleSimOperation):
         return sim_info_a is not sim_info_b and not CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_a, sim_info_b, CommonRelationshipBitId.HAS_MET)
 
     # noinspection PyMissingOrEmptyDocstring
-    def run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         on_completed(self._run_with_sims(sim_info_a, (sim_info_b,)))
         return True
 
@@ -78,7 +78,7 @@ class S4CMRemoveHasMetSimsOp(S4CMSingleSimOperation):
         return 's4cm_has_met'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         def _on_submit(chosen_sim_info_list: Tuple[SimInfo]) -> None:
             if chosen_sim_info_list is None or not chosen_sim_info_list:
                 on_completed(False)
@@ -109,7 +109,7 @@ class S4CMRemoveHasMetSimsOp(S4CMSingleSimOperation):
         return sim_info_a is not sim_info_b and CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_a, sim_info_b, CommonRelationshipBitId.HAS_MET)
 
     # noinspection PyMissingOrEmptyDocstring
-    def run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         on_completed(self._run_with_sims(sim_info_a, (sim_info_b,)))
         return True
 

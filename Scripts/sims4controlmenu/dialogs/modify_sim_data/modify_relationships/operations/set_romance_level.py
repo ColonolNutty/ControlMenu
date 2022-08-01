@@ -33,5 +33,5 @@ class S4CMSetRomanceLevelOp(S4CMSetRelationshipLevelOp):
         return S4CMSettingUtils.are_allowed_romantic_relationship(sim_info_a, sim_info_b)
 
     def can_run_with_sim(self, sim_info: SimInfo) -> bool:
-        """Determine whether or not this operation can run using the specified Sim."""
+        """Determine if this operation can run using the specified Sim."""
         return super().can_run_with_sim(sim_info) and S4CMSettingUtils.is_allowed_romantic_relationship(sim_info)

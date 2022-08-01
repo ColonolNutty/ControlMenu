@@ -49,7 +49,7 @@ class S4CMSetSimAAsAuntOrUncleToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
             return CommonLocalizationUtils.create_localized_string(S4CMSimControlMenuStringId.SIM_NEEDS_TO_HAVE_MOTHER_OR_FATHER_BEFORE_YOU_CAN_ADD_UNCLES_OR_AUNTS_TO_THEM, tokens=(sim_info, ))
         return super().get_disabled_text(new_aunt_or_uncle_sim_info, sim_info)
 
-    def _update_family_tree(self, new_aunt_or_uncle_sim_info: SimInfo, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def _update_family_tree(self, new_aunt_or_uncle_sim_info: SimInfo, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         def _on_selected(_: str, operation: Any):
             if operation is None:
                 on_completed(False)
@@ -96,7 +96,7 @@ class S4CMSetSimAAsAuntOrUncleToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
         option_dialog.show()
         return True
 
-    def _fathers_side(self, new_aunt_or_uncle_sim_info: SimInfo, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def _fathers_side(self, new_aunt_or_uncle_sim_info: SimInfo, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         try:
             self.log.format_with_message('Setting Sim A as aunt/uncle of Sim B on fathers side', sim_a=new_aunt_or_uncle_sim_info, sim_b=sim_info)
             mother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(sim_info)
@@ -111,7 +111,7 @@ class S4CMSetSimAAsAuntOrUncleToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
             return False
         return True
 
-    def _mothers_side(self, new_aunt_or_uncle_sim_info: SimInfo, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def _mothers_side(self, new_aunt_or_uncle_sim_info: SimInfo, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         try:
             self.log.format_with_message('Setting Sim A as aunt/uncle of Sim B on mothers side', sim_a=new_aunt_or_uncle_sim_info, sim_b=sim_info)
             mother_sim_info = CommonSimGenealogyUtils.get_mother_sim_info(sim_info)

@@ -134,6 +134,7 @@ class S4CMModifyOccultTypeDialog(S4CMSimControlDialogBase):
         add_disabled_text = CommonStringId.S4CL_THIS_FEATURE_IS_NOT_YET_IMPLEMENTED if self._occult_type in (CommonOccultType.GHOST,) else S4CMSimControlMenuStringId.SIM_ALREADY_HAS_THIS_OCCULT if has_occult else None
 
         if self._occult_type == CommonOccultType.ROBOT:
+            # noinspection PyUnusedLocal
             all_occult_types = tuple(CommonSimOccultTypeUtils.get_all_occult_types_for_sim_gen(self._sim_info))
             for conflicting_occult_type in (CommonOccultType.ALIEN, CommonOccultType.VAMPIRE, CommonOccultType.WITCH, CommonOccultType.MERMAID, CommonOccultType.PLANT_SIM):
                 if CommonSimOccultTypeUtils.is_occult_type(self._sim_info, conflicting_occult_type):
@@ -174,7 +175,6 @@ class S4CMModifyOccultTypeDialog(S4CMSimControlDialogBase):
         is_currently_occult = CommonSimOccultTypeUtils.is_currently_occult_type(self._sim_info, self._occult_type)
 
         if self._occult_type in (CommonOccultType.ALIEN, CommonOccultType.VAMPIRE, CommonOccultType.WEREWOLF, CommonOccultType.MERMAID):
-
             option_dialog.add_option(
                 CommonDialogButtonOption(
                     'SwitchOccult',

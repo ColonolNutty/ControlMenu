@@ -18,7 +18,7 @@ class S4CMSettingUtils:
     """Setting utils"""
     @staticmethod
     def is_sim_allowed_to_perform_adult_sim_operations(sim_info: SimInfo) -> bool:
-        """Whether or not the Sim is allowed to perform Operations intended for Adult Sims."""
+        """Determine if the Sim is allowed to perform Operations intended for Adult Sims."""
         return CommonAgeUtils.is_adult_or_elder(sim_info)
 
     @staticmethod
@@ -28,12 +28,12 @@ class S4CMSettingUtils:
 
     @staticmethod
     def are_allowed_family_relationship_bits(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        """Whether or not two Sims are allowed to have a family relationship bits."""
+        """Determine if two Sims are allowed to have a family relationship bits."""
         return CommonSpeciesUtils.are_same_species(sim_info_a, sim_info_b)
 
     @staticmethod
     def are_allowed_romantic_relationship(sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        """Whether or not two Sims are allowed to have a Romantic relationship together."""
+        """Determine if two Sims are allowed to have a Romantic relationship together."""
         if not S4CMSettingUtils.is_allowed_romantic_relationship(sim_info_a) or not S4CMSettingUtils.is_allowed_romantic_relationship(sim_info_b):
             return False
         if CommonRelationshipUtils.are_blood_relatives(sim_info_a, sim_info_b):
@@ -68,6 +68,11 @@ class S4CMSettingUtils:
     def get_clock_speed_multiplier() -> int:
         """Retrieve the multiplier for clock speed."""
         return S4CMSettingUtils._get_value(CMSetting.CLOCK_SPEED_MULTIPLIER)
+
+    @staticmethod
+    def get_maximum_number_of_sims_per_lot() -> int:
+        """Retrieve the maximum number of Sims allowed on a lot at any given time."""
+        return S4CMSettingUtils._get_value(CMSetting.MAXIMUM_SIMS_PER_LOT)
 
     @staticmethod
     def _get_value(key: str) -> Any:

@@ -68,7 +68,7 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
 
     @property
     def _relation_operations(self) -> Tuple[S4CMSetSimAAsRelationToSimBOperation]:
-        result: Tuple[S4CMSetSimAAsRelationToSimBOperation] = (
+        result: Tuple[S4CMSetSimAAsRelationToSimBOperation, ...] = (
             S4CMSetSimAAsAuntOrUncleToSimBOp(),
             S4CMSetSimAAsChildToSimBOp(),
             S4CMSetSimAAsCousinToSimBOp(),
@@ -87,7 +87,7 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
         return result
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         def _on_chosen(chosen_sim_info: SimInfo) -> None:
             if chosen_sim_info is None:
                 on_completed(False)
@@ -120,7 +120,7 @@ class S4CMSetFamilyRelationsBitOp(S4CMSingleSimOperation):
         return super().can_run_with_sims(sim_info_a, sim_info_b) and sim_info_a is not sim_info_b and S4CMSettingUtils.are_allowed_family_relationship_bits(sim_info_a, sim_info_b)
 
     # noinspection PyMissingOrEmptyDocstring
-    def run_with_sims(self, sim_info: SimInfo, chosen_sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop):
+    def run_with_sims(self, sim_info: SimInfo, chosen_sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop):
         def _on_none_chosen(_: Any, __: Any):
             try:
                 CommonSimGenealogyUtils.remove_family_relations_with(sim_info, chosen_sim_info)

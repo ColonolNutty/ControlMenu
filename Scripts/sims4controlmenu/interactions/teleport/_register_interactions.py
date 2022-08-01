@@ -16,7 +16,7 @@ class _S4CMTeleportTerrainInteractionHandler(CommonInteractionHandler):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def interactions_to_add(self) -> Tuple[int]:
-        result: Tuple[int] = (
+        result: Tuple[int, ...] = (
             S4CMInteractionId.TELEPORT_ACTIVE_SIM_HERE,
             S4CMInteractionId.TELEPORT_SIMS_TO_TARGET,
         )

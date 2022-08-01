@@ -46,7 +46,7 @@ class S4CMSetSimAAsGrandmotherOnFathersSideToSimBOp(S4CMSetSimAAsRelationToSimBO
         return super().get_disabled_text(grandparent_sim_info, grandchild_sim_info)
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, grandparent_sim_info: SimInfo, grandchild_sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, grandparent_sim_info: SimInfo, grandchild_sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         from sims4controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.mother import \
             S4CMSetSimAAsMotherToSimBOp
         parent_sim_info = CommonSimGenealogyUtils.get_father_sim_info(grandchild_sim_info)

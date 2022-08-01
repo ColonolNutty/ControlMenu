@@ -29,7 +29,7 @@ class S4CMSetAgeOp(S4CMSingleSimOperation):
         raise NotImplementedError()
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         result = CommonAgeUtils.set_age(sim_info, self.age)
         if result:
             CommonSimSpawnUtils.soft_reset(sim_info, cause='S4CM Sim Age Change')

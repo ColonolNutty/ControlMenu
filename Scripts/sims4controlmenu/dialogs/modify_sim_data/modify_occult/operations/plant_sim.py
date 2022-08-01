@@ -22,7 +22,7 @@ class S4CMPlantSimAddOp(S4CMSingleSimOperation):
         return 's4cm_modify_plant_sim'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         if CommonOccultUtils.is_plant_sim(sim_info):
             on_completed(False)
             return False
@@ -44,7 +44,7 @@ class S4CMPlantSimRemoveOp(S4CMSingleSimOperation):
         return 's4cm_modify_plant_sim'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         if not CommonOccultUtils.is_plant_sim(sim_info):
             on_completed(False)
             return False

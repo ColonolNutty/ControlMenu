@@ -49,7 +49,7 @@ class S4CMSetSimAAsRelationToSimBOperation(S4CMDoubleSimOperation, HasS4CMLog, C
     @property
     def _display_name(self) -> int:
         if self.__display_name is None:
-            relationship_bit_id: int = self.relationship_bit_id
+            relationship_bit_id: Union[CommonRelationshipBitId, int] = self.relationship_bit_id
             relationship_bit: RelationshipBit = CommonResourceUtils.load_instance(Types.RELATIONSHIP_BIT, relationship_bit_id)
             if relationship_bit is None:
                 self.__display_name = 0
@@ -60,7 +60,7 @@ class S4CMSetSimAAsRelationToSimBOperation(S4CMDoubleSimOperation, HasS4CMLog, C
     @property
     def _opposite_display_name(self) -> int:
         if self.__opposite_display_name is None:
-            relationship_bit_id: int = self.opposite_relationship_bit_id
+            relationship_bit_id: Union[CommonRelationshipBitId, int] = self.opposite_relationship_bit_id
             relationship_bit: RelationshipBit = CommonResourceUtils.load_instance(Types.RELATIONSHIP_BIT, relationship_bit_id)
             if relationship_bit is None:
                 self.__opposite_display_name = 0
@@ -80,7 +80,7 @@ class S4CMSetSimAAsRelationToSimBOperation(S4CMDoubleSimOperation, HasS4CMLog, C
     def has_relation(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
         """has_relation(sim_info_a, sim_info_b)
 
-        Determine whether or not two Sims have the relationship of this operation.
+        Determine if two Sims have the relationship of this operation.
 
         :param sim_info_a: An instance of a Sim.
         :type sim_info_a: SimInfo
@@ -92,7 +92,7 @@ class S4CMSetSimAAsRelationToSimBOperation(S4CMDoubleSimOperation, HasS4CMLog, C
         return CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_a, self.relationship_bit_id)
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         if not self._should_update_family_tree:
             self._add_relationship_bits(sim_info_a, sim_info_b)
             on_completed(True)
@@ -155,7 +155,7 @@ class S4CMSetSimAAsRelationToSimBOperation(S4CMDoubleSimOperation, HasS4CMLog, C
                 result = CommonRelationshipUtils.add_relationship_bit(sim_info_a, sim_info_b, opposite_relationship_bit_id)
         return result
 
-    def _update_family_tree(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def _update_family_tree(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         on_completed(True)
         return True
 

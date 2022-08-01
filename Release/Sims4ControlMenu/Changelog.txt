@@ -2,7 +2,9 @@ Version 1.4:
 - Updated the Occult menu to allow removing specific occult types as well as being able to switch Sims to and from their occult forms.
 - Added the Werewolf occult to the occult types menu.
 - Added the ability to adjust the speed of pregnancy.
+- The pregnancy dialog now displays the Sim that got a Sim pregnant.
 - Added the ability to set the maximum size of households.
+- The Set Clock Speed and Set Clock Speed Mutiplier settings now persist, which means you will not need to set them on every startup now.
 - Control Menu now requires at least version 1.79 of Sims 4 Community Library
 
 Version 1.3:

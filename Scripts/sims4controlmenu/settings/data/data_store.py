@@ -30,11 +30,13 @@ class CMMainSettingsDataStore(CommonDataStore):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def _default_data(self) -> Dict[str, Any]:
+        from sims.sim_spawner_service import SimSpawnerService
         return {
             CMSetting.VERSION: self._version,
 
             CMSetting.PREGNANCY_SPEED: PregnancyTracker.PREGNANCY_RATE,
             CMSetting.MAXIMUM_HOUSEHOLD_SIZE: Household.MAXIMUM_SIZE,
             CMSetting.REAL_MILLISECONDS_PER_SIM_SECOND: date_and_time.REAL_MILLISECONDS_PER_SIM_SECOND,
-            CMSetting.CLOCK_SPEED_MULTIPLIER: 1.0
+            CMSetting.CLOCK_SPEED_MULTIPLIER: 1.0,
+            CMSetting.MAXIMUM_SIMS_PER_LOT: SimSpawnerService.NPC_SOFT_CAP
         }.copy()

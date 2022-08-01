@@ -19,56 +19,66 @@ class _S4CMAutoApplyTraits:
 
     def _try_apply_traits(self, sim_info: SimInfo):
         if CommonSpeciesUtils.is_human(sim_info):
-            CommonTraitUtils.remove_trait(
+            CommonTraitUtils.remove_traits(
                 sim_info,
-                S4CMTraitId.S4CM_CONTROLLABLE_LARGE_DOG_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_SMALL_DOG_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_CAT_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_FOX_SIM
+                (
+                    S4CMTraitId.S4CM_CONTROLLABLE_LARGE_DOG_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_SMALL_DOG_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_CAT_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_FOX_SIM
+                )
             )
             if CommonTraitUtils.has_trait(sim_info, S4CMTraitId.S4CM_CONTROLLABLE_HUMAN_SIM):
                 return
             CommonTraitUtils.add_trait(sim_info, S4CMTraitId.S4CM_CONTROLLABLE_HUMAN_SIM)
         elif CommonSpeciesUtils.is_large_dog(sim_info):
-            CommonTraitUtils.remove_trait(
+            CommonTraitUtils.remove_traits(
                 sim_info,
-                S4CMTraitId.S4CM_CONTROLLABLE_HUMAN_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_SMALL_DOG_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_CAT_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_FOX_SIM
+                (
+                    S4CMTraitId.S4CM_CONTROLLABLE_HUMAN_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_SMALL_DOG_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_CAT_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_FOX_SIM
+                )
             )
             if CommonTraitUtils.has_trait(sim_info, S4CMTraitId.S4CM_CONTROLLABLE_LARGE_DOG_SIM):
                 return
             CommonTraitUtils.add_trait(sim_info, S4CMTraitId.S4CM_CONTROLLABLE_LARGE_DOG_SIM)
         elif CommonSpeciesUtils.is_small_dog(sim_info):
-            CommonTraitUtils.remove_trait(
+            CommonTraitUtils.remove_traits(
                 sim_info,
-                S4CMTraitId.S4CM_CONTROLLABLE_HUMAN_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_LARGE_DOG_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_CAT_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_FOX_SIM
+                (
+                    S4CMTraitId.S4CM_CONTROLLABLE_HUMAN_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_LARGE_DOG_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_CAT_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_FOX_SIM
+                )
             )
             if CommonTraitUtils.has_trait(sim_info, S4CMTraitId.S4CM_CONTROLLABLE_SMALL_DOG_SIM):
                 return
             CommonTraitUtils.add_trait(sim_info, S4CMTraitId.S4CM_CONTROLLABLE_SMALL_DOG_SIM)
         elif CommonSpeciesUtils.is_cat(sim_info):
-            CommonTraitUtils.remove_trait(
+            CommonTraitUtils.remove_traits(
                 sim_info,
-                S4CMTraitId.S4CM_CONTROLLABLE_HUMAN_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_LARGE_DOG_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_SMALL_DOG_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_FOX_SIM
+                (
+                    S4CMTraitId.S4CM_CONTROLLABLE_HUMAN_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_LARGE_DOG_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_SMALL_DOG_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_FOX_SIM
+                )
             )
             if CommonTraitUtils.has_trait(sim_info, S4CMTraitId.S4CM_CONTROLLABLE_CAT_SIM):
                 return
             CommonTraitUtils.add_trait(sim_info, S4CMTraitId.S4CM_CONTROLLABLE_CAT_SIM)
         elif CommonSpeciesUtils.is_fox(sim_info):
-            CommonTraitUtils.remove_trait(
+            CommonTraitUtils.remove_traits(
                 sim_info,
-                S4CMTraitId.S4CM_CONTROLLABLE_HUMAN_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_LARGE_DOG_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_SMALL_DOG_SIM,
-                S4CMTraitId.S4CM_CONTROLLABLE_CAT_SIM
+                (
+                    S4CMTraitId.S4CM_CONTROLLABLE_HUMAN_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_LARGE_DOG_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_SMALL_DOG_SIM,
+                    S4CMTraitId.S4CM_CONTROLLABLE_CAT_SIM
+                )
             )
             if CommonTraitUtils.has_trait(sim_info, S4CMTraitId.S4CM_CONTROLLABLE_FOX_SIM):
                 return
@@ -76,6 +86,6 @@ class _S4CMAutoApplyTraits:
 
 
 @CommonEventRegistry.handle_events(ModInfo.get_identity())
-def _s4cm_auto_apply_traits_on_sim_spawned(event_data: S4CLSimSpawnedEvent):
+def _cm_auto_apply_traits_on_sim_spawned(event_data: S4CLSimSpawnedEvent):
     sim_info = event_data.sim_info
     _S4CMAutoApplyTraits()._try_apply_traits(sim_info)

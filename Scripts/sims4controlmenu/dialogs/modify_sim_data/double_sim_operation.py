@@ -20,6 +20,6 @@ class S4CMDoubleSimOperation(HasS4CMLog):
     def log_identifier(self) -> str:
         raise NotImplementedError()
 
-    def run(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         """Apply the operation."""
         raise NotImplementedError()

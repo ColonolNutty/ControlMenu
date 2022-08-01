@@ -11,7 +11,7 @@ from sims4communitylib.enums.enumtypes.common_int import CommonInt
 class S4CMStringId(CommonInt):
     """Identifiers for localization strings.
 
-    .. note:: These identifiers point to strings within String Tables within package files.
+    .. note:: These identifiers point to text within String Tables within package files.
 
     """
     CONTROL_MENU = 2505893517

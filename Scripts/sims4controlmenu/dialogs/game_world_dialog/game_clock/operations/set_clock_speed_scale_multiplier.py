@@ -5,20 +5,16 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from typing import Callable, Any
-
-from clock import GameClock
+from typing import Callable
 from sims4communitylib.dialogs.common_choice_outcome import CommonChoiceOutcome
 from sims4communitylib.dialogs.option_dialogs.options.common_dialog_option_context import CommonDialogOptionContext
 from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_input_option import \
     CommonDialogInputFloatOption
 from sims4communitylib.enums.strings_enum import CommonStringId
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
-from sims4communitylib.utils.common_injection_utils import CommonInjectionUtils
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4controlmenu.dialogs.game_world_dialog.enums.string_identifiers import S4CMGameWorldControlMenuStringId
 from sims4controlmenu.enums.string_identifiers import S4CMStringId
-from sims4controlmenu.modinfo import ModInfo
 from sims4controlmenu.settings.settings import CMSetting
 
 

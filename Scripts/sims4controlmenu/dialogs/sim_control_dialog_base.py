@@ -39,7 +39,7 @@ class S4CMSimControlDialogBase(HasS4CMClassLog):
 
     @property
     def description(self) -> Union[int, str, LocalizedString]:
-        """The title of the dialog."""
+        """The description of the dialog."""
         return 0
 
     @property

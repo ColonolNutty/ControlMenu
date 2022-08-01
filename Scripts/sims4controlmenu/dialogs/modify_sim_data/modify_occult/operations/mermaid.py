@@ -7,6 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Tuple, Callable
 from sims.sim_info import SimInfo
+from sims4communitylib.classes.testing.common_execution_result import CommonExecutionResult
 from sims4communitylib.enums.traits_enum import CommonTraitId
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.sims.common_occult_utils import CommonOccultUtils
@@ -23,14 +24,14 @@ class S4CMMermaidAddOp(S4CMSingleSimOperation):
         return 's4cm_modify_mermaid'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[CommonExecutionResult], None] = CommonFunctionUtils.noop) -> bool:
         if CommonOccultUtils.is_mermaid(sim_info):
-            on_completed(False)
+            on_completed(CommonExecutionResult(False, reason=f'{sim_info} is already a mermaid.'))
             return False
         # loot_Mermaid_DebugAdd
         add_loot_id = 205399
         result = CommonSimLootActionUtils.apply_loot_actions_by_id_to_sim(add_loot_id, sim_info)
-        on_completed(result)
+        on_completed(CommonExecutionResult(result))
         return result
 
 
@@ -43,12 +44,12 @@ class S4CMMermaidRemoveOp(S4CMSingleSimOperation):
         return 's4cm_modify_mermaid'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[CommonExecutionResult], None] = CommonFunctionUtils.noop) -> bool:
         if not CommonOccultUtils.is_mermaid(sim_info):
-            on_completed(False)
+            on_completed(CommonExecutionResult(False, reason=f'{sim_info} is not a mermaid.'))
             return False
         from sims4communitylib.utils.sims.common_trait_utils import CommonTraitUtils
-        trait_ids: Tuple[int] = (
+        trait_ids: Tuple[CommonTraitId, ...] = (
             CommonTraitId.OCCULT_MERMAID_MERMAID_FORM,
             CommonTraitId.OCCULT_MERMAID_DISCOVERED,
             CommonTraitId.OCCULT_MERMAID_TEMPORARY_DISCOVERED,
@@ -57,4 +58,4 @@ class S4CMMermaidRemoveOp(S4CMSingleSimOperation):
         )
         result = CommonTraitUtils.remove_trait(sim_info, *trait_ids)
         on_completed(result)
-        return result
+        return result.result

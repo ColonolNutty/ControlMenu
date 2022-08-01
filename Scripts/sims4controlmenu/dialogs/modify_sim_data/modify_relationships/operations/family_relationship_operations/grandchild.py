@@ -48,7 +48,7 @@ class S4CMSetSimAAsGrandchildToSimBOp(S4CMSetSimAAsRelationToSimBOperation):
         return super().get_disabled_text(grandchild_sim_info, grandparent_sim_info)
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, grandchild_sim_info: SimInfo, grandparent_sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, grandchild_sim_info: SimInfo, grandparent_sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         def _on_bit_chosen(_: Any, chosen_operation: S4CMSetSimAAsRelationToSimBOperation):
             if _ is None or chosen_operation is None:
                 return

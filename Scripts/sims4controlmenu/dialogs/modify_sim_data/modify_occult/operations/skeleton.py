@@ -23,7 +23,7 @@ class S4CMSkeletonAddOp(S4CMSingleSimOperation):
         return 's4cm_modify_skeleton'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         if CommonOccultUtils.is_skeleton(sim_info):
             on_completed(False)
             return False
@@ -43,7 +43,7 @@ class S4CMSkeletonRemoveOp(S4CMSingleSimOperation):
         return 's4cm_modify_skeleton'
 
     # noinspection PyMissingOrEmptyDocstring
-    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None]=CommonFunctionUtils.noop) -> bool:
+    def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         if not CommonOccultUtils.is_skeleton(sim_info):
             on_completed(False)
             return False
