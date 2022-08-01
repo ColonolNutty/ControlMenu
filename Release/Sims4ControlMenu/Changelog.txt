@@ -5,7 +5,8 @@ Version 1.4:
 - The pregnancy dialog now displays the Sim that got a Sim pregnant.
 - Added the ability to set the maximum size of households.
 - The Set Clock Speed and Set Clock Speed Mutiplier settings now persist, which means you will not need to set them on every startup now.
-- Control Menu now requires at least version 1.79 of Sims 4 Community Library
+- Added a setting to set the maximum number of Sims that can spawn on a lot at one time.
+- Control Menu now requires at least version 1.81 of Sims 4 Community Library
 
 Version 1.3:
 - Change Outfits to Instant Outfits
