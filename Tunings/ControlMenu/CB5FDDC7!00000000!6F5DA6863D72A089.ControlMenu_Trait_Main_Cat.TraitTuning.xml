@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="Trait" i="trait" m="traits.traits" n="ControlMenu_Trait_Main_Cat" s="8024753206530842761">
+  <L n="ages">
+    <E>BABY</E>
+    <E>TODDLER</E>
+    <E>CHILD</E>
+    <E>TEEN</E>
+    <E>YOUNGADULT</E>
+    <E>ADULT</E>
+    <E>ELDER</E>
+  </L>
+  <L n="species">
+    <E>CAT</E>
+  </L>
+  <L n="actor_mixers">
+    <U>
+      <T n="key">17048453908224900188<!--S4CL_SocialSuper_PetSocial_Sim_To_Pet_NonTouching_Pet--></T>
+    </U>
+    <U>
+      <T n="key">163845<!--petSocial_PetToPet_SocialGroup--></T>
+    </U>
+  </L>
+  <L n="conflicting_traits">
+    <T>1027422807228931770<!--ControlMenu_Trait_Main_Human--></T>
+    <T>11199586991244894006<!--ControlMenu_Trait_Main_LargeDog--></T>
+    <T>5219955596837474990<!--ControlMenu_Trait_Main_SmallDog--></T>
+    <T>8029522887973075998<!--ControlMenu_Trait_Main_Fox--></T>
+  </L>
+  <T n="buffs_add_on_spawn_only">False</T>
+  <T n="display_name">0x46B5367A<!--Control Menu Is Available--></T>
+  <T n="display_name_gender_neutral">0x46B5367A<!--Control Menu Is Available--></T>
+  <T p="TraitIcon" n="icon">2f7d0004:00000000:87A22DAF548644A6</T>
+  <T n="trait_description">0x46D79767<!--Control Menu interactions are available on this Sim.--></T>
+  <T n="trait_origin_description">0x00E5E2DE<!--(From Control Menu)--></T>
+  <E n="trait_type">HIDDEN</E>
+</I>

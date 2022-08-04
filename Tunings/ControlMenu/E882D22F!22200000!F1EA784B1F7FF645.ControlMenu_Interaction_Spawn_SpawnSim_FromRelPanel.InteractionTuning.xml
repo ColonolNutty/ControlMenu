@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="CMSummonSimFromRelPanelInteraction" i="interaction" m="controlmenu.interactions.sim_spawn.summon_sim_from_rel_panel" n="ControlMenu_Interaction_Spawn_SpawnSim_FromRelPanel" s="17431877571737286213">
+  <V t="disabled" n="_saveable" />
+  <T n="cheat">True</T>
+  <T n="debug">True</T>
+  <T n="display_name">0xE6600A8A<!--Summon To Active Sim--></T>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key">2f7d0004:00000000:858679AD01488F2F</T>
+      </U>
+    </V>
+  </V>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

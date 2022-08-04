@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="CMTeleportSimToActiveSimLocationInteraction" i="interaction" m="controlmenu.interactions.teleport.teleport_sim_to_active_sim_location" n="ControlMenu_Interaction_Teleport_TargetToControlledSim" s="1490069377219519480">
+  <V t="disabled" n="_saveable" />
+  <T n="cheat">True</T>
+  <T n="debug">True</T>
+  <T n="category">4622863600011898736<!--PieMenuCategory: ControlMenu_Pie_Teleport--></T>
+  <T n="display_name">0x06FFC182<!--Teleport To Active Sim--></T>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key">2f7d0004:00000000:CFE11FCDA9DBEF75</T>
+      </U>
+    </V>
+  </V>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

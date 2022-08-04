@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<I c="PieMenuCategory" i="pie_menu_category" m="interactions.pie_menu_category" n="ControlMenu_Pie_ControlMenu" s="2361127434841429413">
+  <T n="_collapsible">False</T>
+  <T n="_display_name">0x2D2B497C<!--Control Menu Actions--></T>
+  <T n="_display_priority">2000</T>
+  <T n="_icon" p="MainIcon">2f7d0004:00000000:776A4CC27D585CD9</T>
+</I>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="CMSpawnSimsAtTargetLocationInteraction" i="interaction" m="controlmenu.interactions.sim_spawn.spawn_sims_at_target_location" n="ControlMenu_Interaction_Spawn_SpawnSimsAtTarget" s="17987762437587526084">
+  <V t="disabled" n="_saveable" />
+  <T n="cheat">True</T>
+  <T n="debug">True</T>
+  <T n="display_name">0xD35E8E56<!--Spawn Sims At Location--></T>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key">2f7d0004:00000000:858679AD01488F2F</T>
+      </U>
+    </V>
+  </V>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

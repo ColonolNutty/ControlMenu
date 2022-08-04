@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="CMChangeOutfitToNudeInteraction" i="interaction" m="controlmenu.interactions.change_outfit_to_nude" n="ControlMenu_Interaction_ChangeOutfit_ToNude" s="1786019733440066972">
+  <V t="disabled" n="_saveable" />
+  <T n="category">4929546355272274440<!--PieMenuCategory: ControlMenu_Pie_Outfit--></T>
+  <T n="display_name">0xFB27A58D<!--Change into Nude--></T>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key">2f7d0004:00000000:B74F17BC97B50E14</T>
+      </U>
+    </V>
+  </V>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

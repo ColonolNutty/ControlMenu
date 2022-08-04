@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="Trait" i="trait" m="traits.traits" n="ControlMenu_Trait_Main" s="3473079057927022292">
+  <L n="ages">
+    <E>BABY</E>
+    <E>TODDLER</E>
+    <E>CHILD</E>
+    <E>TEEN</E>
+    <E>YOUNGADULT</E>
+    <E>ADULT</E>
+    <E>ELDER</E>
+  </L>
+  <L n="super_affordances">
+    <T>6234506716935953078<!--ControlMenu_Interaction_OpenSimControlMenu_FromSim--></T>
+    <T>8944185810018745710<!--ControlMenu_Interaction_OpenSimControlMenu_FromDebug--></T>
+    <T>720621355448837154<!--ControlMenu_Interaction_ChangeOutfit--></T>
+    <T>1786019733440066972<!--ControlMenu_Interaction_ChangeOutfit_ToNude--></T>
+    <T>1490069377219519480<!--ControlMenu_Interaction_Teleport_TargetToControlledSim--></T>
+    <T>1994755700559527737<!--ControlMenu_Interaction_Spawn_DespawnTargetSim--></T>
+    <T>6306291199653312070<!--ControlMenu_Interaction_Household_AddTargetSimToControlledHousehold--></T>
+    <T>5014631754271210756<!--ControlMenu_Interaction_Household_RemoveTargetSimFromControlledHousehold--></T>
+  </L>
+  <T n="buffs_add_on_spawn_only">False</T>
+  <T n="display_name">0x1175FB34<!--Control Menu Main Trait--></T>
+  <T n="display_name_gender_neutral">0x1175FB34<!--Control Menu Main Trait--></T>
+  <T p="TraitIcon" n="icon">2f7d0004:00000000:87A22DAF548644A6</T>
+  <T n="trait_description">0x46D79767<!--Control Menu interactions are available on this Sim.--></T>
+  <T n="trait_origin_description">0x00E5E2DE<!--(From Control Menu)--></T>
+  <E n="trait_type">HIDDEN</E>
+</I>

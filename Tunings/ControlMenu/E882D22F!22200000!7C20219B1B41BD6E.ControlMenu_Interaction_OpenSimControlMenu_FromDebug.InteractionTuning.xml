@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="CMOpenSimControlMenuFromDebugInteraction" i="interaction" m="controlmenu.interactions.open_sim_control_menu" n="ControlMenu_Interaction_OpenSimControlMenu_FromDebug" s="8944185810018745710">
+  <V t="disabled" n="_saveable" />
+  <T n="cheat">True</T>
+  <T n="debug">True</T>
+  <T n="display_name">0x847638D3<!--Open Control Menu--></T>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key">2f7d0004:00000000:776A4CC27D585CD9</T>
+      </U>
+    </V>
+  </V>
+  <V n="content_score" t="disabled" />
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+  <T n="pie_menu_priority">2000</T>
+</I>
