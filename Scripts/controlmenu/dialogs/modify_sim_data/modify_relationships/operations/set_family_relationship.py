@@ -16,6 +16,7 @@ from sims4communitylib.modinfo import ModInfo
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4communitylib.utils.localization.common_localized_string_colors import CommonLocalizedStringColor
+from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
@@ -117,7 +118,7 @@ class CMSetFamilyRelationsBitOp(CMSingleSimOperation):
 
     # noinspection PyMissingOrEmptyDocstring
     def can_run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        return super().can_run_with_sims(sim_info_a, sim_info_b) and sim_info_a is not sim_info_b and CMSettingUtils.are_allowed_family_relationship_bits(sim_info_a, sim_info_b)
+        return super().can_run_with_sims(sim_info_a, sim_info_b) and sim_info_a is not sim_info_b and CommonRelationshipUtils.has_permission_to_be_blood_relative_of(sim_info_a, sim_info_b)
 
     # noinspection PyMissingOrEmptyDocstring
     def run_with_sims(self, sim_info: SimInfo, chosen_sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop):

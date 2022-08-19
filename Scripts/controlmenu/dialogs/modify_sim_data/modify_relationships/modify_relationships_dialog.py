@@ -10,6 +10,7 @@ from typing import Callable
 from sims.sim_info import SimInfo
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
+from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
@@ -88,7 +89,7 @@ class CMModifyRelationshipsDialog(CMSimControlDialogBase):
             )
 
         if (target_sim_info is None and CMSetRomanceLevelOp().can_run_with_sim(self._sim_info)) or CMSetRomanceLevelOp().can_run_with_sims(self._sim_info, target_sim_info):
-            if CMSettingUtils.is_allowed_romantic_relationship(self._sim_info):
+            if CommonRelationshipUtils.has_permission_for_romantic_relationships(self._sim_info):
                 option_dialog.add_option(
                     CommonDialogButtonOption(
                         'RomanceLevel',

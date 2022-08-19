@@ -10,9 +10,7 @@ from typing import Any
 from sims.sim_info import SimInfo
 from sims4communitylib.classes.testing.common_test_result import CommonTestResult
 from sims4communitylib.utils.cas.common_outfit_utils import CommonOutfitUtils
-from sims4communitylib.utils.sims.common_age_utils import CommonAgeUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
-from sims4communitylib.utils.sims.common_species_utils import CommonSpeciesUtils
 from controlmenu.settings.settings import CMSetting
 
 

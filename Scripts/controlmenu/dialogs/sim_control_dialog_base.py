@@ -47,6 +47,11 @@ class CMSimControlDialogBase(HasCMClassLog):
         """Determine if the previous button should be included on the first page of the dialog."""
         return True
 
+    @property
+    def per_page(self) -> int:
+        """The number of options per page."""
+        return 10
+
     def open(self, **__) -> None:
         """ Open the dialog. """
         def _reopen() -> None:
@@ -69,7 +74,8 @@ class CMSimControlDialogBase(HasCMClassLog):
             self.description,
             include_previous_button=self.include_previous_button,
             on_previous=_on_previous,
-            on_close=_on_close
+            on_close=_on_close,
+            per_page=self.per_page
         )
 
         if not self._setup_dialog(option_dialog, _on_close, _on_previous, _reopen, **__):

@@ -17,7 +17,6 @@ from sims4communitylib.utils.sims.common_sim_pregnancy_utils import CommonSimPre
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
-from controlmenu.commonlib.utils.common_sim_pregnancy_utils import CMSimPregnancyUtils
 from controlmenu.dialogs.modify_sim_data.enums.string_identifiers import CMSimControlMenuStringId
 from controlmenu.dialogs.modify_sim_data.pregnancy.operations.clear_pregnancy import CMClearPregnancyOp
 from controlmenu.dialogs.modify_sim_data.pregnancy.operations.create_pregnancy import CMCreatePregnancyOp
@@ -72,7 +71,7 @@ class CMPregnancyDialog(CMSimControlDialogBase):
 
         is_pregnant = CommonSimPregnancyUtils.is_pregnant(self._sim_info)
 
-        can_produce_pregnancy = CMSimPregnancyUtils.can_create_pregnancy(self._sim_info)
+        can_produce_pregnancy = CommonSimPregnancyUtils.has_permission_for_pregnancies(self._sim_info)
 
         create_pregnancy_disabled_text = None
         if is_pregnant:

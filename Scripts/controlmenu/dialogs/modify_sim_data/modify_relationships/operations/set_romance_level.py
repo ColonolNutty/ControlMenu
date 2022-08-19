@@ -29,9 +29,8 @@ class CMSetRomanceLevelOp(CMSetRelationshipLevelOp):
     def _is_allowed_relationship_track(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
         if not super()._is_allowed_relationship_track(sim_info_a, sim_info_b):
             return False
-        from controlmenu.settings.setting_utils import CMSettingUtils
-        return CMSettingUtils.are_allowed_romantic_relationship(sim_info_a, sim_info_b)
+        return CommonRelationshipUtils.has_permission_for_romantic_relationship_with(sim_info_a, sim_info_b)
 
     def can_run_with_sim(self, sim_info: SimInfo) -> bool:
         """Determine if this operation can run using the specified Sim."""
-        return super().can_run_with_sim(sim_info) and CMSettingUtils.is_allowed_romantic_relationship(sim_info)
+        return super().can_run_with_sim(sim_info) and CommonRelationshipUtils.has_permission_for_romantic_relationships(sim_info)

@@ -36,6 +36,11 @@ class CMModifyOccultDialog(CMSimControlDialogBase):
     def title(self) -> int:
         return CMSimControlMenuStringId.MODIFY_OCCULT
 
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def per_page(self) -> int:
+        return 5
+
     def _setup_dialog(
         self,
         option_dialog: CommonChooseButtonOptionDialog,
@@ -55,10 +60,10 @@ class CMModifyOccultDialog(CMSimControlDialogBase):
                 'RemoveAllOccults',
                 CommonOccultType.NON_OCCULT,
                 CommonDialogResponseOptionContext(
-                    CMSimControlMenuStringId.REMOVE_ALL_OCCULTS
+                    CMSimControlMenuStringId.REMOVE_ALL_OCCULTS,
                 ),
                 on_chosen=lambda *_, **__: _operation_run(CMRemoveAllOccultsOp())
-            )
+            ),
         )
 
         def _on_occult_type_chosen(_: str, _occult_type: CommonOccultType):

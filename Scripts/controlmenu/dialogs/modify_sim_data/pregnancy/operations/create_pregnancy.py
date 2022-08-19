@@ -13,7 +13,6 @@ from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.sims.common_sim_name_utils import CommonSimNameUtils
 from sims4communitylib.utils.sims.common_sim_pregnancy_utils import CommonSimPregnancyUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
-from controlmenu.commonlib.utils.common_sim_pregnancy_utils import CMSimPregnancyUtils
 from controlmenu.dialogs.modify_sim_data.enums.string_identifiers import CMSimControlMenuStringId
 from controlmenu.dialogs.modify_sim_data.single_sim_operation import CMSingleSimOperation
 from controlmenu.modinfo import ModInfo
@@ -47,7 +46,7 @@ class CMCreatePregnancyOp(CMSingleSimOperation):
         def _can_create_pregnancy(partner_sim_info: SimInfo) -> bool:
             if sim_info is partner_sim_info:
                 return False
-            return CMSimPregnancyUtils.can_create_pregnancy_together(sim_info, partner_sim_info)
+            return CommonSimPregnancyUtils.has_permission_for_pregnancies_with(sim_info, partner_sim_info).result
 
         dialog = CommonPremadeChooseSimOptionDialog(
             CMSimControlMenuStringId.WHO_WILL_IMPREGNATE_SIM,

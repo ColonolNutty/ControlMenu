@@ -9,7 +9,7 @@ from sims4communitylib.mod_support.common_mod_info import CommonModInfo
 
 
 class ModInfo(CommonModInfo):
-    """ Mod info for the Sims 4 Control Menu. """
+    """ Mod info for the Control Menu. """
     _FILE_PATH: str = str(__file__)
 
     @property
