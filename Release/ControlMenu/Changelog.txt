@@ -1,4 +1,4 @@
-Version 1.4:
+Version 2.0:
 - Updated the Occult menu to allow removing specific occult types as well as being able to switch Sims to and from their occult forms.
 - Added the Werewolf occult to the occult types menu.
 - Added the ability to adjust the speed of pregnancy.
@@ -6,6 +6,8 @@ Version 1.4:
 - Added the ability to set the maximum size of households.
 - The Set Clock Speed and Set Clock Speed Mutiplier settings now persist, which means you will not need to set them on every startup now.
 - Added a setting to set the maximum number of Sims that can spawn on a lot at one time.
+- Added phone icons and pie menu variants for Control Menu
+- The occult dialog now only shows 5 options per page in case any more occult types are added. This will prevent UI issues if there are new occults.
 - Rebranded Sims 4 Control Menu as Control Menu
 - Control Menu now requires at least version 1.81 of Sims 4 Community Library
 
