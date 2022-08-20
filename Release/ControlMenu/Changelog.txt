@@ -9,7 +9,7 @@ Version 2.0:
 - Added phone icons and pie menu variants for Control Menu
 - The occult dialog now only shows 5 options per page in case any more occult types are added. This will prevent UI issues if there are new occults.
 - Rebranded Sims 4 Control Menu as Control Menu
-- Control Menu now requires at least version 1.81 of Sims 4 Community Library
+- Control Menu now requires at least version 2.0 of Sims 4 Community Library
 
 Version 1.3:
 - Change Outfits to Instant Outfits
