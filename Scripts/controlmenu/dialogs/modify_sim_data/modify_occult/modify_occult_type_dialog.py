@@ -39,6 +39,7 @@ class CMModifyOccultTypeDialog(CMSimControlDialogBase):
         from controlmenu.dialogs.modify_sim_data.modify_occult.operations.alien import CMAlienAddOp
         from controlmenu.dialogs.modify_sim_data.modify_occult.operations.mermaid import CMMermaidAddOp
         from controlmenu.dialogs.modify_sim_data.modify_occult.operations.servo import CMServoAddOp
+        from controlmenu.dialogs.modify_sim_data.modify_occult.operations.scarecrow import CMScarecrowAddOp
         from controlmenu.dialogs.modify_sim_data.modify_occult.operations.skeleton import CMSkeletonAddOp
         from controlmenu.dialogs.modify_sim_data.modify_occult.operations.vampire import CMVampireAddOp
         from controlmenu.dialogs.modify_sim_data.modify_occult.operations.witch import CMWitchAddOp
@@ -48,6 +49,7 @@ class CMModifyOccultTypeDialog(CMSimControlDialogBase):
             CommonOccultType.MERMAID: CMMermaidAddOp(),
             CommonOccultType.ROBOT: CMServoAddOp(),
             CommonOccultType.SKELETON: CMSkeletonAddOp(),
+            CommonOccultType.SCARECROW: CMScarecrowAddOp(),
             CommonOccultType.VAMPIRE: CMVampireAddOp(),
             CommonOccultType.WITCH: CMWitchAddOp(),
             CommonOccultType.PLANT_SIM: CMPlantSimAddOp(),
@@ -58,6 +60,7 @@ class CMModifyOccultTypeDialog(CMSimControlDialogBase):
         from controlmenu.dialogs.modify_sim_data.modify_occult.operations.alien import CMAlienRemoveOp
         from controlmenu.dialogs.modify_sim_data.modify_occult.operations.mermaid import CMMermaidRemoveOp
         from controlmenu.dialogs.modify_sim_data.modify_occult.operations.servo import CMServoRemoveOp
+        from controlmenu.dialogs.modify_sim_data.modify_occult.operations.scarecrow import CMScarecrowRemoveOp
         from controlmenu.dialogs.modify_sim_data.modify_occult.operations.skeleton import CMSkeletonRemoveOp
         from controlmenu.dialogs.modify_sim_data.modify_occult.operations.vampire import CMVampireRemoveOp
         from controlmenu.dialogs.modify_sim_data.modify_occult.operations.witch import CMWitchRemoveOp
@@ -67,6 +70,7 @@ class CMModifyOccultTypeDialog(CMSimControlDialogBase):
             CommonOccultType.MERMAID: CMMermaidRemoveOp(),
             CommonOccultType.ROBOT: CMServoRemoveOp(),
             CommonOccultType.SKELETON: CMSkeletonRemoveOp(),
+            CommonOccultType.SCARECROW: CMScarecrowRemoveOp(),
             CommonOccultType.VAMPIRE: CMVampireRemoveOp(),
             CommonOccultType.WITCH: CMWitchRemoveOp(),
             CommonOccultType.PLANT_SIM: CMPlantSimRemoveOp(),
