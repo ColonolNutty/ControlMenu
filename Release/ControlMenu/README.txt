@@ -1,7 +1,7 @@
 
 ----------------- Main -----------------
 
-Drag and drop all folders directly into your "The Sims 4/" folder
+Drag and drop all folders and files directly into your "The Sims 4/Mods" folder
 
 Delete the existing files from previous versions if they exist!
 

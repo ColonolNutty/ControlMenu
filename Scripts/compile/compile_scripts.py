@@ -11,7 +11,7 @@ from Utilities.unpyc3_compiler import Unpyc3PythonCompiler
 
 
 Unpyc3PythonCompiler.compile_mod(
-    folder_path_to_output_ts4script_to=os.path.join('..', '..', 'Release', 'ControlMenu', 'Mods'),
+    folder_path_to_output_ts4script_to=os.path.join('..', '..', 'Release', 'ControlMenu'),
     names_of_modules_include=('controlmenu', 'sims4controlmenu',),
     output_ts4script_name='controlmenu'
 )

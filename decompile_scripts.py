@@ -8,7 +8,7 @@ from settings import custom_scripts_for_decompile_source, game_folder, decompile
 def _decompile_using_unpyc3(decompile_ea_scripts: bool=False, decompile_custom_scripts: bool=False):
     output_folder = 'EA'
     if not os.path.exists(output_folder):
-        os.mkdir(output_folder)
+        os.makedirs(output_folder, exist_ok=True)
 
     _remove_files_conflicting_with_decompile(decompile_ea_scripts=decompile_ea_scripts)
 

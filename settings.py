@@ -34,6 +34,9 @@ decompile_method_name = S4PyDecompilationMethod.PY37DEC
 custom_scripts_for_decompile_source: str = './custom_scripts_for_decompile'
 custom_scripts_for_decompile_destination: str = './custom_scripts_for_decompile'
 
+if not os.path.exists(custom_scripts_for_decompile_source):
+    os.makedirs(custom_scripts_for_decompile_source, exist_ok=True)
+
 if should_decompile_ea_scripts:
     decompile_method_name = S4PyDecompilationMethod.UNPYC3
     should_decompile_custom_scripts = False

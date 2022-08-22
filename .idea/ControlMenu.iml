@@ -12,6 +12,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Utilities" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Libraries/S4CL" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/Release" />
+      <excludeFolder url="file://$MODULE_DIR$/Tunings/Temp" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
