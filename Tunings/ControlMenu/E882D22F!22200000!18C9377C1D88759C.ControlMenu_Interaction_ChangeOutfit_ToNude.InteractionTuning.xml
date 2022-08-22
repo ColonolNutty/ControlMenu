@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <I c="CMChangeOutfitToNudeInteraction" i="interaction" m="controlmenu.interactions.change_outfit_to_nude" n="ControlMenu_Interaction_ChangeOutfit_ToNude" s="1786019733440066972">
   <V t="disabled" n="_saveable" />
+  <T n="cheat">True</T>
+  <T n="debug">True</T>
   <T n="category">4929546355272274440<!--PieMenuCategory: ControlMenu_Pie_Outfit--></T>
   <T n="display_name">0xFB27A58D<!--Change into Nude--></T>
   <L n="interaction_category_tags">

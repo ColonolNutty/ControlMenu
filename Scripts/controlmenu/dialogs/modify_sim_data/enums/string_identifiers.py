@@ -72,6 +72,12 @@ class CMSimControlMenuStringId(CommonInt):
     SET_PREGNANCY_SPEED_DESCRIPTION = 0x335F7272
     # Tokens: {0.SimFirstName}
     OTHER_PARENT = 0x2C01701B
+    # Tokens: {0.String} (Number of babies)
+    NUMBER_OF_BABIES = 0xFAE047FE
+    # Tokens: {0.String} (A list of genders)
+    GENDERS_OF_BABIES = 0x2495850D
+    # Tokens: {0.String} (Percentage)
+    PREGNANCY_PROGRESS_PERCENTAGE = 0x706C882B
 
     # Money
     MODIFY_CURRENCY = 0xBAD2DD9C
