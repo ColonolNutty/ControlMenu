@@ -17,11 +17,15 @@ from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_but
 from controlmenu.dialogs.game_world_dialog.enums.string_identifiers import CMGameWorldControlMenuStringId
 from controlmenu.dialogs.sim_control_dialog_base import CMSimControlDialogBase
 from sims4communitylib.enums.common_weather_event_ids import CommonWeatherEventId
+from sims4communitylib.enums.strings_enum import CommonStringId
+from sims4communitylib.utils.common_weather_utils import CommonWeatherUtils
+from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
+from sims4communitylib.utils.localization.common_localized_string_separators import CommonLocalizedStringSeparator
 from sims4communitylib.utils.misc.common_text_utils import CommonTextUtils
 
 
 class CMChangeWeatherDialog(CMSimControlDialogBase):
-    """ The control dialog for the Game Clock. """
+    """ The control dialog for the Weather. """
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
@@ -36,8 +40,34 @@ class CMChangeWeatherDialog(CMSimControlDialogBase):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def description(self) -> Union[int, str, LocalizedString]:
-        # TODO: Description with text showing current temperature, thunder or lightning (Yes/No), cloud type
-        return 0
+        strings_list = [
+            CMGameWorldControlMenuStringId.CURRENT_WEATHER,
+        ]
+        temperature = CommonWeatherUtils.get_current_temperature()
+        strings_list.append(CommonLocalizationUtils.create_localized_string(
+            CMGameWorldControlMenuStringId.TEMPERATURE,
+            tokens=(
+                temperature.name,
+            )
+        ))
+        cloud_type = CommonWeatherUtils.get_weather_cloud_type()
+        strings_list.append(CommonLocalizationUtils.create_localized_string(
+            CMGameWorldControlMenuStringId.CLOUD_TYPE,
+            tokens=(
+                cloud_type.name,
+            )
+        ))
+        thunder_or_lightning = CommonWeatherUtils.current_weather_contains_thunder_or_lightning()
+        strings_list.append(CommonLocalizationUtils.create_localized_string(
+            CMGameWorldControlMenuStringId.THUNDER_OR_LIGHTNING,
+            tokens=(
+                CommonStringId.S4CL_YES if thunder_or_lightning else CommonStringId.S4CL_NO,
+            )
+        ))
+        return CommonLocalizationUtils.combine_localized_strings(
+            tuple(strings_list),
+            separator=CommonLocalizedStringSeparator.NEWLINE
+        )
 
     # noinspection PyMissingOrEmptyDocstring
     @property

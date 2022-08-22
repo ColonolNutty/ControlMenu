@@ -31,8 +31,14 @@ class CMSimControlMenuStringId(CommonInt):
     CURRENT_NUMBER_OF_GHOSTS_STRING = 0x8D866983
     # Tokens: {0.SimFirstName} (Sim)
     SIM_IS_NOT_A_GHOST = 0xDCFE1538
+    # Tokens: {0.SimFirstName} (Sim)
+    SIM_IS_ALREADY_A_GHOST = 0x92BE45E9
     # Tokens: {0.String} (Number Revived)
     REVIVED_COUNT_GHOSTS = 0xAB7B4FE6
+    # Tokens: {0.SimFirstName} (Sim)
+    KILL_SIM = 0x9DA179E9
+    # Tokens: {0.SimFirstName} (Sim)
+    WHAT_GRUESOME_FATE_SHALL_BEFALL_SIM = 0x9C77ED49
 
     # Occult
     MODIFY_OCCULT = 0x346492D3

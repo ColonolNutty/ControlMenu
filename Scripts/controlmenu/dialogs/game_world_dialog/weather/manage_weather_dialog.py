@@ -23,7 +23,7 @@ from sims4communitylib.utils.localization.common_localized_string_separators imp
 
 
 class CMManageWeatherDialog(CMSimControlDialogBase):
-    """ The control dialog for the Game Clock. """
+    """ The control dialog for the Weather. """
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
@@ -38,7 +38,6 @@ class CMManageWeatherDialog(CMSimControlDialogBase):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def description(self) -> Union[int, str, LocalizedString]:
-        # TODO: Description with text showing current temperature, thunder or lightning (Yes/No), cloud type
         strings_list = [
             CMGameWorldControlMenuStringId.CURRENT_WEATHER,
         ]

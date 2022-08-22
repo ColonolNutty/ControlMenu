@@ -7,6 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Callable, Union
 
+from controlmenu.dialogs.modify_sim_data.manage_death.kill_sim_dialog import CMKillSimDialog
 from controlmenu.dialogs.modify_sim_data.manage_death.operations.revive_ghost_sim import CMReviveGhostSimOp
 from controlmenu.dialogs.modify_sim_data.manage_death.revive_ghost_sims_dialog import CMReviveGhostSimsDialog
 from protocolbuffers.Localization_pb2 import LocalizedString
@@ -72,6 +73,20 @@ class CMManageDeathDialog(CMSimControlDialogBase):
                     disabled_text_tokens=(self._sim_info,)
                 ),
                 on_chosen=lambda *_, **__: _operation_run(CMReviveGhostSimOp())
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'KillSim',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.KILL_SIM,
+                    text_tokens=(self._sim_info,),
+                    disabled_text_identifier=CMSimControlMenuStringId.SIM_IS_ALREADY_A_GHOST if CommonOccultUtils.is_ghost(self._sim_info) else None,
+                    disabled_text_tokens=(self._sim_info,)
+                ),
+                on_chosen=lambda *_, **__: CMKillSimDialog(self._sim_info, on_close=reopen).open()
             )
         )
 
