@@ -1,3 +1,14 @@
+Version 2.1:
+- Added a warning when choosing to transform into a scarecrow.
+- Moved the Instant Outfit pie category to the cheat menu.
+- Increased the priority of the Despawn Sim interaction to the front.
+- Added more details about the pregnancy of a Sim to the pregnancy dialog, you can now see the Gender, Species, and how many babies a Sim is currently carrying.
+- Fixed an error that would occur when opening Control Menu from the relationshpi panel.
+- Added a SHIFT+CLICK version of the open control menu interaction to the relationship panel.
+- Added the ability to revive Ghost Sims.
+- Added the ability to kill Sims in various ways.
+- Added the ability to change the current weather.
+
 Version 2.0:
 - Updated the Occult menu to allow removing specific occult types as well as being able to switch Sims to and from their occult forms.
 - Added the Werewolf occult to the occult types menu.
