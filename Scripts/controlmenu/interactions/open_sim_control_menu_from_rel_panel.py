@@ -6,6 +6,8 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Any
+
+from interactions import ParticipantType
 from interactions.context import InteractionContext
 from sims.sim import Sim
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction
@@ -43,7 +45,6 @@ class CMOpenSimControlMenuFromRelPanelInteraction(CommonImmediateSuperInteractio
 
     # noinspection PyMissingOrEmptyDocstring
     def on_started(self, interaction_sim: Sim, interaction_target: Sim) -> bool:
-        # noinspection PyUnresolvedReferences
         picked_sim_info = CommonSimUtils.get_sim_info(self.get_participant(ParticipantType.PickedSim))
         if picked_sim_info is None:
             return False

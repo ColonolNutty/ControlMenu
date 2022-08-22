@@ -19,8 +19,9 @@ class _CMSimControlMenuRelationshipPanelInteractionHandler(CommonInteractionHand
     # noinspection PyMissingOrEmptyDocstring
     @property
     def interactions_to_add(self) -> Tuple[int]:
-        result: Tuple[int] = (
+        result: Tuple[int, ...] = (
             CMInteractionId.OPEN_SIM_CONTROL_MENU_FROM_REL_PANEL,
+            CMInteractionId.OPEN_SIM_CONTROL_MENU_FROM_REL_PANEL_FROM_DEBUG
         )
         return result
 
