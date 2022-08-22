@@ -76,8 +76,15 @@ class CMSimControlMenuStringId(CommonInt):
     NUMBER_OF_BABIES = 0xFAE047FE
     # Tokens: {0.String} (A list of genders)
     GENDERS_OF_BABIES = 0x2495850D
+    # Tokens: {0.String} (A list of species)
+    SPECIES_OF_BABIES = 0x29CA68E1
     # Tokens: {0.String} (Percentage)
     PREGNANCY_PROGRESS_PERCENTAGE = 0x706C882B
+    NOT_PREGNANT = 0xDACAB5EF
+    # Tokens: {0.SimFirstName} (Sim)
+    SIM_HAS_NO_PREGNANCY_DATA = 0x6B8F2687
+    # Tokens: {0.String} (A list of details)
+    BABY_DETAILS = 0x000A33FE
 
     # Money
     MODIFY_CURRENCY = 0xBAD2DD9C
