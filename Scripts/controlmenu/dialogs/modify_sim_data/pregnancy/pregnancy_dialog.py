@@ -44,9 +44,9 @@ class CMPregnancyDialog(CMSimControlDialogBase):
     def title(self) -> int:
         return CMSimControlMenuStringId.PREGNANCY
 
+    # noinspection PyMissingOrEmptyDocstring
     @property
     def description(self) -> Union[int, str, LocalizedString]:
-        """The title of the dialog."""
         if CommonSimPregnancyUtils.is_pregnant(self._sim_info):
             pregnancy_tracker: PregnancyTracker = self._sim_info.pregnancy_tracker
             if not pregnancy_tracker:

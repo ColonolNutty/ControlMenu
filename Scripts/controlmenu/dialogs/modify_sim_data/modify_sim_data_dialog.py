@@ -6,6 +6,8 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Callable
+
+from controlmenu.dialogs.modify_sim_data.manage_death.manage_death_dialog import CMManageDeathDialog
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
@@ -25,7 +27,6 @@ from controlmenu.dialogs.modify_sim_data.modify_traits.modify_traits_dialog impo
 from controlmenu.dialogs.modify_sim_data.pregnancy.pregnancy_dialog import CMPregnancyDialog
 from controlmenu.dialogs.sim_control_dialog_base import CMSimControlDialogBase
 from controlmenu.enums.string_identifiers import CMStringId
-from controlmenu.settings.setting_utils import CMSettingUtils
 from sims4communitylib.utils.sims.common_sim_pregnancy_utils import CommonSimPregnancyUtils
 
 
@@ -135,6 +136,17 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                     CMSimControlMenuStringId.HOUSEHOLD,
                 ),
                 on_chosen=lambda *_, **__: CMHouseholdDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'ManageDeath',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.MANAGE_DEATH,
+                ),
+                on_chosen=lambda *_, **__: CMManageDeathDialog(self._sim_info, on_previous=reopen).open()
             )
         )
 

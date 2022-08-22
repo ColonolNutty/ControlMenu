@@ -34,3 +34,6 @@ class CMGameWorldControlMenuStringId(CommonInt):
     MAXIMUM_SIMS_PER_LOT_DESCRIPTION = 0xA0977C9D
 
     CLEAR_LOT_CHANGES = 0xA8F79F66
+
+    # Weather
+    MANAGE_WEATHER = 0xCEA68D54
