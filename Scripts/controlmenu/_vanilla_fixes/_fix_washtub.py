@@ -59,7 +59,7 @@ def _cm_add_replace_water_interaction_with_clothes(event_data: S4CLZoneEarlyLoad
             176807,
         ),
         'cm.update_washtub_on_replace_water',
-        (
+        command_arguments=(
             CommonCommandParticipantArgumentData(ParticipantType.Object),
         )
     )

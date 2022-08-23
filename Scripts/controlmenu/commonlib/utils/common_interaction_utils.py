@@ -232,8 +232,7 @@ class CMCommonInteractionUtils(HasCMClassLog):
             from ui.ui_dialog import CommandArgType
             import collections
             do_command_data = dict()
-            # do_command_slots = {'arguments', 'command', 'success_chance', 'timing'}
-            do_command_slots = {'command', 'success_chance', 'timing'}
+            do_command_slots = {'arguments', 'command', 'success_chance', 'timing'}
 
             do_command_data.update({'command': command_name})
             do_command_data.update({'success_chance': SuccessChance.ONE})
@@ -256,9 +255,7 @@ class CMCommonInteractionUtils(HasCMClassLog):
             # arguments_two_immutable_class = make_immutable_slots_class(argument_two_slots)
             # arguments_two_tuning = arguments_two_immutable_class(arguments_two)
 
-            if argument_tunings:
-                do_command_data.update({'arguments': tuple(argument_tunings)})
-                do_command_slots.add('arguments')
+            do_command_data.update({'arguments': tuple(argument_tunings)})
 
             timing_data = dict()
             timing_data.update({'criticality': CleanupType.OnCancel})
@@ -271,7 +268,6 @@ class CMCommonInteractionUtils(HasCMClassLog):
             timing_data.update({'timing': timing.name.lower()})
             timing_data.update({'xevt_id': None})
             # timing_data.update({'xevt_id': xevt_id})
-            # timing_slots = {'criticality', 'offset_time', 'supports_failsafe', 'timing', 'xevt_id'}
             timing_slots = {'criticality', 'offset_time', 'supports_failsafe', 'timing', 'xevt_id'}
             timing_immutable_class = make_immutable_slots_class(timing_slots)
             timing_tuning = timing_immutable_class(timing_data)
