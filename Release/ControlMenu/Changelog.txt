@@ -8,6 +8,7 @@ Version 2.1:
 - Added the ability to revive Ghost Sims.
 - Added the ability to kill Sims in various ways.
 - Added the ability to change the current weather.
+- The induce labor operation is now much more reliable at inducing labor in Sims.
 
 Version 2.0:
 - Updated the Occult menu to allow removing specific occult types as well as being able to switch Sims to and from their occult forms.
