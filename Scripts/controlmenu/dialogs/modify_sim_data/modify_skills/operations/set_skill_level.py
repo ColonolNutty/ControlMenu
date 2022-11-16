@@ -112,7 +112,7 @@ class CMSetSkillLevelsSimOp(CMSingleSimOperation):
                             icon=icon,
                             is_enabled=self._is_skill_allowed_for_modification(sim_info, skill)
                         ),
-                        dialog_description_identifier=CMSimModifySkillsStringId.ENTER_A_VALE_BETWEEN_MIN_AND_MAX_FOR_SKILL,
+                        dialog_description_identifier=CMSimModifySkillsStringId.ENTER_A_VALUE_BETWEEN_MIN_AND_MAX_FOR_SKILL,
                         dialog_description_tokens=(str(0), str(int(skill.max_level)), str(current_skill_level)),
                         min_value=0,
                         max_value=int(skill.max_level),
