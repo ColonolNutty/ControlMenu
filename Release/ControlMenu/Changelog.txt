@@ -1,3 +1,7 @@
+Version 2.2:
+- Disabled the immortality VFX
+- Disabled the buff_Clothing_Nude broadcaster, so Sims will stop doing the "See What's Happening" interaction every 5 seconds they encounter a Sim that has a CAS Part misflagged as "Nude".
+
 Version 2.1:
 - Added a warning when choosing to transform into a scarecrow.
 - Moved the Instant Outfit pie category to the cheat menu.
