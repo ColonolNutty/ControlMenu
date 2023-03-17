@@ -7,6 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Callable
 
+from controlmenu.dialogs.modify_sim_data.modify_age.set_age.operations.infant import CMSetAgeInfantOp
 from sims4communitylib.enums.common_age import CommonAge
 from sims4communitylib.enums.strings_enum import CommonStringId
 from sims4communitylib.utils.sims.common_age_utils import CommonAgeUtils
@@ -52,6 +53,18 @@ class CMSetAgeDialog(CMSimControlDialogBase):
                 reopen()
 
             operation.run(self._sim_info, on_completed=_on_operation_complete)
+
+        if CommonAgeUtils.is_age_available_for_sim(self._sim_info, CommonAge.INFANT):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'Infant',
+                    CommonAge.INFANT,
+                    CommonDialogResponseOptionContext(
+                        CommonStringId.INFANT
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(CMSetAgeInfantOp())
+                )
+            )
 
         if CommonAgeUtils.is_age_available_for_sim(self._sim_info, CommonAge.TODDLER):
             option_dialog.add_option(

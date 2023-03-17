@@ -2,6 +2,7 @@
 <I c="Trait" i="trait" m="traits.traits" n="ControlMenu_Trait_Main_Cat" s="8024753206530842761">
   <L n="ages">
     <E>BABY</E>
+    <E>INFANT</E>
     <E>TODDLER</E>
     <E>CHILD</E>
     <E>TEEN</E>
