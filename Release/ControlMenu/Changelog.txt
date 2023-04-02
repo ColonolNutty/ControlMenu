@@ -1,6 +1,8 @@
 Version 2.2:
 - Disabled the immortality VFX
 - Disabled the buff_Clothing_Nude broadcaster, so Sims will stop doing the "See What's Happening" interaction every 5 seconds they encounter a Sim that has a CAS Part misflagged as "Nude".
+- Added the ability to change Sims into Infants using Control Menu
+- Added the Control Menu interactions to Infants.
 
 Version 2.1:
 - Added a warning when choosing to transform into a scarecrow.
