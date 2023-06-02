@@ -183,6 +183,15 @@ class CMSimControlMenuStringId(CommonInt):
 
     # Traits
     MODIFY_TRAITS = 0xE11E0436
+    ADD_TRAITS = 0x7AA8C421
+    # Tokens: {0.String} (Trait Display Name) {1.String} (Trait Id)
+    ADDED_TRAIT_TITLE = 0x93730BD2
+    # Tokens: {0.SimFirstName} (Sim) {1.String} (Trait Display Name) {2.String} (Trait Id) {3.String} (Trait Tuning Name)
+    ADDED_TRAIT_DESCRIPTION = 0xD1F44152
+    # Tokens: {0.String} (Trait Display Name) {1.String} (Trait Id)
+    FAILED_TO_ADD_TRAIT_TITLE = 0x4DD52072
+    # Tokens: {0.SimFirstName} (Sim) {1.String} (Trait Display Name) {2.String} (Trait Id) {3.String} (Trait Tuning Name)
+    FAILED_TO_ADD_TRAIT_DESCRIPTION = 0xB5C879F2
     REMOVE_TRAITS = 0xF6CBA3F4
     # Tokens: {0.String} (Trait Display Name) {1.String} (Trait Id)
     REMOVED_TRAIT_TITLE = 0xDA729790
