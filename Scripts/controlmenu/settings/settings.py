@@ -14,5 +14,8 @@ class CMSetting:
     REAL_MILLISECONDS_PER_SIM_SECOND = 'cm_real_milliseconds_per_sim_second'
     CLOCK_SPEED_MULTIPLIER = 'cm_clock_speed_multiplier'
 
+    # DISCLAIMERS
+    PERFORM_INTERACTION_DISCLAIMER_SHOWN = 'cm_perform_interaction_disclaimer_shown'
+
     MAXIMUM_SIMS_PER_LOT = 'cm_maximum_sims_per_lot'
     VERSION = 'version'

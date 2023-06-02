@@ -61,6 +61,14 @@ class CMSettingUtils:
         """Retrieve the maximum number of Sims allowed on a lot at any given time."""
         return CMSettingUtils._get_value(CMSetting.MAXIMUM_SIMS_PER_LOT)
 
+    def perform_interaction_disclaimer_has_been_shown(self) -> bool:
+        """ Determine if the disclaimer has been shown already. """
+        return CMSettingUtils._get_value(CMSetting.PERFORM_INTERACTION_DISCLAIMER_SHOWN)
+
+    def flag_perform_interaction_disclaimer_as_shown(self) -> None:
+        """ Flag the disclaimer as shown already so it no longer shows. """
+        CMSettingUtils._set_value(CMSetting.PERFORM_INTERACTION_DISCLAIMER_SHOWN, True)
+
     @staticmethod
     def _get_value(key: str) -> Any:
         from controlmenu.persistence.cm_data_manager_utils import CMMainDataManagerUtils
