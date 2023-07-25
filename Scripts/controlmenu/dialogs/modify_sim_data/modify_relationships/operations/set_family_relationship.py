@@ -56,7 +56,6 @@ from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_
     CMSetSimAAsRelationToSimBOperation
 from controlmenu.dialogs.modify_sim_data.single_sim_operation import CMSingleSimOperation
 from controlmenu.enums.string_identifiers import CMStringId
-from controlmenu.settings.setting_utils import CMSettingUtils
 
 
 class CMSetFamilyRelationsBitOp(CMSingleSimOperation):

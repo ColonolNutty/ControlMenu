@@ -70,10 +70,10 @@ class CMPregnancyDialog(CMSimControlDialogBase):
             strings_list.append(number_of_babies_string)
             baby_details = list()
             for baby_data in CMSimPregnancyUtils.get_babies_gen(self._sim_info):
-                self.log.format_info_with_message('Sim has baby data.', baby_data=baby_data, baby_data_type=type(baby_data), baby_data_dir=dir(baby_data))
+                self.log.format_info_with_message('Sim has baby data.', baby_data=baby_data, baby_data_type=type(baby_data), baby_data_dir=dir(baby_data), baby_species=baby_data.species)
                 from sims4communitylib.enums.common_species import CommonSpecies
                 # noinspection PyTypeChecker
-                species_string_id = CommonSpecies.convert_to_localized_string_id(CommonSpecies.get_species(baby_data))
+                species_string_id = CommonSpecies.convert_to_localized_string_id(CommonSpecies.convert_from_vanilla(baby_data.species))
                 gender_string_id = CommonGender.convert_to_localized_string_id(CommonGender.convert_from_vanilla(baby_data.gender))
                 baby_details.append(
                     CommonLocalizationUtils.combine_localized_strings(

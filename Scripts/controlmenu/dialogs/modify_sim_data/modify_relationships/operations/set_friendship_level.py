@@ -23,4 +23,4 @@ class CMSetFriendshipLevelOp(CMSetRelationshipLevelOp):
         return 'cm_friendship'
 
     def _determine_relationship_track(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> Union[CommonRelationshipTrackId, int]:
-        return CommonRelationshipUtils._determine_friendship_track(sim_info_a, sim_info_b)
+        return CommonRelationshipUtils.get_friendship_relationship_track(sim_info_a, sim_info_b)

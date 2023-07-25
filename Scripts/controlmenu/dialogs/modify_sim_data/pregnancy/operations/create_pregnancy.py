@@ -29,10 +29,12 @@ class CMCreatePregnancyOp(CMSingleSimOperation):
     # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
         if CommonSimPregnancyUtils.is_pregnant(sim_info):
+            self.log.format_with_message(f'Failed, {sim_info} is already pregnant.')
             on_completed(False)
             return False
 
         if not CommonSimPregnancyUtils.can_impregnate(sim_info) and not CommonSimPregnancyUtils.can_be_impregnated(sim_info):
+            self.log.format_with_message(f'Failed, {sim_info} can neither impregnate nor be impregnated.')
             on_completed(False)
             return False
 
@@ -46,7 +48,10 @@ class CMCreatePregnancyOp(CMSingleSimOperation):
         def _can_create_pregnancy(partner_sim_info: SimInfo) -> bool:
             if sim_info is partner_sim_info:
                 return False
-            return CommonSimPregnancyUtils.has_permission_for_pregnancies_with(sim_info, partner_sim_info).result
+            has_permission = CommonSimPregnancyUtils.has_permission_for_pregnancies_with(sim_info, partner_sim_info)
+            if not has_permission:
+                self.log.format_with_message(f'Failed, {sim_info} does not have permission for pregnancy with {partner_sim_info}. Reason: {has_permission.reason}')
+            return has_permission.result
 
         dialog = CommonPremadeChooseSimOptionDialog(
             CMSimControlMenuStringId.WHO_WILL_IMPREGNATE_SIM,
@@ -59,8 +64,10 @@ class CMCreatePregnancyOp(CMSingleSimOperation):
             on_close=lambda: on_completed(False)
         )
         if not dialog.has_options():
+            self.log.debug(f'No Sims were found to be able to create a pregnancy with {sim_info}')
             on_completed(False)
             return False
+        self.log.format_with_message('Showing dialog.')
         # Sort the Sims in the dialog by their name.
         dialog._internal_dialog._rows = tuple(sorted(dialog._internal_dialog._rows, key=lambda row: CommonSimNameUtils.get_full_name(CommonSimUtils.get_sim_info(row.sim_id))))
         dialog.show(sim_info=sim_info)

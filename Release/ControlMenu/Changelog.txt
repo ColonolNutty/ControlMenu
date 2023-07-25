@@ -1,3 +1,9 @@
+Version 2.3:
+- Added the ability to manipulate Sims into performing interactions on objects, Sims, and the terrain (Control Menu -> Manipulate Sim To Perform Interaction)
+- Added interactions to gain control and remove control of Sims (Excluding household Sims) (Control Menu -> Gain Control Of Sim/Remove Control Of Sim)
+- Pet Sims are now made selectable.
+- Added the ability to add any non personality, non gender option traits to Sims (Modify Sim Data -> Traits -> Add Traits)
+
 Version 2.2:
 - Disabled the immortality VFX
 - Disabled the buff_Clothing_Nude broadcaster, so Sims will stop doing the "See What's Happening" interaction every 5 seconds they encounter a Sim that has a CAS Part misflagged as "Nude".
