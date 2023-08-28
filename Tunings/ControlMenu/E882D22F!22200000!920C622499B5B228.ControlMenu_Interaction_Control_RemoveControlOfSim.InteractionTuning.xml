@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="CMDebugRemoveControlOfSimInteraction" i="interaction" m="controlmenu.interactions.sim.remove_control_of_sim" n="ControlMenu_Interaction_Control_RemoveControlOfSim" s="10523894338595172904">
+  <V n="_saveable" t="disabled"/>
+  <T n="cheat">True</T>
+  <T n="debug">True</T>
+  <T n="category">2361127434841429413<!--ControlMenu_Pie_ControlMenu--></T>
+  <T n="display_name">0x62AFBB5F<!--Remove Control Of {1.SimFirstName} {1.SimLastName}--></T>
+  <U n="display_name_text_tokens">
+    <L n="tokens">
+      <V t="participant_type">
+        <U n="participant_type">
+          <V n="objects" t="from_participant">
+            <U n="from_participant">
+              <E n="participant">Actor</E>
+            </U>
+          </V>
+        </U>
+      </V>
+      <V t="participant_type">
+        <U n="participant_type">
+          <V n="objects" t="from_participant">
+            <U n="from_participant">
+              <E n="participant">Object</E>
+            </U>
+          </V>
+        </U>
+      </V>
+    </L>
+  </U>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key" p="InGame\UI\Icons\PieMenu\Interactions\icon_pieMenu_immediateInteraction.png">2f7d0004:00000000:25eea5cdba6a6fd6</T>
+      </U>
+    </V>
+  </V>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+</I>

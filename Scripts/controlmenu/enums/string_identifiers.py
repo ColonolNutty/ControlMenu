@@ -23,8 +23,8 @@ class CMStringId(CommonInt):
     NONE = 0x2CA33BDB
 
     # Dialogs
-    MODIFY_SIM_DATA = 0x6B018D3E
-    MODIFY_GAME_WORLD_DATA = 0xCEDE48C5
+    SIM = 0x22706EFA
+    GAME_WORLD = 0x0DCD0F9F
 
     # Teleport
     CHOOSE_SIMS_TO_TELEPORT = 0xB48EC1FE

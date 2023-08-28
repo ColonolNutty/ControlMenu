@@ -28,7 +28,7 @@ class CMModifyBuffsDialog(CMSimControlDialogBase):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return CMSimControlMenuStringId.MODIFY_BUFFS
+        return CMSimControlMenuStringId.BUFFS
 
     def _setup_dialog(
         self,

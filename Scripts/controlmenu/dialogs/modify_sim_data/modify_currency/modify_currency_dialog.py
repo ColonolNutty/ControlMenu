@@ -29,7 +29,7 @@ class CMModifyCurrencyDialog(CMSimControlDialogBase):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return CMSimControlMenuStringId.MODIFY_CURRENCY
+        return CMSimControlMenuStringId.CURRENCY
 
     def _setup_dialog(
         self,

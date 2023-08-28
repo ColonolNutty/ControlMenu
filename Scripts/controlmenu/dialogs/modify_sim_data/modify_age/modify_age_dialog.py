@@ -27,7 +27,7 @@ class CMModifyAgeDialog(CMSimControlDialogBase):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return CMSimControlMenuStringId.MODIFY_AGE
+        return CMSimControlMenuStringId.AGE
 
     def _setup_dialog(
         self,

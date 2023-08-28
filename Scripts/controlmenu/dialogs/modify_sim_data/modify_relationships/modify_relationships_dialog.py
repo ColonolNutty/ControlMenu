@@ -41,7 +41,7 @@ class CMModifyRelationshipsDialog(CMSimControlDialogBase):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return CMSimControlMenuStringId.MODIFY_RELATIONSHIPS
+        return CMSimControlMenuStringId.RELATIONSHIPS
 
     def _setup_dialog(
         self,

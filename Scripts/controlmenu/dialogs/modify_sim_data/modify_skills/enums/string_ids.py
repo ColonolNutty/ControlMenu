@@ -10,7 +10,7 @@ from sims4communitylib.enums.enumtypes.common_int import CommonInt
 
 class CMSimModifySkillsStringId(CommonInt):
     """String identifiers for the modify skills dialog."""
-    MODIFY_SKILLS = 0x7F658567
+    SKILLS = 0x8D31A167
     MAX_ALL_SKILLS = 0x24596042
     SET_SKILL_LEVELS = 0x016A7191
     # Tokens: {0.String} (Min) {1.String} (Max) {2.String} (Current)

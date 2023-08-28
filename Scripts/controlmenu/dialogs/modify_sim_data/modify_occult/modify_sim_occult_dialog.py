@@ -34,7 +34,7 @@ class CMModifyOccultDialog(CMSimControlDialogBase):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return CMSimControlMenuStringId.MODIFY_OCCULT
+        return CMSimControlMenuStringId.OCCULT
 
     # noinspection PyMissingOrEmptyDocstring
     @property

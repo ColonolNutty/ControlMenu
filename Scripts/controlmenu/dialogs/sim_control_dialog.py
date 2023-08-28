@@ -48,7 +48,7 @@ class CMSimControlDialog(CMSimControlDialogBase):
                 'ModifySimData',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMStringId.MODIFY_SIM_DATA
+                    CMStringId.SIM
                 ),
                 on_chosen=lambda *_, **__: CMModifySimDataDialog(self._sim_info, on_previous=reopen).open()
             )
@@ -58,7 +58,7 @@ class CMSimControlDialog(CMSimControlDialogBase):
                 'ModifyGameWorldData',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMStringId.MODIFY_GAME_WORLD_DATA
+                    CMStringId.GAME_WORLD
                 ),
                 on_chosen=lambda *_, **__: CMModifyGameWorldDataDialog(self._sim_info, on_previous=reopen).open()
             )

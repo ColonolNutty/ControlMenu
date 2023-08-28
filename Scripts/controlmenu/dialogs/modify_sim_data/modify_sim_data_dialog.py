@@ -41,7 +41,7 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return CMStringId.MODIFY_SIM_DATA
+        return CMStringId.SIM
 
     def _setup_dialog(
         self,
@@ -56,7 +56,7 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                 'ModifyAge',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMSimControlMenuStringId.MODIFY_AGE,
+                    CMSimControlMenuStringId.AGE,
                 ),
                 on_chosen=lambda *_, **__: CMModifyAgeDialog(self._sim_info, on_previous=reopen).open()
             )
@@ -67,7 +67,7 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                 'ModifyTraits',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMSimControlMenuStringId.MODIFY_TRAITS,
+                    CMSimControlMenuStringId.TRAITS,
                 ),
                 on_chosen=lambda *_, **__: CMModifyTraitsDialog(self._sim_info, on_previous=reopen).open()
             )
@@ -78,7 +78,7 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                 'ModifyBuffs',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMSimControlMenuStringId.MODIFY_BUFFS,
+                    CMSimControlMenuStringId.BUFFS,
                 ),
                 on_chosen=lambda *_, **__: CMModifyBuffsDialog(self._sim_info, on_previous=reopen).open()
             )
@@ -89,7 +89,7 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                 'ModifyCurrency',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMSimControlMenuStringId.MODIFY_CURRENCY,
+                    CMSimControlMenuStringId.CURRENCY,
                 ),
                 on_chosen=lambda *_, **__: CMModifyCurrencyDialog(self._sim_info, on_previous=reopen).open()
             )
@@ -100,7 +100,7 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                 'ModifyOccult',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMSimControlMenuStringId.MODIFY_OCCULT,
+                    CMSimControlMenuStringId.OCCULT,
                 ),
                 on_chosen=lambda *_, **__: CMModifyOccultDialog(self._sim_info, on_previous=reopen).open()
             )
@@ -111,7 +111,7 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                 'ModifyRelationships',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMSimControlMenuStringId.MODIFY_RELATIONSHIPS,
+                    CMSimControlMenuStringId.RELATIONSHIPS,
                 ),
                 on_chosen=lambda *_, **__: CMModifyRelationshipsDialog(self._sim_info, on_previous=reopen).open()
             )
@@ -122,7 +122,7 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                 'ModifySkills',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMSimModifySkillsStringId.MODIFY_SKILLS,
+                    CMSimModifySkillsStringId.SKILLS,
                 ),
                 on_chosen=lambda *_, **__: CMModifySkillsDialog(self._sim_info, on_previous=reopen).open()
             )

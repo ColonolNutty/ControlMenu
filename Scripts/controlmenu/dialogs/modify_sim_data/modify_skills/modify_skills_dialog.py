@@ -32,7 +32,7 @@ class CMModifySkillsDialog(CMSimControlDialogBase):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return CMSimModifySkillsStringId.MODIFY_SKILLS
+        return CMSimModifySkillsStringId.SKILLS
 
     def _setup_dialog(
         self,

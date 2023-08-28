@@ -19,6 +19,8 @@
     <T>1994755700559527737<!--ControlMenu_Interaction_Spawn_DespawnTargetSim--></T>
     <T>6306291199653312070<!--ControlMenu_Interaction_Household_AddTargetSimToControlledHousehold--></T>
     <T>5014631754271210756<!--ControlMenu_Interaction_Household_RemoveTargetSimFromControlledHousehold--></T>
+    <T>3033551836814724673<!--ControlMenu_Interaction_Control_GainControlOfSim--></T>
+    <T>10523894338595172904<!--ControlMenu_Interaction_Control_RemoveControlOfSim--></T>
   </L>
   <T n="buffs_add_on_spawn_only">False</T>
   <T n="display_name">0x1175FB34<!--Control Menu Main Trait--></T>
