@@ -35,7 +35,7 @@ class CMManageDeathDialog(CMSimControlDialogBase):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return CMSimControlMenuStringId.MANAGE_DEATH
+        return CMSimControlMenuStringId.DEATH
 
     # noinspection PyMissingOrEmptyDocstring
     @property

@@ -46,7 +46,7 @@ class CMModifyGameWorldDataDialog(CMSimControlDialogBase):
                 'ModifyGameClock',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMGameWorldControlMenuStringId.MODIFY_GAME_CLOCK,
+                    CMGameWorldControlMenuStringId.GAME_CLOCK,
                 ),
                 on_chosen=lambda *_, **__: CMModifyGameClockDialog(self._sim_info, on_previous=reopen).open()
             )
@@ -57,7 +57,7 @@ class CMModifyGameWorldDataDialog(CMSimControlDialogBase):
                 'ModifyLotData',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMGameWorldControlMenuStringId.MODIFY_LOT_DATA,
+                    CMGameWorldControlMenuStringId.LOT_DATA,
                 ),
                 on_chosen=lambda *_, **__: CMModifyLotDataDialog(self._sim_info, on_previous=reopen).open()
             )
@@ -68,7 +68,7 @@ class CMModifyGameWorldDataDialog(CMSimControlDialogBase):
                 'Weather',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMGameWorldControlMenuStringId.MANAGE_WEATHER,
+                    CMGameWorldControlMenuStringId.WEATHER,
                 ),
                 on_chosen=lambda *_, **__: CMManageWeatherDialog(self._sim_info, on_previous=reopen).open()
             )

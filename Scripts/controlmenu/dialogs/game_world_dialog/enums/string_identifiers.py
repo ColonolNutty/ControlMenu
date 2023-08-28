@@ -15,8 +15,8 @@ class CMGameWorldControlMenuStringId(CommonInt):
 
     """
     # Dialogs
-    MODIFY_LOT_DATA = 0x95A6A712
-    MODIFY_GAME_CLOCK = 0x414ED309
+    LOT_DATA = 0xBBB62312
+    GAME_CLOCK = 0x36C0AF09
 
     # Clock
     SET_CLOCK_SPEED_SCALE = 0x161643FA
@@ -36,7 +36,7 @@ class CMGameWorldControlMenuStringId(CommonInt):
     CLEAR_LOT_CHANGES = 0xA8F79F66
 
     # Weather
-    MANAGE_WEATHER = 0xCEA68D54
+    WEATHER = 0x12E95823
     CHANGE_WEATHER = 0x8527178D
     HOW_LONG_SHOULD_THE_WEATHER_LAST = 0x7079EEEE
     # Tokens: {0.String} (Temperature)

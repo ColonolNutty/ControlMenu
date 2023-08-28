@@ -6,6 +6,9 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Callable
+
+from controlmenu.dialogs.modify_sim_data.modify_skills.operations.randomize_selected_skills import \
+    CMRandomizeSelectedSkillsSimOp
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
@@ -79,6 +82,17 @@ class CMModifySkillsDialog(CMSimControlDialogBase):
                         CMSimModifySkillsStringId.RANDOMIZE_SKILL_LEVELS_TITLE
                     ),
                     on_chosen=lambda *_, **__: _operation_run(CMRandomizeAllSkillsSimOp())
+                )
+            )
+
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'RandomizeSelectedSkills',
+                    None,
+                    CommonDialogResponseOptionContext(
+                        CMSimModifySkillsStringId.RANDOMIZE_SELECT_SKILL_LEVELS_TITLE
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(CMRandomizeSelectedSkillsSimOp())
                 )
             )
 

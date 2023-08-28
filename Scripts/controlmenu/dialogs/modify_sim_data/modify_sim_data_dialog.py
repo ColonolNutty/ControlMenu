@@ -144,7 +144,7 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                 'ManageDeath',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMSimControlMenuStringId.MANAGE_DEATH,
+                    CMSimControlMenuStringId.DEATH,
                 ),
                 on_chosen=lambda *_, **__: CMManageDeathDialog(self._sim_info, on_previous=reopen).open()
             )

@@ -30,7 +30,7 @@ class CMModifyGameClockDialog(CMSimControlDialogBase):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return CMGameWorldControlMenuStringId.MODIFY_GAME_CLOCK
+        return CMGameWorldControlMenuStringId.GAME_CLOCK
 
     def _setup_dialog(
         self,

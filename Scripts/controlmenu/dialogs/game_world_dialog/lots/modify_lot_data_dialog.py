@@ -32,7 +32,7 @@ class CMModifyLotDataDialog(CMSimControlDialogBase):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def title(self) -> int:
-        return CMGameWorldControlMenuStringId.MODIFY_LOT_DATA
+        return CMGameWorldControlMenuStringId.LOT_DATA
 
     def _setup_dialog(
         self,
