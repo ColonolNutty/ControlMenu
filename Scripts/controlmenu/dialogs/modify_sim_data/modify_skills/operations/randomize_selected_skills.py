@@ -103,7 +103,7 @@ class CMRandomizeSelectedSkillsSimOp(CMSingleSimOperation):
 
                 option_dialog.add_option(
                     CommonDialogObjectOption(
-                        f'{skill}',
+                        str(skill_id),
                         skill,
                         CommonDialogOptionContext(
                             display_name,
