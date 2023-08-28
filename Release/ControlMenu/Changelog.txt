@@ -3,6 +3,11 @@ Version 2.3:
 - Added interactions to gain control and remove control of Sims (Excluding household Sims) (Control Menu -> Gain Control Of Sim/Remove Control Of Sim)
 - Pet Sims are now made selectable.
 - Added the ability to add any non personality, non gender option traits to Sims (Modify Sim Data -> Traits -> Add Traits)
+- Added the ability to set the career of a Sim.
+- Added the ability to remove careers from a Sim. (This includes removing High School/Grade School from Sims)
+- Added the ability to choose specific skills to randomize.
+- Removed the text "Modify" from many of the menu options.
+- Control Menu now requires at least version 2.8 of Sims 4 Community Library
 
 Version 2.2:
 - Disabled the immortality VFX
