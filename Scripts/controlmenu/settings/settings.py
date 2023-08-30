@@ -14,6 +14,15 @@ class CMSetting:
     REAL_MILLISECONDS_PER_SIM_SECOND = 'cm_real_milliseconds_per_sim_second'
     CLOCK_SPEED_MULTIPLIER = 'cm_clock_speed_multiplier'
 
+    AGE_LENGTH_MULTIPLIER_BABY = 'cm_age_length_multiplier_baby'
+    AGE_LENGTH_MULTIPLIER_INFANT = 'cm_age_length_multiplier_infant'
+    AGE_LENGTH_MULTIPLIER_TODDLER = 'cm_age_length_multiplier_toddler'
+    AGE_LENGTH_MULTIPLIER_CHILD = 'cm_age_length_multiplier_child'
+    AGE_LENGTH_MULTIPLIER_TEEN = 'cm_age_length_multiplier_teen'
+    AGE_LENGTH_MULTIPLIER_YOUNG_ADULT = 'cm_age_length_multiplier_young_adult'
+    AGE_LENGTH_MULTIPLIER_ADULT = 'cm_age_length_multiplier_adult'
+    AGE_LENGTH_MULTIPLIER_ELDER = 'cm_age_length_multiplier_elder'
+
     # DISCLAIMERS
     PERFORM_INTERACTION_DISCLAIMER_SHOWN = 'cm_perform_interaction_disclaimer_shown'
 

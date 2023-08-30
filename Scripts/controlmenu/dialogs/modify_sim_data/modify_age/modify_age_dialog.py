@@ -6,6 +6,9 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Callable
+
+from controlmenu.dialogs.modify_sim_data.modify_age.set_age_length_multipliers.set_age_length_multipliers_dialog import \
+    CMSetAgeLengthMultipliersDialog
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
@@ -45,6 +48,16 @@ class CMModifyAgeDialog(CMSimControlDialogBase):
                     CMSimControlMenuStringId.SET_AGE
                 ),
                 on_chosen=lambda *_, **__: CMSetAgeDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'SetAgeLengthMultipliers',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.SET_AGE_LENGTH_MULTIPLIERS
+                ),
+                on_chosen=lambda *_, **__: CMSetAgeLengthMultipliersDialog(self._sim_info, on_previous=reopen).open()
             )
         )
         return True

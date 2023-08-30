@@ -38,5 +38,13 @@ class CMMainSettingsDataStore(CommonDataStore):
             CMSetting.MAXIMUM_HOUSEHOLD_SIZE: Household.MAXIMUM_SIZE,
             CMSetting.REAL_MILLISECONDS_PER_SIM_SECOND: date_and_time.REAL_MILLISECONDS_PER_SIM_SECOND,
             CMSetting.CLOCK_SPEED_MULTIPLIER: 1.0,
-            CMSetting.MAXIMUM_SIMS_PER_LOT: SimSpawnerService.NPC_SOFT_CAP
+            CMSetting.MAXIMUM_SIMS_PER_LOT: SimSpawnerService.NPC_SOFT_CAP,
+            CMSetting.AGE_LENGTH_MULTIPLIER_BABY: 1.0,
+            CMSetting.AGE_LENGTH_MULTIPLIER_INFANT: 1.0,
+            CMSetting.AGE_LENGTH_MULTIPLIER_TODDLER: 1.0,
+            CMSetting.AGE_LENGTH_MULTIPLIER_CHILD: 1.0,
+            CMSetting.AGE_LENGTH_MULTIPLIER_TEEN: 1.0,
+            CMSetting.AGE_LENGTH_MULTIPLIER_YOUNG_ADULT: 1.0,
+            CMSetting.AGE_LENGTH_MULTIPLIER_ADULT: 1.0,
+            CMSetting.AGE_LENGTH_MULTIPLIER_ELDER: 1.0,
         }.copy()

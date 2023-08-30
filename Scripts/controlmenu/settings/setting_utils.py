@@ -36,6 +36,48 @@ class CMSettingUtils:
         """Determine if two Sims are allowed to have a Romantic relationship together."""
         return CommonRelationshipUtils.has_permission_for_romantic_relationship_with(sim_info_a, sim_info_b)
 
+    class AgeLength:
+        """Age length settings."""
+        @staticmethod
+        def get_age_length_multiplier_baby() -> int:
+            """Retrieve a multiplier for the length of the Baby Age."""
+            return CMSettingUtils._get_value(CMSetting.AGE_LENGTH_MULTIPLIER_BABY)
+
+        @staticmethod
+        def get_age_length_multiplier_infant() -> int:
+            """Retrieve a multiplier for the length of the Infant Age."""
+            return CMSettingUtils._get_value(CMSetting.AGE_LENGTH_MULTIPLIER_INFANT)
+
+        @staticmethod
+        def get_age_length_multiplier_toddler() -> int:
+            """Retrieve a multiplier for the length of the Toddler Age."""
+            return CMSettingUtils._get_value(CMSetting.AGE_LENGTH_MULTIPLIER_TODDLER)
+
+        @staticmethod
+        def get_age_length_multiplier_child() -> int:
+            """Retrieve a multiplier for the length of the Child Age."""
+            return CMSettingUtils._get_value(CMSetting.AGE_LENGTH_MULTIPLIER_CHILD)
+
+        @staticmethod
+        def get_age_length_multiplier_teen() -> int:
+            """Retrieve a multiplier for the length of the Teen Age."""
+            return CMSettingUtils._get_value(CMSetting.AGE_LENGTH_MULTIPLIER_TEEN)
+
+        @staticmethod
+        def get_age_length_multiplier_young_adult() -> int:
+            """Retrieve a multiplier for the length of the Young Adult Age."""
+            return CMSettingUtils._get_value(CMSetting.AGE_LENGTH_MULTIPLIER_YOUNG_ADULT)
+
+        @staticmethod
+        def get_age_length_multiplier_adult() -> int:
+            """Retrieve a multiplier for the length of the Adult Age."""
+            return CMSettingUtils._get_value(CMSetting.AGE_LENGTH_MULTIPLIER_ADULT)
+
+        @staticmethod
+        def get_age_length_multiplier_elder() -> int:
+            """Retrieve a multiplier for the length of the Elder Age."""
+            return CMSettingUtils._get_value(CMSetting.AGE_LENGTH_MULTIPLIER_ELDER)
+
     @staticmethod
     def get_maximum_household_size() -> int:
         """Retrieve the maximum size for households."""
