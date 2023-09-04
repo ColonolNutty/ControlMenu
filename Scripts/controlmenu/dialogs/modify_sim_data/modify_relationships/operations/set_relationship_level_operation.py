@@ -13,6 +13,7 @@ from relationships.relationship_track import RelationshipTrack
 from relationships.tunable import BitTrackNode, _RelationshipTrackData2dLinkArrayElement
 from sims.sim_info import SimInfo
 from sims4.resources import Types
+from sims4communitylib.classes.testing.common_test_result import CommonTestResult
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
 from sims4communitylib.dialogs.premade_dialogs.common_premade_choose_sim_option_dialog import \
@@ -170,5 +171,9 @@ class CMSetRelationshipLevelOp(CMSingleSimOperation):
             return result
         return tuple(relationship_options.values())
 
-    def _is_allowed_relationship_track(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
-        return self._determine_relationship_track(sim_info_a, sim_info_b) != -1 and sim_info_a is not sim_info_b
+    def _is_allowed_relationship_track(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> CommonTestResult:
+        if sim_info_a is sim_info_b:
+            return CommonTestResult(False, reason='Sim A is Sim B')
+        if self._determine_relationship_track(sim_info_a, sim_info_b) == -1:
+            return CommonTestResult(False, reason='No relationship track specified.')
+        return CommonTestResult.TRUE
