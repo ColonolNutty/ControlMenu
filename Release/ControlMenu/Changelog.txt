@@ -1,3 +1,8 @@
+Version 2.4:
+- Added the ability to Remove Family (Blood) Relations of Sims
+- Added the ability to remove Relationship Bits between Sims
+- Added the ability to set Statistic and Commodity values on Sims
+
 Version 2.3:
 - Added the ability to manipulate Sims into performing interactions on objects, Sims, and the terrain (Control Menu -> Manipulate Sim To Perform Interaction)
 - Added interactions to gain control and remove control of Sims (Excluding household Sims) (Control Menu -> Gain Control Of Sim/Remove Control Of Sim)
