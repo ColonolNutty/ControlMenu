@@ -10,6 +10,7 @@ from typing import Callable
 from controlmenu.dialogs.modify_sim_data.manage_death.manage_death_dialog import CMManageDeathDialog
 from controlmenu.dialogs.modify_sim_data.modify_career.enums.string_ids import CMSimModifyCareerStringId
 from controlmenu.dialogs.modify_sim_data.modify_career.modify_career_dialog import CMModifyCareerDialog
+from controlmenu.dialogs.modify_sim_data.modify_statistics.modify_statistics_dialog import CMModifyStatisticsDialog
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
@@ -160,6 +161,17 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                     CMSimControlMenuStringId.DEATH,
                 ),
                 on_chosen=lambda *_, **__: CMManageDeathDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'ModifyStatistics',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.STATISTICS,
+                ),
+                on_chosen=lambda *_, **__: CMModifyStatisticsDialog(self._sim_info, on_previous=reopen).open()
             )
         )
 
