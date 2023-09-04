@@ -141,6 +141,7 @@ class CMSimControlMenuStringId(CommonInt):
     CHOOSE_SIMS_TO_REMOVE_HAS_MET = 0x3C861ED6
 
     REMOVE_FAMILY_RELATIONS = 0x3ED0B64C
+    REMOVE_RELATIONSHIP_BIT = 0x948CD333
 
     CHOOSE_PARENT_RELATIONSHIP = 0xCAD046A0
     # Tokens: {0.SimFirstName} {0.SimLastName} (Sim A) {1.String} (Relation) {2.SimFirstName} {2.SimLastName} (Sim B)

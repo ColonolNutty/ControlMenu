@@ -9,6 +9,8 @@ from typing import Callable
 
 from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.remove_family_relationships import \
     CMRemoveFamilyRelationsBitOp
+from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.remove_relationship_bit import \
+    CMRemoveRelationshipBitOp
 from sims.sim_info import SimInfo
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
@@ -153,6 +155,18 @@ class CMModifyRelationshipsDialog(CMSimControlDialogBase):
                         CMSimControlMenuStringId.REMOVE_FAMILY_RELATIONS
                     ),
                     on_chosen=lambda *_, **__: _operation_run(CMRemoveFamilyRelationsBitOp())
+                )
+            )
+
+        if (target_sim_info is None and CMRemoveRelationshipBitOp().can_run_with_sim(self._sim_info)) or CMRemoveRelationshipBitOp().can_run_with_sims(self._sim_info, target_sim_info):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'RemoveRelationshipBit',
+                    None,
+                    CommonDialogResponseOptionContext(
+                        CMSimControlMenuStringId.REMOVE_RELATIONSHIP_BIT,
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(CMRemoveRelationshipBitOp())
                 )
             )
 
