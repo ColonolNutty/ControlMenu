@@ -10,6 +10,7 @@ from typing import Callable
 from controlmenu.dialogs.modify_sim_data.manage_death.manage_death_dialog import CMManageDeathDialog
 from controlmenu.dialogs.modify_sim_data.modify_career.enums.string_ids import CMSimModifyCareerStringId
 from controlmenu.dialogs.modify_sim_data.modify_career.modify_career_dialog import CMModifyCareerDialog
+from controlmenu.dialogs.modify_sim_data.modify_perks.modify_perks_dialog import CMModifyPerksDialog
 from controlmenu.dialogs.modify_sim_data.modify_statistics.modify_statistics_dialog import CMModifyStatisticsDialog
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
@@ -100,17 +101,6 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'ModifyCurrency',
-                None,
-                CommonDialogResponseOptionContext(
-                    CMSimControlMenuStringId.CURRENCY,
-                ),
-                on_chosen=lambda *_, **__: CMModifyCurrencyDialog(self._sim_info, on_previous=reopen).open()
-            )
-        )
-
-        option_dialog.add_option(
-            CommonDialogButtonOption(
                 'ModifyOccult',
                 None,
                 CommonDialogResponseOptionContext(
@@ -144,12 +134,35 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
 
         option_dialog.add_option(
             CommonDialogButtonOption(
-                'Household',
+                'ModifyPerks',
                 None,
                 CommonDialogResponseOptionContext(
-                    CMSimControlMenuStringId.HOUSEHOLD,
+                    CMSimControlMenuStringId.PERKS,
                 ),
-                on_chosen=lambda *_, **__: CMHouseholdDialog(self._sim_info, on_previous=reopen).open()
+                on_chosen=lambda *_, **__: CMModifyPerksDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+
+        if CommonSimPregnancyUtils.has_permission_for_pregnancies(self._sim_info):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'Pregnancy',
+                    None,
+                    CommonDialogResponseOptionContext(
+                        CMSimControlMenuStringId.PREGNANCY,
+                    ),
+                    on_chosen=lambda *_, **__: CMPregnancyDialog(self._sim_info, on_previous=reopen).open()
+                )
+            )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'ModifyCurrency',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.CURRENCY,
+                ),
+                on_chosen=lambda *_, **__: CMModifyCurrencyDialog(self._sim_info, on_previous=reopen).open()
             )
         )
 
@@ -166,6 +179,17 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
 
         option_dialog.add_option(
             CommonDialogButtonOption(
+                'Household',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.HOUSEHOLD,
+                ),
+                on_chosen=lambda *_, **__: CMHouseholdDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
                 'ModifyStatistics',
                 None,
                 CommonDialogResponseOptionContext(
@@ -174,16 +198,4 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                 on_chosen=lambda *_, **__: CMModifyStatisticsDialog(self._sim_info, on_previous=reopen).open()
             )
         )
-
-        if CommonSimPregnancyUtils.has_permission_for_pregnancies(self._sim_info):
-            option_dialog.add_option(
-                CommonDialogButtonOption(
-                    'Pregnancy',
-                    None,
-                    CommonDialogResponseOptionContext(
-                        CMSimControlMenuStringId.PREGNANCY,
-                    ),
-                    on_chosen=lambda *_, **__: CMPregnancyDialog(self._sim_info, on_previous=reopen).open()
-                )
-            )
         return True

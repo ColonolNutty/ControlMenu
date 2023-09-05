@@ -61,9 +61,6 @@ class CMSetCommodityValuesSimOp(CMSingleSimOperation):
         commodity_tracker: CommodityTracker = sim_info.commodity_tracker
         for commodity in commodity_tracker.all_statistics():
             commodity: Commodity = commodity
-            self.log.enable()
-            self.log.format_with_message('Got things', commodity_dir=dir(commodity))
-            self.log.disable()
             commodity_guid = CommonStatisticUtils.get_statistic_id(commodity)
             if commodity_guid is None:
                 self.log.format_with_message('Missing statistic id for Statistic.', statistic=commodity)
