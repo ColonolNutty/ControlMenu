@@ -8,6 +8,7 @@ Copyright (c) COLONOLNUTTY
 from typing import Callable, Union
 
 from controlmenu.commonlib.utils.common_sim_pregnancy_utils import CMSimPregnancyUtils
+from controlmenu.dialogs.modify_sim_data.pregnancy.operations.reroll_offspring import CMRerollOffspringOp
 from protocolbuffers.Localization_pb2 import LocalizedString
 from sims.pregnancy.pregnancy_tracker import PregnancyTracker
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
@@ -134,6 +135,19 @@ class CMPregnancyDialog(CMSimControlDialogBase):
                     disabled_text_tokens=(self._sim_info,)
                 ),
                 on_chosen=lambda *_, **__: _operation_run(CMCreatePregnancyOp())
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'RerollOffspring',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.REROLL_OFFSPRING,
+                    disabled_text_identifier=CMSimControlMenuStringId.SIM_IS_NOT_PREGNANT if not is_pregnant else None,
+                    disabled_text_tokens=(self._sim_info,)
+                ),
+                on_chosen=lambda *_, **__: _operation_run(CMRerollOffspringOp())
             )
         )
 

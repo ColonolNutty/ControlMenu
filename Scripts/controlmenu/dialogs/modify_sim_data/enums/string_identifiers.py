@@ -109,6 +109,7 @@ class CMSimControlMenuStringId(CommonInt):
     SIM_HAS_NO_PREGNANCY_DATA = 0x6B8F2687
     # Tokens: {0.String} (A list of details)
     BABY_DETAILS = 0x000A33FE
+    REROLL_OFFSPRING = 0x3BC26007
 
     # Money
     CURRENCY = 0xE0E2599C
