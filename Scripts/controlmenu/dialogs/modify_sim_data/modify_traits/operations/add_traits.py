@@ -80,7 +80,7 @@ class CMAddTraitsSimOp(CMSingleSimOperation):
             # noinspection PyUnresolvedReferences
             confirmation = CommonOkCancelDialog(
                 CMStringId.CONFIRMATION,
-                CMSimControlMenuStringId.ARE_YOU_SURE_YOU_WANT_TO_REMOVE_TRAIT,
+                CMSimControlMenuStringId.ARE_YOU_SURE_YOU_WANT_TO_ADD_TRAIT,
                 description_tokens=(chosen_trait.display_name(sim_info), str(_trait_id), CommonTraitUtils.get_trait_name(chosen_trait), CommonSimUtils.get_sim_instance(sim_info)),
                 ok_text_identifier=CMStringId.YES,
                 cancel_text_identifier=CMStringId.NO

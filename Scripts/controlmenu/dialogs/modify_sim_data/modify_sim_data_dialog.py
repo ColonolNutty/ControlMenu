@@ -12,6 +12,7 @@ from controlmenu.dialogs.modify_sim_data.modify_career.enums.string_ids import C
 from controlmenu.dialogs.modify_sim_data.modify_career.modify_career_dialog import CMModifyCareerDialog
 from controlmenu.dialogs.modify_sim_data.modify_motives.enums.string_ids import CMSimModifyMotivesStringId
 from controlmenu.dialogs.modify_sim_data.modify_motives.modify_motives_dialog import CMModifyMotivesDialog
+from controlmenu.dialogs.modify_sim_data.modify_name.modify_name_dialog import CMModifyNameDialog
 from controlmenu.dialogs.modify_sim_data.modify_perks.modify_perks_dialog import CMModifyPerksDialog
 from controlmenu.dialogs.modify_sim_data.modify_statistics.modify_statistics_dialog import CMModifyStatisticsDialog
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
@@ -87,6 +88,17 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                     CMSimControlMenuStringId.BUFFS,
                 ),
                 on_chosen=lambda *_, **__: CMModifyBuffsDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'ModifyNae',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.NAME,
+                ),
+                on_chosen=lambda *_, **__: CMModifyNameDialog(self._sim_info, on_previous=reopen).open()
             )
         )
 

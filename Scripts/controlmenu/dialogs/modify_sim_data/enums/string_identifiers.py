@@ -116,6 +116,14 @@ class CMSimControlMenuStringId(CommonInt):
     REMOVE_SIMOLEONS = 0x65E9AA30
     HOW_MANY_SIMOLEONS = 0xE00491B6
 
+    # Name
+    NAME = 0x2F8B3BF4
+    CHANGE_THE_NAME_OF_A_SIM = 0x96E71222
+    FIRST_NAME = 0x0E45B89E
+    LAST_NAME = 0x1471ECFA
+    PRONOUNS = 0xE467D949
+    MODIFY_PRONOUNS_OF_A_SIM = 0x512A243A
+
     # Relationships
     CHOOSE_LEVEL = 0x1B5E1A84
     ADD_HAS_MET = 0xBE410840
@@ -206,6 +214,8 @@ class CMSimControlMenuStringId(CommonInt):
     REMOVED_TRAIT_DESCRIPTION = 0x07FF910B
     # Tokens: {0.String} (Trait Display Name) {1.String} (Trait Id) {2.String} (Trait Tuning Name) from {3.SimFirstName} (Sim)
     ARE_YOU_SURE_YOU_WANT_TO_REMOVE_TRAIT = 0x7C089D5A
+    # Tokens: {0.String} (Trait Display Name) {1.String} (Trait Id) {2.String} (Trait Tuning Name) to {3.SimFirstName} (Sim)
+    ARE_YOU_SURE_YOU_WANT_TO_ADD_TRAIT = 0xA494A1AA
 
     SET_PERSONALITY_TRAITS = 0x20CCE602
     # Tokens: {0.String} (Max Num Of Personality Traits)
