@@ -200,6 +200,9 @@ class CMSimControlMenuStringId(CommonInt):
     # Traits
     TRAITS = 0xEEEA2036
     ADD_TRAITS = 0x7AA8C421
+    MODIFY_LIKES = 0xE462A7EF
+    MODIFY_DISLIKES = 0x416EDB91
+    MODIFY_LIKES_DISLIKES_DESCRIPTION = 0x879965E3
     # Tokens: {0.String} (Trait Display Name) {1.String} (Trait Id)
     ADDED_TRAIT_TITLE = 0x93730BD2
     # Tokens: {0.SimFirstName} (Sim) {1.String} (Trait Display Name) {2.String} (Trait Id) {3.String} (Trait Tuning Name)

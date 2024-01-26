@@ -7,6 +7,8 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Callable
 
+from controlmenu.dialogs.modify_sim_data.modify_traits.operations.add_dislikes import CMAddDislikesSimOp
+from controlmenu.dialogs.modify_sim_data.modify_traits.operations.add_likes import CMAddLikesSimOp
 from controlmenu.dialogs.modify_sim_data.modify_traits.operations.add_traits import CMAddTraitsSimOp
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
@@ -82,4 +84,26 @@ class CMModifyTraitsDialog(CMSimControlDialogBase):
                     on_chosen=lambda *_, **__: _operation_run(CMRemoveTraitsSimOp())
                 )
             )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'AddLikes',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.MODIFY_LIKES
+                ),
+                on_chosen=lambda *_, **__: _operation_run(CMAddLikesSimOp())
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'AddDislikes',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.MODIFY_DISLIKES
+                ),
+                on_chosen=lambda *_, **__: _operation_run(CMAddDislikesSimOp())
+            )
+        )
         return True
