@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<I c="Buff" i="buff" m="buffs.buff" n="ControlMenu_Buff_MoodOverride_Stressed" s="13965468449571667897">
+<!--Buff_FlirtyByPotion-->
+  <T n="audio_sting_on_add" p="InGame\Audio\Stings\sting_buff_gain.propx">39b2aa4a:00000000:8af8b916cf64c646</T>
+  <T n="audio_sting_on_remove" p="InGame\Audio\Stings\sting_buff_loss.propx">39b2aa4a:00000000:3bf33216a25546ea</T>
+  <T n="buff_description">0xEC429971<!--The mood of this Sim is being overridden by Control Menu.--></T>
+  <T n="buff_name">0x4E5098D8<!--Mood Override--></T>
+  <T n="icon" p="InGame\UI\Icons\Buffs\Buffs_Potion.png">2f7d0004:00000000:351f1fa8ab354ec1</T>
+  <T n="mood_type">14645<!--Mood_Stressed--></T>
+  <T n="mood_weight">1000000</T>
+  <T n="visible">True</T>
+</I>

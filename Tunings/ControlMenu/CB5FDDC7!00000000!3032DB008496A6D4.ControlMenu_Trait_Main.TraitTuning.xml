@@ -21,6 +21,7 @@
     <T>5014631754271210756<!--ControlMenu_Interaction_Household_RemoveTargetSimFromControlledHousehold--></T>
     <T>3033551836814724673<!--ControlMenu_Interaction_Control_GainControlOfSim--></T>
     <T>10523894338595172904<!--ControlMenu_Interaction_Control_RemoveControlOfSim--></T>
+    <T>672484418852683378<!--ControlMenu_Interaction_Control_ApplyMoodOverride--></T>
   </L>
   <T n="buffs_add_on_spawn_only">False</T>
   <T n="display_name">0x1175FB34<!--Control Menu Main Trait--></T>
