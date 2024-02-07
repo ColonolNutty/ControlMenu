@@ -7,6 +7,7 @@ Version 2.4:
 - Added the ability to modify walk styles
 - Added a button to the pregnancy menu that allows rerolling the offspring data.
 - Added separate entries under Traits for adding/removing Likes and Dislikes.
+- Added an interaction used to open a many that will force override the current Mood of Sims.
 
 Version 2.3:
 - Added the ability to manipulate Sims into performing interactions on objects, Sims, and the terrain (Control Menu -> Manipulate Sim To Perform Interaction)
