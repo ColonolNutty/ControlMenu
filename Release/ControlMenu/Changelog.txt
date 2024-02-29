@@ -1,3 +1,6 @@
+Version 2.5:
+- Updated all tunings for the 1.105.297.1030 update of Sims 4
+
 Version 2.4:
 - Added the ability to Remove Family (Blood) Relations of Sims
 - Added the ability to remove Relationship Bits between Sims
@@ -7,7 +10,7 @@ Version 2.4:
 - Added the ability to modify walk styles
 - Added a button to the pregnancy menu that allows rerolling the offspring data.
 - Added separate entries under Traits for adding/removing Likes and Dislikes.
-- Added an interaction used to open a many that will force override the current Mood of Sims.
+- Added an interaction used to open a menu that will force override the current Mood of Sims.
 
 Version 2.3:
 - Added the ability to manipulate Sims into performing interactions on objects, Sims, and the terrain (Control Menu -> Manipulate Sim To Perform Interaction)

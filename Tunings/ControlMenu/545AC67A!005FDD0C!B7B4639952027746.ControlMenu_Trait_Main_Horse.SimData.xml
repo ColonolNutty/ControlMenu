@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SimData version="0x00000101" u="0x00000019">
+<SimData version="0x00000101" u="0x00000037">
   <Instances>
-    <I name="ControlMenu_Trait_Main_Cat" schema="Trait" type="Object">
+    <I name="ControlMenu_Trait_Main_Horse" schema="Trait" type="Object">
       <L name="ages">
         <T type="Int64">1</T>
         <T type="Int64">128</T>
@@ -21,13 +21,13 @@
         <T type="TableSetReference">11199586991244894006</T>
         <T type="TableSetReference">5219955596837474990</T>
         <T type="TableSetReference">8029522887973075998</T>
-        <T type="TableSetReference">13237314714905769798</T>
+        <T type="TableSetReference">8024753206530842761</T>
       </L>
       <T name="display_name">0x46B5367A</T>
       <L name="genders" />
       <T name="icon">2F7D0004-00000000-87A22DAF548644A6</T>
       <L name="species">
-        <T type="Int64">3</T>
+        <T type="Int64">6</T>
       </L>
       <L name="tags" />
       <T name="trait_description">0x46D79767</T>

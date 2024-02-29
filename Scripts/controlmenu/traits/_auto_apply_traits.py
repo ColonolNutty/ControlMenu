@@ -27,7 +27,8 @@ class _CMAutoApplyTraits:
                     CMTraitId.CONTROLLABLE_LARGE_DOG_SIM,
                     CMTraitId.CONTROLLABLE_SMALL_DOG_SIM,
                     CMTraitId.CONTROLLABLE_CAT_SIM,
-                    CMTraitId.CONTROLLABLE_FOX_SIM
+                    CMTraitId.CONTROLLABLE_FOX_SIM,
+                    CMTraitId.CONTROLLABLE_HORSE_SIM
                 )
             )
             if CommonTraitUtils.has_trait(sim_info, CMTraitId.CONTROLLABLE_HUMAN_SIM):
@@ -40,7 +41,8 @@ class _CMAutoApplyTraits:
                     CMTraitId.CONTROLLABLE_HUMAN_SIM,
                     CMTraitId.CONTROLLABLE_SMALL_DOG_SIM,
                     CMTraitId.CONTROLLABLE_CAT_SIM,
-                    CMTraitId.CONTROLLABLE_FOX_SIM
+                    CMTraitId.CONTROLLABLE_FOX_SIM,
+                    CMTraitId.CONTROLLABLE_HORSE_SIM
                 )
             )
             if CommonTraitUtils.has_trait(sim_info, CMTraitId.CONTROLLABLE_LARGE_DOG_SIM):
@@ -53,7 +55,8 @@ class _CMAutoApplyTraits:
                     CMTraitId.CONTROLLABLE_HUMAN_SIM,
                     CMTraitId.CONTROLLABLE_LARGE_DOG_SIM,
                     CMTraitId.CONTROLLABLE_CAT_SIM,
-                    CMTraitId.CONTROLLABLE_FOX_SIM
+                    CMTraitId.CONTROLLABLE_FOX_SIM,
+                    CMTraitId.CONTROLLABLE_HORSE_SIM
                 )
             )
             if CommonTraitUtils.has_trait(sim_info, CMTraitId.CONTROLLABLE_SMALL_DOG_SIM):
@@ -66,7 +69,8 @@ class _CMAutoApplyTraits:
                     CMTraitId.CONTROLLABLE_HUMAN_SIM,
                     CMTraitId.CONTROLLABLE_LARGE_DOG_SIM,
                     CMTraitId.CONTROLLABLE_SMALL_DOG_SIM,
-                    CMTraitId.CONTROLLABLE_FOX_SIM
+                    CMTraitId.CONTROLLABLE_FOX_SIM,
+                    CMTraitId.CONTROLLABLE_HORSE_SIM
                 )
             )
             if CommonTraitUtils.has_trait(sim_info, CMTraitId.CONTROLLABLE_CAT_SIM):
@@ -79,12 +83,27 @@ class _CMAutoApplyTraits:
                     CMTraitId.CONTROLLABLE_HUMAN_SIM,
                     CMTraitId.CONTROLLABLE_LARGE_DOG_SIM,
                     CMTraitId.CONTROLLABLE_SMALL_DOG_SIM,
-                    CMTraitId.CONTROLLABLE_CAT_SIM
+                    CMTraitId.CONTROLLABLE_CAT_SIM,
+                    CMTraitId.CONTROLLABLE_HORSE_SIM
                 )
             )
             if CommonTraitUtils.has_trait(sim_info, CMTraitId.CONTROLLABLE_FOX_SIM):
                 return
             CommonTraitUtils.add_trait(sim_info, CMTraitId.CONTROLLABLE_FOX_SIM)
+        elif CommonSpeciesUtils.is_horse(sim_info):
+            CommonTraitUtils.remove_traits(
+                sim_info,
+                (
+                    CMTraitId.CONTROLLABLE_HUMAN_SIM,
+                    CMTraitId.CONTROLLABLE_LARGE_DOG_SIM,
+                    CMTraitId.CONTROLLABLE_SMALL_DOG_SIM,
+                    CMTraitId.CONTROLLABLE_CAT_SIM,
+                    CMTraitId.CONTROLLABLE_FOX_SIM
+                )
+            )
+            if CommonTraitUtils.has_trait(sim_info, CMTraitId.CONTROLLABLE_HORSE_SIM):
+                return
+            CommonTraitUtils.add_trait(sim_info, CMTraitId.CONTROLLABLE_HORSE_SIM)
 
 
 @CommonEventRegistry.handle_events(ModInfo.get_identity())

@@ -177,5 +177,6 @@ class CMRemoveTraitsSimOp(CMSingleSimOperation):
             CMTraitId.CONTROLLABLE_LARGE_DOG_SIM,
             CMTraitId.CONTROLLABLE_SMALL_DOG_SIM,
             CMTraitId.CONTROLLABLE_CAT_SIM,
-            CMTraitId.CONTROLLABLE_FOX_SIM
+            CMTraitId.CONTROLLABLE_FOX_SIM,
+            CMTraitId.CONTROLLABLE_HORSE_SIM
         )

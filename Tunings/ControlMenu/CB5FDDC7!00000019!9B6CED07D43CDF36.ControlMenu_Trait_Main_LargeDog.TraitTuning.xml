@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<I c="Trait" i="trait" m="traits.traits" n="ControlMenu_Trait_Main_SmallDog" s="5219955596837474990">
+<I c="Trait" i="trait" m="traits.traits" n="ControlMenu_Trait_Main_LargeDog" s="11199586991244894006">
   <L n="ages">
     <E>BABY</E>
     <E>INFANT</E>
@@ -23,9 +23,10 @@
   </L>
   <L n="conflicting_traits">
     <T>1027422807228931770<!--ControlMenu_Trait_Main_Human--></T>
-    <T>11199586991244894006<!--ControlMenu_Trait_Main_LargeDog--></T>
+    <T>5219955596837474990<!--ControlMenu_Trait_Main_SmallDog--></T>
     <T>8024753206530842761<!--ControlMenu_Trait_Main_Cat--></T>
     <T>8029522887973075998<!--ControlMenu_Trait_Main_Fox--></T>
+    <T>13237314714905769798<!--ControlMenu_Trait_Main_Horse--></T>
   </L>
   <T n="buffs_add_on_spawn_only">False</T>
   <T n="display_name">0x46B5367A<!--Control Menu Is Available--></T>
