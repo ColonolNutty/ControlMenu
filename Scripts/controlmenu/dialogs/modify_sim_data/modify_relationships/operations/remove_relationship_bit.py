@@ -96,13 +96,13 @@ class CMRemoveRelationshipBitOp(CMSingleSimOperation):
             relationship_bit: RelationshipBit = relationship_bit
             display_name_value = relationship_bit.display_name
             if display_name_value:
-                display_name = display_name_value(chosen_sim, sim)
+                display_name = display_name_value(sim, chosen_sim)
             else:
                 display_name = relationship_bit.__name__
 
             description_value = relationship_bit.bit_description
             if description_value:
-                description = description_value(chosen_sim, sim)
+                description = description_value(sim, chosen_sim)
             else:
                 description = 0
 
