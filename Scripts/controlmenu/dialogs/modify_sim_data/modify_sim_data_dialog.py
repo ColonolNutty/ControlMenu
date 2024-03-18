@@ -10,6 +10,7 @@ from typing import Callable
 from controlmenu.dialogs.modify_sim_data.manage_death.manage_death_dialog import CMManageDeathDialog
 from controlmenu.dialogs.modify_sim_data.modify_career.enums.string_ids import CMSimModifyCareerStringId
 from controlmenu.dialogs.modify_sim_data.modify_career.modify_career_dialog import CMModifyCareerDialog
+from controlmenu.dialogs.modify_sim_data.modify_lifestyles.modify_lifestyles_dialog import CMModifyLifestylesDialog
 from controlmenu.dialogs.modify_sim_data.modify_motives.enums.string_ids import CMSimModifyMotivesStringId
 from controlmenu.dialogs.modify_sim_data.modify_motives.modify_motives_dialog import CMModifyMotivesDialog
 from controlmenu.dialogs.modify_sim_data.modify_name.modify_name_dialog import CMModifyNameDialog
@@ -36,6 +37,7 @@ from controlmenu.dialogs.modify_sim_data.pregnancy.pregnancy_dialog import CMPre
 from controlmenu.dialogs.sim_control_dialog_base import CMSimControlDialogBase
 from controlmenu.enums.string_identifiers import CMStringId
 from sims4communitylib.utils.sims.common_sim_pregnancy_utils import CommonSimPregnancyUtils
+from statistics.trait_statistic import TraitStatisticGroup
 
 
 class CMModifySimDataDialog(CMSimControlDialogBase):
@@ -224,6 +226,18 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                 on_chosen=lambda *_, **__: CMModifyStatisticsDialog(self._sim_info, on_previous=reopen).open()
             )
         )
+
+        if hasattr(TraitStatisticGroup, 'Lifestyle'):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'ModifyLifestyles',
+                    None,
+                    CommonDialogResponseOptionContext(
+                        CMSimControlMenuStringId.LIFESTYLES,
+                    ),
+                    on_chosen=lambda *_, **__: CMModifyLifestylesDialog(self._sim_info, on_previous=reopen).open()
+                )
+            )
 
         option_dialog.add_option(
             CommonDialogButtonOption(
