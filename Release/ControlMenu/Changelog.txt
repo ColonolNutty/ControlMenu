@@ -1,6 +1,10 @@
 Version 2.6:
 - Fixed an issue when displaying relationship bits, where Sims showed reverse in the description text.
 - Added the ability to update Lifestyles of Sims.
+- Added a way to teleport objects to the active Sim.
+- Added a way to destroy objects using CM.
+- Added a way to modify fit and fat levels of Sims via Control Menu (Under new Body menu)
+- Control Menu now requires at least version 3.4 of S4CL
 
 Version 2.5:
 - Updated all tunings for the 1.105.297.1030 update of Sims 4
