@@ -8,6 +8,7 @@ Copyright (c) COLONOLNUTTY
 from typing import Callable
 
 from controlmenu.dialogs.modify_sim_data.manage_death.manage_death_dialog import CMManageDeathDialog
+from controlmenu.dialogs.modify_sim_data.modify_body.modify_body_dialog import CMModifyBodyDialog
 from controlmenu.dialogs.modify_sim_data.modify_career.enums.string_ids import CMSimModifyCareerStringId
 from controlmenu.dialogs.modify_sim_data.modify_career.modify_career_dialog import CMModifyCareerDialog
 from controlmenu.dialogs.modify_sim_data.modify_lifestyles.modify_lifestyles_dialog import CMModifyLifestylesDialog
@@ -191,6 +192,17 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                     CMSimControlMenuStringId.CURRENCY,
                 ),
                 on_chosen=lambda *_, **__: CMModifyCurrencyDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'ModifyBody',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.BODY,
+                ),
+                on_chosen=lambda *_, **__: CMModifyBodyDialog(self._sim_info, on_previous=reopen).open()
             )
         )
 

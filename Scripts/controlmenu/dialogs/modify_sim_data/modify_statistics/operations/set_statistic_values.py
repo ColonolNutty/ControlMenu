@@ -53,7 +53,7 @@ class CMSetStatisticValuesSimOp(CMSingleSimOperation):
             if setting_value is None or CommonChoiceOutcome.is_error_or_cancel(outcome):
                 _reopen()
                 return
-            CommonSimStatisticUtils.set_statistic_level(sim_info, _statistic_guid, setting_value)
+            self._set_statistic_level(sim_info, _statistic_guid, setting_value)
             _reopen()
 
         statistic_tracker: StatisticTracker = sim_info.statistic_tracker
@@ -118,3 +118,6 @@ class CMSetStatisticValuesSimOp(CMSingleSimOperation):
             return False
         option_dialog.show(sim_info=sim_info, sort_options=True, page=current_page)
         return True
+
+    def _set_statistic_level(self, sim_info: SimInfo, statistic: int, amount: float):
+        CommonSimStatisticUtils.set_statistic_level(sim_info, statistic, amount)

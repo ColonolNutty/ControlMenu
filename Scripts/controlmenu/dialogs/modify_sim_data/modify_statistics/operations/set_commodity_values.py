@@ -55,7 +55,7 @@ class CMSetCommodityValuesSimOp(CMSingleSimOperation):
             if setting_value is None or CommonChoiceOutcome.is_error_or_cancel(outcome):
                 on_completed(True)
                 return
-            CommonSimStatisticUtils.set_statistic_level(sim_info, _commodity_guid, setting_value)
+            self._set_commodity_level(sim_info, _commodity_guid, setting_value)
             _reopen()
 
         commodity_tracker: CommodityTracker = sim_info.commodity_tracker
@@ -126,3 +126,6 @@ class CMSetCommodityValuesSimOp(CMSingleSimOperation):
             return False
         option_dialog.show(sim_info=sim_info, sort_options=True, page=current_page)
         return True
+
+    def _set_commodity_level(self, sim_info: SimInfo, commodity: int, amount: float):
+        CommonSimStatisticUtils.set_statistic_level(sim_info, commodity, amount)

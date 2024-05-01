@@ -1,5 +1,6 @@
 Version 2.6:
 - Fixed an issue when displaying relationship bits, where Sims showed reverse in the description text.
+- Added the ability to update Lifestyles of Sims.
 
 Version 2.5:
 - Updated all tunings for the 1.105.297.1030 update of Sims 4
