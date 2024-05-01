@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<I c="CMTeleportSimToActiveSimLocationInteraction" i="interaction" m="controlmenu.interactions.teleport.teleport_sim_to_active_sim_location" n="ControlMenu_Interaction_Teleport_TargetToControlledSim" s="1490069377219519480">
+<I c="CMTeleportToActiveSimLocationInteraction" i="interaction" m="controlmenu.interactions.teleport.teleport_to_active_sim_location" n="ControlMenu_Interaction_Teleport_TargetToControlledSim" s="1490069377219519480">
   <V t="disabled" n="_saveable" />
   <T n="cheat">True</T>
   <T n="debug">True</T>

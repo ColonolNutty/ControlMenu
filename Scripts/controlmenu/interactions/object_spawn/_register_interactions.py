@@ -9,30 +9,18 @@ from typing import Tuple
 
 from objects.script_object import ScriptObject
 from sims4communitylib.services.interactions.interaction_registration_service import CommonInteractionRegistry, \
-    CommonInteractionType, CommonInteractionHandler, CommonScriptObjectInteractionHandler
-from controlmenu.enums.interaction_identifiers import CMInteractionId
+    CommonInteractionType, CommonScriptObjectInteractionHandler
 from sims4communitylib.utils.common_type_utils import CommonTypeUtils
-
-
-@CommonInteractionRegistry.register_interaction_handler(CommonInteractionType.ON_TERRAIN_LOAD)
-class _CMTeleportTerrainInteractionHandler(CommonInteractionHandler):
-    # noinspection PyMissingOrEmptyDocstring
-    @property
-    def interactions_to_add(self) -> Tuple[int]:
-        result: Tuple[int, ...] = (
-            CMInteractionId.TELEPORT_CONTROLLED_SIM_TO_TARGET,
-            CMInteractionId.TELEPORT_SIMS_TO_TARGET,
-        )
-        return result
+from controlmenu.enums.interaction_identifiers import CMInteractionId
 
 
 @CommonInteractionRegistry.register_interaction_handler(CommonInteractionType.ON_SCRIPT_OBJECT_LOAD)
-class _CMTeleportObjectControlMenuInteractionHandler(CommonScriptObjectInteractionHandler):
+class _CMObjectSpawnControlMenuInteractionHandler(CommonScriptObjectInteractionHandler):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def interactions_to_add(self) -> Tuple[int]:
         result: Tuple[int, ...] = (
-            CMInteractionId.TELEPORT_TARGET_TO_CONTROLLED_SIM,
+            CMInteractionId.DESTROY_OBJECT,
         )
         return result
 

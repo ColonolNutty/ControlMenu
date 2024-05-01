@@ -80,6 +80,7 @@ class _CMAddDebugInteractionsToAffordanceWhitelist(CommonAddInteractionsToAfford
             CMInteractionId.SPAWN_SIMS_AT_TARGET,
             CMInteractionId.SUMMON_SIM_FROM_REL_PANEL,
             CMInteractionId.MANIPULATE_TO_PERFORM_INTERACTION,
+            CMInteractionId.TELEPORT_TARGET_TO_CONTROLLED_SIM
         ]
         # noinspection PyTypeChecker
         return tuple(interaction_ids)
