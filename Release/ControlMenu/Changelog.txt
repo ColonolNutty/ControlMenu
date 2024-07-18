@@ -1,3 +1,8 @@
+Version 2.7:
+- Added the ability to change the death type of Ghost Sims.
+- Added the ability to set the pronouns of Sims to the default available pronouns.
+- Added the ability to remove Whims.
+
 Version 2.6:
 - Fixed an issue when displaying relationship bits, where Sims showed reverse in the description text.
 - Added the ability to update Lifestyles of Sims.
