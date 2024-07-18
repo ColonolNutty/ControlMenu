@@ -12,11 +12,16 @@ from sims.sim_info import SimInfo
 from sims4communitylib.dialogs.common_choice_outcome import CommonChoiceOutcome
 from sims4communitylib.dialogs.option_dialogs.common_choose_object_option_dialog import CommonChooseObjectOptionDialog
 from sims4communitylib.dialogs.option_dialogs.options.common_dialog_option_context import CommonDialogOptionContext
+from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_action_option import \
+    CommonDialogActionOption
 from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_input_text_option import \
     CommonDialogInputTextOption
+from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_select_option import \
+    CommonDialogSelectOption
 from sims4communitylib.enums.common_gender import CommonGender
 from sims4communitylib.enums.enumtypes.common_int import CommonInt
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
+from sims4communitylib.utils.common_icon_utils import CommonIconUtils
 from sims4communitylib.utils.common_resource_utils import CommonResourceUtils
 from controlmenu.dialogs.modify_sim_data.enums.string_identifiers import CMSimControlMenuStringId
 from controlmenu.dialogs.modify_sim_data.single_sim_operation import CMSingleSimOperation
@@ -26,6 +31,7 @@ from sims4communitylib.utils.sims.common_gender_utils import CommonGenderUtils
 
 
 class CMPronounsCase(CommonInt):
+    """Pronouns Case."""
     SUBJECTIVE = 1
     OBJECTIVE = 2
     POSSESSIVE_DEPENDENT = 3
@@ -34,6 +40,7 @@ class CMPronounsCase(CommonInt):
 
     @classmethod
     def get_display_name(cls, pronouns_case: 'CMPronounsCase') -> int:
+        """Display names of pronouns."""
         if pronouns_case == CMPronounsCase.SUBJECTIVE:
             return 0xCAD4DF2E
         if pronouns_case == CMPronounsCase.OBJECTIVE:
@@ -49,6 +56,7 @@ class CMPronounsCase(CommonInt):
 
     @classmethod
     def get_display_description(cls, pronouns_case: 'CMPronounsCase') -> int:
+        """Display description of pronouns."""
         if pronouns_case == CMPronounsCase.SUBJECTIVE:
             return 0xEB6E9505
         if pronouns_case == CMPronounsCase.OBJECTIVE:
@@ -63,6 +71,7 @@ class CMPronounsCase(CommonInt):
 
     @classmethod
     def get_default_pronoun(cls, pronouns_case: 'CMPronounsCase', gender: CommonGender) -> str:
+        """Default pronouns."""
         if gender == CommonGender.MALE:
             if pronouns_case == CMPronounsCase.SUBJECTIVE:
                 return 'he'
@@ -136,6 +145,7 @@ class CMModifyPronounsOp(CMSingleSimOperation):
             on_completed(True)
 
         def _on_chosen(_pronouns_case: CMPronounsCase, new_value: str, outcome: CommonChoiceOutcome):
+            self.log.format_with_message('Entered new pronoun value', pronouns_case=_pronouns_case, new_value=new_value)
             if outcome == CommonChoiceOutcome.ERROR:
                 _reopen()
                 return
@@ -152,7 +162,18 @@ class CMModifyPronounsOp(CMSingleSimOperation):
             mod_identity=self.mod_identity,
         )
 
-        gender = CommonGenderUtils.get_gender(sim_info)
+        option_dialog.add_option(
+            CommonDialogActionOption(
+                CommonDialogOptionContext(
+                    CMSimControlMenuStringId.SELECT_FROM_DEFAULT_PRONOUNS_NAME,
+                    CMSimControlMenuStringId.SELECT_FROM_DEFAULT_PRONOUNS_DESCRIPTION,
+                    icon=CommonIconUtils.load_arrow_navigate_into_icon()
+                ),
+                on_chosen=lambda *_, **__: self._select_default_pronoun(sim_info, current_pronouns, _reopen)
+            )
+        )
+
+        gender = CommonGender.get_gender(sim_info)
 
         for pronouns_case in CMPronounsCase.values:
             current_value = current_pronouns.get(pronouns_case, CMPronounsCase.get_default_pronoun(pronouns_case, gender))
@@ -184,6 +205,80 @@ class CMModifyPronounsOp(CMSingleSimOperation):
 
         if not option_dialog.has_options():
             on_completed(False)
+            return True
+
+        option_dialog.show(
+            sim_info=sim_info
+        )
+
+    def _select_default_pronoun(self, sim_info: SimInfo, current_pronouns: Dict[CMPronounsCase, str], on_close: Callable[[], None]):
+        def _reopen() -> None:
+            self._select_default_pronoun(sim_info, current_pronouns, on_close)
+
+        def _on_close() -> None:
+            on_close()
+
+        def _on_chosen(_: str, chosen_gender: CommonGender):
+            if chosen_gender is None:
+                _on_close()
+                return
+            self.log.format_with_message('Chose default pronouns', gender=chosen_gender)
+            for pronouns_case in CMPronounsCase.values:
+                default_pronoun = CMPronounsCase.get_default_pronoun(pronouns_case, chosen_gender)
+                current_pronouns[pronouns_case] = default_pronoun
+            _reopen()
+
+        option_dialog = CommonChooseObjectOptionDialog(
+            CMSimControlMenuStringId.SELECT_FROM_DEFAULT_PRONOUNS_NAME,
+            CMSimControlMenuStringId.SELECT_FROM_DEFAULT_PRONOUNS_DESCRIPTION,
+            on_close=_on_close,
+            mod_identity=self.mod_identity,
+        )
+
+        male_pronouns = [CMPronounsCase.get_default_pronoun(pronouns_case, CommonGender.MALE) for pronouns_case in CMPronounsCase.values]
+        option_dialog.add_option(
+            CommonDialogSelectOption(
+                'HeHim',
+                CommonGender.MALE,
+                CommonDialogOptionContext(
+                    CMSimControlMenuStringId.HE_HIM,
+                    CommonLocalizationUtils.combine_localized_strings_with_comma_space_and(male_pronouns),
+                    icon=CommonIconUtils.load_arrow_right_icon()
+                ),
+                on_chosen=_on_chosen
+            )
+        )
+
+        female_pronouns = [CMPronounsCase.get_default_pronoun(pronouns_case, CommonGender.FEMALE) for pronouns_case in CMPronounsCase.values]
+        option_dialog.add_option(
+            CommonDialogSelectOption(
+                'SheHer',
+                CommonGender.FEMALE,
+                CommonDialogOptionContext(
+                    CMSimControlMenuStringId.SHE_HER,
+                    CommonLocalizationUtils.combine_localized_strings_with_comma_space_and(female_pronouns),
+                    icon=CommonIconUtils.load_arrow_right_icon()
+                ),
+                on_chosen=_on_chosen
+            )
+        )
+
+        they_them_pronouns = [CMPronounsCase.get_default_pronoun(pronouns_case, CommonGender.INVALID) for pronouns_case in CMPronounsCase.values]
+        option_dialog.add_option(
+            CommonDialogSelectOption(
+                'TheyThem',
+                CommonGender.INVALID,
+                CommonDialogOptionContext(
+                    CMSimControlMenuStringId.THEY_THEM,
+                    CommonLocalizationUtils.combine_localized_strings_with_comma_space_and(they_them_pronouns),
+                    icon=CommonIconUtils.load_arrow_right_icon()
+                ),
+                on_chosen=_on_chosen
+            )
+        )
+
+        if not option_dialog.has_options():
+            _on_close()
             return True
 
         option_dialog.show(
