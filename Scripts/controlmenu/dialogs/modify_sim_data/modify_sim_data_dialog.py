@@ -18,6 +18,7 @@ from controlmenu.dialogs.modify_sim_data.modify_name.modify_name_dialog import C
 from controlmenu.dialogs.modify_sim_data.modify_perks.modify_perks_dialog import CMModifyPerksDialog
 from controlmenu.dialogs.modify_sim_data.modify_statistics.modify_statistics_dialog import CMModifyStatisticsDialog
 from controlmenu.dialogs.modify_sim_data.modify_walkstyles.modify_walk_style_dialog import CMModifyWalkStyleDialog
+from controlmenu.dialogs.modify_sim_data.modify_whims.modify_whims_dialog import CMModifyWhimsDialog
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
     CommonDialogButtonOption
@@ -259,6 +260,17 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                     CMSimControlMenuStringId.WALK_STYLE,
                 ),
                 on_chosen=lambda *_, **__: CMModifyWalkStyleDialog(self._sim_info, on_previous=reopen).open()
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'ModifyWhims',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.WHIMS,
+                ),
+                on_chosen=lambda *_, **__: CMModifyWhimsDialog(self._sim_info, on_previous=reopen).open()
             )
         )
         return True

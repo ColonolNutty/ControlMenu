@@ -293,3 +293,15 @@ class CMSimControlMenuStringId(CommonInt):
     SET_LIFESTYLE_VALUES = 0x21423828
     TWO_LIFESTYLE_TYPES_DESCRIPTION = 0x25ACF2E5
     ONE_LIFESTYLE_TYPE_DESCRIPTION = 0xE269B782
+
+    # Whims
+    WHIMS = 0xC477C771
+    REMOVE_WHIMS = 0xDF9B6F03
+    # Tokens: {0.String} (Whim Display Name) {1.String} (Whim Id)
+    REMOVED_WHIM_TITLE = 0x7712390B
+    # Tokens: {0.SimFirstName} (Sim) {1.String} (Whim Display Name) {2.String} (Whim Id) {3.String} (Whim Tuning Name)
+    REMOVED_WHIM_DESCRIPTION = 0x87C14A22
+    # Tokens: {0.String} (Whim Display Name) {1.String} (Whim Id) {2.String} (Whim Tuning Name) from {3.SimFirstName} (Sim)
+    ARE_YOU_SURE_YOU_WANT_TO_REMOVE_WHIM = 0xC27F4DC7
+    # Tokens: {0.String} (Whim Display Name) {1.String} (Whim Id) {2.String} (Whim Tuning Name) to {3.SimFirstName} (Sim)
+    ARE_YOU_SURE_YOU_WANT_TO_ADD_WHIM = 0xC14E7DBD
