@@ -9,6 +9,7 @@ from typing import Callable, Union
 
 from controlmenu.dialogs.modify_sim_data.manage_death.kill_sim_dialog import CMKillSimDialog
 from controlmenu.dialogs.modify_sim_data.manage_death.operations.revive_ghost_sim import CMReviveGhostSimOp
+from controlmenu.dialogs.modify_sim_data.manage_death.operations.set_death_type import CMSetDeathTypeOp
 from controlmenu.dialogs.modify_sim_data.manage_death.revive_ghost_sims_dialog import CMReviveGhostSimsDialog
 from protocolbuffers.Localization_pb2 import LocalizedString
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
@@ -98,6 +99,19 @@ class CMManageDeathDialog(CMSimControlDialogBase):
                     CMSimControlMenuStringId.REVIVE_GHOSTS,
                 ),
                 on_chosen=lambda *_, **__: CMReviveGhostSimsDialog(self._sim_info, on_close=reopen).open()
+            )
+        )
+
+        option_dialog.add_option(
+            CommonDialogButtonOption(
+                'SetDeathType',
+                None,
+                CommonDialogResponseOptionContext(
+                    CMSimControlMenuStringId.SET_DEATH_TYPE_NAME,
+                    disabled_text_identifier=CMSimControlMenuStringId.SIM_IS_NOT_A_GHOST if not CommonOccultUtils.is_ghost(self._sim_info) else None,
+                    disabled_text_tokens=(self._sim_info,)
+                ),
+                on_chosen=lambda *_, **__: _operation_run(CMSetDeathTypeOp())
             )
         )
         return True
