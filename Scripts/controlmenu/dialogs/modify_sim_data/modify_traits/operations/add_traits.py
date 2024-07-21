@@ -42,8 +42,56 @@ class CMAddTraitsSimOp(CMSingleSimOperation):
 
     # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop, current_page: int = 1) -> bool:
-        def _reopen() -> None:
+        def _reopen(*_, **__) -> None:
             self.run(sim_info, on_completed=on_completed, current_page=option_dialog.current_page)
+
+        def _on_close() -> None:
+            on_completed(False)
+
+        @CommonExceptionHandler.catch_exceptions(self.mod_identity, fallback_return=False)
+        def _on_chosen(_: str, chosen_trait_type: TraitType):
+            if chosen_trait_type is None:
+                on_completed(False)
+                return
+            self._choose_trait_to_add(sim_info, chosen_trait_type, on_completed=_reopen)
+
+        option_dialog = CommonChooseObjectOptionDialog(
+            CMSimControlMenuStringId.CHOOSE_A_TYPE_OF_TRAIT,
+            0,
+            on_close=_on_close,
+            mod_identity=self.mod_identity,
+            per_page=20000
+        )
+
+        for trait_type in TraitType.values:
+            if trait_type in (TraitType.PERSONALITY, TraitType.GENDER_OPTIONS):
+                continue
+            try:
+                option_dialog.add_option(
+                    CommonDialogSelectOption(
+                        trait_type.name,
+                        trait_type,
+                        CommonDialogOptionContext(
+                            trait_type.name,
+                            0,
+                            icon=CommonIconUtils.load_arrow_navigate_into_icon()
+                        ),
+                        on_chosen=_on_chosen
+                    )
+                )
+            except Exception as ex:
+                self.log.format_error_with_message('Failed to display trait type.', trait_type=trait_type, exception=ex)
+
+        if not option_dialog.has_options():
+            on_completed(False)
+            return False
+        option_dialog.show(sim_info=sim_info, sort_options=True, page=current_page)
+        return True
+
+    # noinspection PyMissingOrEmptyDocstring
+    def _choose_trait_to_add(self, sim_info: SimInfo, trait_type: TraitType, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop, current_page: int = 1) -> bool:
+        def _reopen() -> None:
+            self._choose_trait_to_add(sim_info, trait_type, on_completed=on_completed, current_page=option_dialog.current_page)
 
         def _on_close() -> None:
             on_completed(False)
@@ -88,8 +136,9 @@ class CMAddTraitsSimOp(CMSingleSimOperation):
             confirmation.show(on_ok_selected=_on_yes_selected, on_cancel_selected=_on_no_selected)
 
         option_dialog = CommonChooseObjectOptionDialog(
-            CMSimControlMenuStringId.ADD_TRAITS,
+            CMSimControlMenuStringId.ADD_TRAITS_TYPE,
             0,
+            title_tokens=(trait_type.name,),
             on_close=_on_close,
             mod_identity=self.mod_identity,
             per_page=20000
@@ -99,11 +148,14 @@ class CMAddTraitsSimOp(CMSingleSimOperation):
             if trait_guid is None:
                 self.log.format_with_message('Missing trait id for Trait.', trait=trait)
                 continue
+            if trait.trait_type != trait_type:
+                self.log.format_with_message('Not showing trait due to it not matching trait type', trait=trait, trait_type=trait_type)
+                continue
             if trait.trait_type in (TraitType.PERSONALITY, TraitType.GENDER_OPTIONS):
-                self.log.format_with_message('No showing trait due to it being a personality trait.', trait=trait)
+                self.log.format_with_message('Not showing trait due to it being a personality trait.', trait=trait)
                 continue
             if not trait.is_valid_trait(sim_info):
-                self.log.format_with_message('No showing trait due to it being unavailable for Sim.', trait=trait, sim=sim_info)
+                self.log.format_with_message('Not showing trait due to it being unavailable for Sim.', trait=trait, sim=sim_info)
                 continue
             if CommonTraitUtils.has_trait(sim_info, trait_guid):
                 self.log.format_with_message('Sim already has the trait.', trait=trait, sim=sim_info)

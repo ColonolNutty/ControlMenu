@@ -215,6 +215,9 @@ class CMSimControlMenuStringId(CommonInt):
     # Traits
     TRAITS = 0xEEEA2036
     ADD_TRAITS = 0x7AA8C421
+    # Tokens: {0.String} (Trait Type)
+    ADD_TRAITS_TYPE = 0xDFF3ABDB
+    CHOOSE_A_TYPE_OF_TRAIT = 0xCE32067C
     LIKES = 0x86679BEF
     LIKES_DESCRIPTION = 0x6B0D778E
     DISLIKES = 0x677E5791

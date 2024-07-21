@@ -47,7 +47,7 @@ class CMAddWhimsSimOp(CMSingleSimOperation):
             on_completed(False)
 
         @CommonExceptionHandler.catch_exceptions(self.mod_identity, fallback_return=False)
-        def _on_chosen(_: int, chosen_whim_type: WhimType):
+        def _on_chosen(_: str, chosen_whim_type: WhimType):
             if chosen_whim_type is None:
                 on_completed(False)
                 return
