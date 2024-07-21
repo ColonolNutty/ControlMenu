@@ -7,6 +7,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Callable
 
+from controlmenu.dialogs.modify_sim_data.modify_whims.operations.add_whims import CMAddWhimsSimOp
 from controlmenu.dialogs.modify_sim_data.modify_whims.operations.remove_whims import CMRemoveWhimsSimOp
 from controlmenu.dialogs.modify_sim_data.single_sim_operation import CMSingleSimOperation
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
@@ -44,6 +45,18 @@ class CMModifyWhimsDialog(CMSimControlDialogBase):
                 reopen()
 
             operation.run(self._sim_info, on_completed=_on_operation_complete)
+
+        if CMAddWhimsSimOp().can_run_with_sim(self._sim_info):
+            option_dialog.add_option(
+                CommonDialogButtonOption(
+                    'AddWhims',
+                    None,
+                    CommonDialogResponseOptionContext(
+                        CMSimControlMenuStringId.ADD_WHIMS
+                    ),
+                    on_chosen=lambda *_, **__: _operation_run(CMAddWhimsSimOp())
+                )
+            )
 
         if CMRemoveWhimsSimOp().can_run_with_sim(self._sim_info):
             option_dialog.add_option(

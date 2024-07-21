@@ -296,6 +296,11 @@ class CMSimControlMenuStringId(CommonInt):
 
     # Whims
     WHIMS = 0xC477C771
+    ADD_WHIMS = 0xE7F175E4
+    # Tokens: {0.String} (Whim Type)
+    ADD_WHIMS_WHIM_TYPE = 0x3A114AA0
+    CHOOSE_A_WHIM_SLOT = 0x480733CE
+
     REMOVE_WHIMS = 0xDF9B6F03
     # Tokens: {0.String} (Whim Display Name) {1.String} (Whim Id)
     REMOVED_WHIM_TITLE = 0x7712390B

@@ -46,7 +46,7 @@ class CMCommonSimWhimUtils(_HasS4CLClassLog):
         :return: True, if the Sim has the specified Whim. False, if not.
         :rtype: bool
         """
-        whim_instance = cls.load_whim_by_guid(whim)
+        whim_instance = CMCommonWhimUtils.load_whim_by_guid(whim)
         if whim_instance is None:
             return False
         whim_tracker = cls.get_whim_tracker(sim_info)
@@ -63,7 +63,7 @@ class CMCommonSimWhimUtils(_HasS4CLClassLog):
         :param whim: The whim to check for.
         :type whim: Union[int, Whim]
         """
-        whim_instance = cls.load_whim_by_guid(whim)
+        whim_instance = CMCommonWhimUtils.load_whim_by_guid(whim)
         if whim_instance is None:
             return CommonExecutionResult(False, reason=f'Whim not found by Guid {whim}')
         whim_tracker = cls.get_whim_tracker(sim_info)
@@ -74,6 +74,30 @@ class CMCommonSimWhimUtils(_HasS4CLClassLog):
             if whim_slot.whim is whim_instance:
                 whim_slot.clear(telemetry_event=TelemetryWhimEvents.CHEAT_CLEAR)
                 needs_update = True
+        if needs_update:
+            whim_tracker._send_goals_update()
+        return CommonExecutionResult.TRUE
+
+    @classmethod
+    def remove_whim_by_type(cls, sim_info: SimInfo, whim_type: WhimType) -> CommonExecutionResult:
+        """remove_whim_by_type(sim_info, whim_type)
+
+        Remove a Whim from a Sim by type.
+
+        :param sim_info: The info of a Sim.
+        :type sim_info: SimInfo
+        :param whim_type: The type of whim to remove.
+        :type whim_type: WhimType
+        """
+        whim_tracker = cls.get_whim_tracker(sim_info)
+        if whim_tracker is None:
+            return CommonExecutionResult(False, reason=f'Target Sim {sim_info} did not have a Whim Tracker.')
+        needs_update = False
+        for whim_slot in cls.get_whim_slots(sim_info):
+            if whim_slot.whim_type == whim_type:
+                whim_slot.clear(telemetry_event=TelemetryWhimEvents.CHEAT_CLEAR)
+                needs_update = True
+                break
         if needs_update:
             whim_tracker._send_goals_update()
         return CommonExecutionResult.TRUE
@@ -126,40 +150,6 @@ class CMCommonSimWhimUtils(_HasS4CLClassLog):
         :rtype: WhimsTracker
         """
         return sim_info.whim_tracker
-
-    @classmethod
-    def load_whim_by_guid(cls, whim: Union[int, Whim]) -> Union[Whim, None]:
-        """load_whim_by_guid(whim)
-
-        Load an instance of a Whim by its identifier.
-
-        :param whim: The identifier of a Whim.
-        :type whim: Union[int, CommonWhimId, Whim]
-        :return: An instance of a Whim matching the decimal identifier or None if not found.
-        :rtype: Union[Whim, None]
-        """
-        if isinstance(whim, Whim):
-            return whim
-        # noinspection PyBroadException
-        try:
-            # noinspection PyCallingNonCallable
-            whim_instance = whim()
-            if isinstance(whim_instance, Whim):
-                # noinspection PyTypeChecker
-                return whim
-        except:
-            pass
-        # noinspection PyBroadException
-        try:
-            whim: int = int(whim)
-        except:
-            # noinspection PyTypeChecker
-            whim: Whim = whim
-            return whim
-
-        from sims4.resources import Types
-        from sims4communitylib.utils.common_resource_utils import CommonResourceUtils
-        return CommonResourceUtils.load_instance(Types.WHIM, whim)
 
 
 # noinspection SpellCheckingInspection
