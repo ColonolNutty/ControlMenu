@@ -16,13 +16,13 @@ from sims4communitylib.utils.sims.common_sim_career_utils import CommonSimCareer
 from controlmenu.dialogs.modify_sim_data.single_sim_operation import CMSingleSimOperation
 
 
-class CMRemoveCareerSimOp(CMSingleSimOperation):
-    """Remove Career from a Sim."""
+class CMRemoveAllCareersSimOp(CMSingleSimOperation):
+    """Remove All Careers from a Sim."""
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def log_identifier(self) -> str:
-        return 'cm_remove_career_from_sim'
+        return 'cm_remove_all_careers_from_sim'
 
     # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:

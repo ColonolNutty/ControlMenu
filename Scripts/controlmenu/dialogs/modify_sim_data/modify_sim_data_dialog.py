@@ -10,7 +10,7 @@ from typing import Callable
 from controlmenu.dialogs.modify_sim_data.manage_death.manage_death_dialog import CMManageDeathDialog
 from controlmenu.dialogs.modify_sim_data.modify_body.modify_body_dialog import CMModifyBodyDialog
 from controlmenu.dialogs.modify_sim_data.modify_career.enums.string_ids import CMSimModifyCareerStringId
-from controlmenu.dialogs.modify_sim_data.modify_career.modify_career_dialog import CMModifyCareerDialog
+from controlmenu.dialogs.modify_sim_data.modify_career.modify_careers_dialog import CMModifyCareersDialog
 from controlmenu.dialogs.modify_sim_data.modify_lifestyles.modify_lifestyles_dialog import CMModifyLifestylesDialog
 from controlmenu.dialogs.modify_sim_data.modify_motives.enums.string_ids import CMSimModifyMotivesStringId
 from controlmenu.dialogs.modify_sim_data.modify_motives.modify_motives_dialog import CMModifyMotivesDialog
@@ -114,7 +114,7 @@ class CMModifySimDataDialog(CMSimControlDialogBase):
                 CommonDialogResponseOptionContext(
                     CMSimModifyCareerStringId.CAREER,
                 ),
-                on_chosen=lambda *_, **__: CMModifyCareerDialog(self._sim_info, on_previous=reopen).open()
+                on_chosen=lambda *_, **__: CMModifyCareersDialog(self._sim_info, on_previous=reopen).open()
             )
         )
 
