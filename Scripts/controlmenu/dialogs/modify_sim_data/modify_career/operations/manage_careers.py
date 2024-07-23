@@ -54,7 +54,7 @@ class CMManageCareersSimOp(CMSingleSimOperation):
                 return
             self.log.format_with_message('Displaying career tracks career for Sim.', _career=_career, sim=sim_info)
             from controlmenu.dialogs.modify_sim_data.modify_career.modify_career_dialog import CMModifyCareerDialog
-            CMModifyCareerDialog(sim_info, _career, on_close=_reopen, on_previous=on_completed).open()
+            CMModifyCareerDialog(sim_info, _career, on_close=_reopen, on_previous=_on_close).open()
 
         career_tracker = CommonSimCareerUtils.get_career_tracker(sim_info)
         if career_tracker is None:

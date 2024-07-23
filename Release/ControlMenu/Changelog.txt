@@ -1,7 +1,9 @@
 Version 2.7:
 - Added the ability to change the death type of Ghost Sims.
 - Added the ability to set the pronouns of Sims to the default available pronouns.
-- Added the ability to remove Whims.
+- Added the ability to Add and Remove Whims.
+- Added the ability to manage Careers. Promote, Demote, and Set Performance of specific careers on Sims.
+- Updated the Add Traits dialog, it is now organized by trait types.
 
 Version 2.6:
 - Fixed an issue when displaying relationship bits, where Sims showed reverse in the description text.
