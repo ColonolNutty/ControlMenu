@@ -303,6 +303,7 @@ class CMSimControlMenuStringId(CommonInt):
     # Tokens: {0.String} (Whim Type)
     ADD_WHIMS_WHIM_TYPE = 0x3A114AA0
     CHOOSE_A_WHIM_SLOT = 0x480733CE
+    APPLY_WHIMSET = 0x5989570A
 
     REMOVE_WHIMS = 0xDF9B6F03
     # Tokens: {0.String} (Whim Display Name) {1.String} (Whim Id)

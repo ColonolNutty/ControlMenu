@@ -83,12 +83,13 @@ class CMModifyMotivesSimOp(CMSingleSimOperation):
                     motive_name = motive_name[0].upper() + motive_name[1:]
                     display_name = LocalizationHelperTuning.get_raw_text(motive_name)
 
-                stat_name_overrides = commodity.stat_name_overrides
-                if stat_name_overrides is not None:
-                    for (trait, override_display_name) in stat_name_overrides.items():
-                        if CommonTraitUtils.has_trait(sim_info, trait):
-                            display_name = override_display_name
-                            break
+                if hasattr(commodity, 'stat_name_overrides'):
+                    stat_name_overrides = commodity.stat_name_overrides
+                    if stat_name_overrides is not None:
+                        for (trait, override_display_name) in stat_name_overrides.items():
+                            if CommonTraitUtils.has_trait(sim_info, trait):
+                                display_name = override_display_name
+                                break
 
                 if commodity.commodity_states:
                     current_state = commodity.get_current_state_info()

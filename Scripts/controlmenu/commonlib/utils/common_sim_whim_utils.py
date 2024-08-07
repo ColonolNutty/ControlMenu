@@ -22,6 +22,7 @@ from sims4communitylib.services.commands.common_console_command_output import Co
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from whims.whim import Whim
+from whims.whim_set import WhimSetBaseMixin
 from whims.whims_tracker import WhimsTracker, WhimType, TelemetryWhimEvents
 
 
@@ -51,6 +52,23 @@ class CMCommonSimWhimUtils(_HasS4CLClassLog):
             return False
         whim_tracker = cls.get_whim_tracker(sim_info)
         return whim_tracker.is_whim_active(whim_instance)
+
+    @classmethod
+    def apply_whimset(cls, sim_info: SimInfo, whimset: WhimSetBaseMixin) -> CommonExecutionResult:
+        """apply_whimset(sim_info, whimset)
+
+        Apply a whimset to a Sim. Giving them a random Whim from the whimset.
+
+        :param sim_info: The info of a Sim.
+        :type sim_info: SimInfo
+        :param whimset: An instance of a Whimset.
+        :type whimset: WhimSetBaseMixin
+        :return: True, if successful. False, if not.
+        :rtype: CommonExecutionResult
+        """
+        whims_tracker = cls.get_whim_tracker(sim_info)
+        whims_tracker.push_whimset(whimset)
+        return CommonExecutionResult.TRUE
 
     @classmethod
     def remove_whim(cls, sim_info: SimInfo, whim: Union[int, Whim]) -> CommonExecutionResult:

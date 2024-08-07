@@ -6,6 +6,13 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 Copyright (c) COLONOLNUTTY
 """
 from typing import Callable, Any, Tuple
+
+from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.engaged import \
+    CMSetSimAAsEngagedToSimBOp
+from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.girlfriend_or_boyfriend import \
+    CMSetSimAAsGirlfriendOrBoyfriendToSimBOp
+from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.promised import \
+    CMSetSimAAsPromisedToSimBOp
 from sims.sim_info import SimInfo
 from sims4communitylib.dialogs.ok_cancel_dialog import CommonOkCancelDialog
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
@@ -79,6 +86,9 @@ class CMSetFamilyRelationsBitOp(CMSingleSimOperation):
             CMSetSimAAsGrandmotherOnFathersSideToSimBOp(),
             CMSetSimAAsGrandmotherOnMothersSideToSimBOp(),
             CMSetSimAAsHusbandOrWifeToSimBOp(),
+            CMSetSimAAsGirlfriendOrBoyfriendToSimBOp(),
+            CMSetSimAAsEngagedToSimBOp(),
+            CMSetSimAAsPromisedToSimBOp(),
             CMSetSimAAsMotherToSimBOp(),
             CMSetSimAAsNieceOrNephewToSimBOp(),
             CMSetSimAAsSiblingToSimBOp(),

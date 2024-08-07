@@ -10,18 +10,18 @@ from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_
     CMSetSimAAsRelationToSimBOperation
 
 
-class CMSetSimAAsHusbandOrWifeToSimBOp(CMSetSimAAsRelationToSimBOperation):
-    """Set Sim A as a husband or wife of Sim B"""
+class CMSetSimAAsPromisedToSimBOp(CMSetSimAAsRelationToSimBOperation):
+    """Set Sim A as promised to Sim B"""
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def relationship_bit_id(self) -> CommonRelationshipBitId:
-        return CommonRelationshipBitId.ROMANTIC_MARRIED
+        return CommonRelationshipBitId.ROMANTIC_PROMISED
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def opposite_relationship_bit_id(self) -> CommonRelationshipBitId:
-        return CommonRelationshipBitId.ROMANTIC_MARRIED
+        return CommonRelationshipBitId.ROMANTIC_PROMISED
 
     @property
     def _should_update_family_tree(self) -> bool:

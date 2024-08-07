@@ -5,10 +5,11 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from typing import Union, Callable, Iterator
+from typing import Union, Callable, Iterator, Tuple
 
 from aspirations.aspiration_types import AspriationType
 from protocolbuffers.Localization_pb2 import LocalizedString
+from sims.sim_info import SimInfo
 from sims4.resources import Types
 from sims4communitylib.classes.testing.common_execution_result import CommonExecutionResult
 from sims4communitylib.classes.testing.common_test_result import CommonTestResult
@@ -113,6 +114,38 @@ class CMCommonWhimUtils(_HasS4CLClassLog):
         return getattr(whim, 'guid64', None)
 
     @classmethod
+    def get_whimset_guid(cls, whimset: Union[int, WhimSetBaseMixin]) -> Union[int, None]:
+        """get_whimset_guid(whimset)
+
+        Retrieve the GUID (Decimal Identifier) of a Whimset.
+
+        :param whimset: The identifier or instance of a Whimset.
+        :type whimset: Union[int, WhimSetBaseMixin]
+        :return: The decimal identifier of the Whimset or None if the Whimset does not have an id.
+        :rtype: Union[int, None]
+        """
+        if isinstance(whimset, int):
+            return whimset
+        return getattr(whimset, 'guid64', None)
+
+    @classmethod
+    def get_whimset_whims(cls, whimset: WhimSetBaseMixin) -> Tuple[Whim]:
+        """get_whimset_whims(whimset)
+
+        Retrieve the Whims contained in a Whimset.
+
+        :param whimset: An instance of a Whimset.
+        :type whimset: WhimSetBaseMixin
+        :return: The whims contained in the Whimset.
+        :rtype: Tuple[Whim]
+        """
+        # noinspection PyUnresolvedReferences
+        if not hasattr(whimset, 'whims') or not whimset.whims:
+            return tuple()
+        # noinspection PyUnresolvedReferences,PyTypeChecker
+        return tuple([whim_class.whim for whim_class in whimset.whims])
+
+    @classmethod
     def get_whim_name(cls, whim: Whim) -> Union[str, None]:
         """get_whim_name(whim)
 
@@ -133,7 +166,30 @@ class CMCommonWhimUtils(_HasS4CLClassLog):
             try:
                 return whim.__class__.__name__
             except:
-                return ''
+                return 'Unknown Whim'
+
+    @classmethod
+    def get_whimset_name(cls, whimset: WhimSetBaseMixin) -> Union[str, None]:
+        """get_whimset_name(whimset)
+
+        Retrieve the Name of a Whimset.
+
+        :param whimset: An instance of a Whimset.
+        :type whimset: WhimSetBaseMixin
+        :return: The name of a Whimset or None if a problem occurs.
+        :rtype: Union[str, None]
+        """
+        if whimset is None:
+            return None
+        # noinspection PyBroadException
+        try:
+            return whimset.__name__ or whimset.__class__.__name__
+        except:
+            # noinspection PyBroadException
+            try:
+                return whimset.__class__.__name__
+            except:
+                return 'Unknown Whimset'
 
     @classmethod
     def get_whim_description(cls, whim: Whim, goal: SituationGoal) -> Union[LocalizedString, None]:
