@@ -4,6 +4,7 @@ Version 2.7:
 - Added the ability to Add and Remove Whims.
 - Added the ability to manage Careers. Promote, Demote, and Set Performance of specific careers on Sims.
 - Updated the Add Traits dialog, it is now organized by trait types.
+- Fixed a problem with the Modify Motives dialog where some motives were not being displayed.
 
 Version 2.6:
 - Fixed an issue when displaying relationship bits, where Sims showed reverse in the description text.

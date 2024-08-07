@@ -196,7 +196,7 @@ _log = CommonLogRegistry().register_log(ModInfo.get_identity(), 'cm_whims')
 # _log.enable()
 
 
-# @CommonInjectionUtils.inject_safely_into(ModInfo.get_identity(), SituationGoalRanInteractionOnTargetedSim, SituationGoalRanInteractionOnTargetedSim._can_sim_pass_test.__name__)
+@CommonInjectionUtils.inject_safely_into(ModInfo.get_identity(), SituationGoalRanInteractionOnTargetedSim, SituationGoalRanInteractionOnTargetedSim._can_sim_pass_test.__name__)
 def _cm_can_sim_pass_test(original, cls, target_sim_info, actor_sim_info, inherited_target_sim_info) -> TestResult:
     original_result = original(target_sim_info, actor_sim_info, inherited_target_sim_info)
     if not original_result:

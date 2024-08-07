@@ -112,7 +112,9 @@ class CMModifyMotivesSimOp(CMSingleSimOperation):
                 if current_state is not None:
                     description = current_state.data_description
 
-                    if current_state.data_description_overrides:
+                    if hasattr(current_state, '_data_description_overrides')\
+                            and hasattr(current_state, 'data_description_overrides')\
+                            and current_state.data_description_overrides:
                         for data_override in current_state.data_description_overrides:
                             trait = data_override.key
                             override_description = data_override.value
