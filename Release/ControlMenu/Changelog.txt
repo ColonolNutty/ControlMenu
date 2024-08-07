@@ -2,8 +2,11 @@ Version 2.7:
 - Added the ability to change the death type of Ghost Sims.
 - Added the ability to set the pronouns of Sims to the default available pronouns.
 - Added the ability to Add and Remove Whims.
+- Added the ability to apply Whim Sets.
 - Added the ability to manage Careers. Promote, Demote, and Set Performance of specific careers on Sims.
 - Updated the Add Traits dialog, it is now organized by trait types.
+- Choosing Spouse in the Family Relations now properly applies the correct relationship bit.
+- Added Promised, Significant Other, and Engaged to the Family Relations dialog.
 - Fixed a problem with the Modify Motives dialog where some motives were not being displayed.
 
 Version 2.6:
