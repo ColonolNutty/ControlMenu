@@ -1,3 +1,6 @@
+Version 2.7.1:
+- Fixed an issue from patch on 01/14/2025
+
 Version 2.7:
 - Added the ability to change the death type of Ghost Sims.
 - Added the ability to set the pronouns of Sims to the default available pronouns.

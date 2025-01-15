@@ -9,8 +9,6 @@ from typing import Callable
 
 from controlmenu.commonlib.utils.common_sim_whim_utils import CMCommonSimWhimUtils
 from controlmenu.commonlib.utils.common_whim_utils import CMCommonWhimUtils
-from controlmenu.modinfo import ModInfo
-from event_testing.results import TestResult
 from sims.sim_info import SimInfo
 from sims4communitylib.dialogs.option_dialogs.common_choose_object_option_dialog import CommonChooseObjectOptionDialog
 from sims4communitylib.dialogs.option_dialogs.options.common_dialog_option_context import CommonDialogOptionContext
@@ -19,13 +17,10 @@ from sims4communitylib.dialogs.option_dialogs.options.objects.common_dialog_sele
 from sims4communitylib.exceptions.common_exceptions_handler import CommonExceptionHandler
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.common_icon_utils import CommonIconUtils
-from sims4communitylib.utils.common_injection_utils import CommonInjectionUtils
-from sims4communitylib.utils.common_log_registry import CommonLogRegistry
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from controlmenu.dialogs.modify_sim_data.enums.string_identifiers import CMSimControlMenuStringId
 from controlmenu.dialogs.modify_sim_data.single_sim_operation import CMSingleSimOperation
 from situations.situation_goal import SituationGoal
-from situations.situation_goal_targeted_sim import SituationGoalRanInteractionOnTargetedSim
 from whims.whim import Whim
 from whims.whims_tracker import WhimType
 
@@ -190,15 +185,3 @@ class CMAddWhimsSimOp(CMSingleSimOperation):
         :rtype: bool
         """
         return True
-
-
-_log = CommonLogRegistry().register_log(ModInfo.get_identity(), 'cm_whims')
-# _log.enable()
-
-
-@CommonInjectionUtils.inject_safely_into(ModInfo.get_identity(), SituationGoalRanInteractionOnTargetedSim, SituationGoalRanInteractionOnTargetedSim._can_sim_pass_test.__name__)
-def _cm_can_sim_pass_test(original, cls, target_sim_info, actor_sim_info, inherited_target_sim_info) -> TestResult:
-    original_result = original(target_sim_info, actor_sim_info, inherited_target_sim_info)
-    if not original_result:
-        _log.format_with_message('Failed whim with Sim', target_sim=target_sim_info, actor_sim=actor_sim_info, inherited_target_sim_info=inherited_target_sim_info, result=original_result, whim=cls)
-    return original_result

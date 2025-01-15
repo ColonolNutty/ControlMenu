@@ -11,6 +11,7 @@ from protocolbuffers.Localization_pb2 import LocalizedString
 from relationships.relationship_bit import RelationshipBit
 from sims.sim_info import SimInfo
 from sims4.resources import Types
+from sims4communitylib.classes.testing.common_execution_result import CommonExecutionResult
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
@@ -145,7 +146,7 @@ class CMSetSimAAsRelationToSimBOperation(CMDoubleSimOperation, HasCMLog, CommonS
         option_dialog.show()
         return True
 
-    def _add_relationship_bits(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> bool:
+    def _add_relationship_bits(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> CommonExecutionResult:
         self.log.format_with_message('Setting Sim A as relation to Sim B', sim_a=sim_info_a, sim_b=sim_info_b, relation_id=self.relationship_bit_id)
         result = CommonRelationshipUtils.add_relationship_bit(sim_info_b, sim_info_a, self.relationship_bit_id)
         if result:
