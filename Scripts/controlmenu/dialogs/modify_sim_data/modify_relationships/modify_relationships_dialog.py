@@ -11,9 +11,13 @@ from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.remove_
     CMRemoveFamilyRelationsBitOp
 from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.remove_relationship_bit import \
     CMRemoveRelationshipBitOp
+from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.set_romantic_satisfaction_level import \
+    CMSetRomanticSatisfactionLevelOp
 from sims.sim_info import SimInfo
+from sims4.common import Pack
 from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
     CommonDialogResponseOptionContext
+from sims4communitylib.utils.resources.common_game_pack_utils import CommonGamePackUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
 from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
@@ -64,6 +68,15 @@ class CMModifyRelationshipsDialog(CMSimControlDialogBase):
             else:
                 operation.run(self._sim_info, on_completed=_on_operation_complete)
 
+        def _operation_run_with_sims(operation: CMSingleSimOperation, _sim_info_a: SimInfo, _sim_info_b: SimInfo):
+            def _on_operation_complete(_: bool) -> None:
+                reopen()
+
+            if _sim_info_b is not None:
+                operation.run_with_sims(_sim_info_a, _sim_info_b, on_completed=_on_operation_complete)
+            else:
+                operation.run(_sim_info_a, on_completed=_on_operation_complete)
+
         if target_sim_info is None:
             active_sim_info = CommonSimUtils.get_active_sim_info()
             if active_sim_info is not None and self._sim_info is not active_sim_info:
@@ -103,6 +116,55 @@ class CMModifyRelationshipsDialog(CMSimControlDialogBase):
                         on_chosen=lambda *_, **__: _operation_run(CMSetRomanceLevelOp())
                     )
                 )
+
+        if CommonGamePackUtils.has_game_pack_available(Pack.EP16):  # Love Struck
+            if CommonRelationshipUtils.has_permission_for_romantic_relationships(self._sim_info):
+                if target_sim_info is not None and CMSetRomanticSatisfactionLevelOp().can_run_with_sims(self._sim_info, target_sim_info):
+                    option_dialog.add_option(
+                        CommonDialogButtonOption(
+                            'Romantic Satisfaction Sim A To Sim B',
+                            None,
+                            CommonDialogResponseOptionContext(
+                                CMSimControlMenuStringId.SET_SIM_A_ROMANTIC_SATISFACTION_LEVEL_TOWARD_SIM_B,
+                                text_tokens=(self._sim_info, target_sim_info),
+                            ),
+                            on_chosen=lambda *_, **__: _operation_run(CMSetRomanticSatisfactionLevelOp(treat_sim_as_secondary=False))
+                        )
+                    )
+                    option_dialog.add_option(
+                        CommonDialogButtonOption(
+                            'Romantic Satisfaction Sim B To Sim A',
+                            None,
+                            CommonDialogResponseOptionContext(
+                                CMSimControlMenuStringId.SET_SIM_A_ROMANTIC_SATISFACTION_LEVEL_TOWARD_SIM_B,
+                                text_tokens=(target_sim_info, self._sim_info),
+                            ),
+                            on_chosen=lambda *_, **__: _operation_run(CMSetRomanticSatisfactionLevelOp(treat_sim_as_secondary=True))
+                        )
+                    )
+                elif target_sim_info is None and CMSetRomanticSatisfactionLevelOp().can_run_with_sim(self._sim_info):
+                    option_dialog.add_option(
+                        CommonDialogButtonOption(
+                            'Romantic Satisfaction A Sim To Sim A',
+                            None,
+                            CommonDialogResponseOptionContext(
+                                CMSimControlMenuStringId.SET_A_SIMS_ROMANTIC_SATISFACTION_LEVEL_TOWARD_SIM_A,
+                                text_tokens=(self._sim_info,),
+                            ),
+                            on_chosen=lambda *_, **__: _operation_run(CMSetRomanticSatisfactionLevelOp(treat_sim_as_secondary=True))
+                        )
+                    )
+                    option_dialog.add_option(
+                        CommonDialogButtonOption(
+                            'Romantic Satisfaction Sim A To A Sim',
+                            None,
+                            CommonDialogResponseOptionContext(
+                                CMSimControlMenuStringId.SET_SIM_A_ROMANTIC_SATISFACTION_LEVEL_TOWARD_A_SIM,
+                                text_tokens=(self._sim_info,),
+                            ),
+                            on_chosen=lambda *_, **__: _operation_run(CMSetRomanticSatisfactionLevelOp(treat_sim_as_secondary=False))
+                        )
+                    )
 
         if (target_sim_info is None and CMAddHasMetSimsOp().can_run_with_sim(self._sim_info)) or CMAddHasMetSimsOp().can_run_with_sims(self._sim_info, target_sim_info):
             option_dialog.add_option(

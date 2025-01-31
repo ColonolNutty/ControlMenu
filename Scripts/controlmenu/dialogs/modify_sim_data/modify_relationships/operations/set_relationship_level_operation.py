@@ -10,6 +10,7 @@ from typing import Callable, Union, Tuple, Any, Dict
 from protocolbuffers.Localization_pb2 import LocalizedString
 from relationships.relationship_bit import RelationshipBit
 from relationships.relationship_track import RelationshipTrack
+from relationships.relationship_track_bit_data_tuning import TunableRelationshipIntervalBitData
 from relationships.tunable import BitTrackNode, _RelationshipTrackData2dLinkArrayElement
 from sims.sim_info import SimInfo
 from sims4.resources import Types
@@ -94,7 +95,7 @@ class CMSetRelationshipLevelOp(CMSingleSimOperation):
     # noinspection PyMissingOrEmptyDocstring
     def run_with_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop):
         relationship_track_id = self._determine_relationship_track(sim_info_a, sim_info_b)
-        if relationship_track_id == -1:
+        if relationship_track_id == -1 or relationship_track_id is None:
             self.log.format_with_message('No relationship track id found between Sims.', sim=sim_info_a, chosen_sim=sim_info_b)
             on_completed(False)
             return
@@ -146,26 +147,39 @@ class CMSetRelationshipLevelOp(CMSingleSimOperation):
 
     def _load_relationship_options(self, relationship_track: RelationshipTrack) -> Tuple[CMRelationshipOption]:
         relationship_options: Dict[Any, CMRelationshipOption] = dict()
-        for bit_set_item in relationship_track.bit_data.bit_set_list:
-            if isinstance(bit_set_item, _RelationshipTrackData2dLinkArrayElement):
-                for bit_set in bit_set_item.bit_set:
-                    bit_set: BitTrackNode = bit_set
-                    bit: RelationshipBit = bit_set.bit
-                    # noinspection PyUnresolvedReferences
-                    bit_display_name = bit.display_name
-                    minimum_value = bit_set.add_value
-                    relationship_options[bit_display_name] = CMRelationshipOption(bit_display_name, minimum_value)
-            else:
-                bit_set_item: BitTrackNode = bit_set_item
-                bit: RelationshipBit = bit_set_item.bit
+        # noinspection PyTypeChecker
+        max_value = float(relationship_track.max_value)
+        # noinspection PyTypeChecker
+        min_value = float(relationship_track.min_value)
+        if isinstance(relationship_track.bit_data, TunableRelationshipIntervalBitData):
+            for bit_set in relationship_track.bit_data.bit_track_node_gen():
+                bit_set: BitTrackNode = bit_set
+                bit: RelationshipBit = bit_set.bit
                 # noinspection PyUnresolvedReferences
                 bit_display_name = bit.display_name
-                minimum_value = bit_set_item.add_value
+                minimum_value = bit_set.add_value
                 relationship_options[bit_display_name] = CMRelationshipOption(bit_display_name, minimum_value)
+        else:
+            for bit_set_item in relationship_track.bit_data.bit_set_list:
+                if isinstance(bit_set_item, _RelationshipTrackData2dLinkArrayElement):
+                    for bit_set in bit_set_item.bit_set:
+                        bit_set: BitTrackNode = bit_set
+                        bit: RelationshipBit = bit_set.bit
+                        # noinspection PyUnresolvedReferences
+                        bit_display_name = bit.display_name
+                        minimum_value = bit_set.add_value
+                        relationship_options[bit_display_name] = CMRelationshipOption(bit_display_name, minimum_value)
+                else:
+                    bit_set_item: BitTrackNode = bit_set_item
+                    bit: RelationshipBit = bit_set_item.bit
+                    # noinspection PyUnresolvedReferences
+                    bit_display_name = bit.display_name
+                    minimum_value = bit_set_item.add_value
+                    relationship_options[bit_display_name] = CMRelationshipOption(bit_display_name, minimum_value)
         if relationship_options:
             result: Tuple[CMRelationshipOption, ...] = (
-                CMRelationshipOption(CMSimControlMenuStringId.MAXIMUM, 100.0),
-                CMRelationshipOption(CMSimControlMenuStringId.MINIMUM, -100.0),
+                CMRelationshipOption(CMSimControlMenuStringId.MAXIMUM, max_value),
+                CMRelationshipOption(CMSimControlMenuStringId.MINIMUM, min_value),
                 *relationship_options.values()
             )
             return result
