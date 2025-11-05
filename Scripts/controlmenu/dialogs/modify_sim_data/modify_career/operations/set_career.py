@@ -87,7 +87,13 @@ class CMSetCareerSimOp(CMSingleSimOperation):
                     continue
             try:
                 self.log.format_with_message('Attempting to display career', career=career, skill_id=career_guid, sim=sim_info)
-                if not career.is_valid_career(sim_info=sim_info, from_join=True):
+                from careers.career_small_business import SmallBusinessCareer
+                if career == SmallBusinessCareer:
+                    if not career.is_career_available(sim_info=sim_info, from_join=True):
+                        continue
+                    if not career.is_career_selectable(sim_info=sim_info):
+                        continue
+                elif not career.is_valid_career(sim_info=sim_info, from_join=True):
                     self.log.format_with_message('Failed, Career is not available for Sim.', career=career, skill_id=career_guid, sim=sim_info)
                     continue
 

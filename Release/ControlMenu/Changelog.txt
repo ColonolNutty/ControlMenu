@@ -1,3 +1,7 @@
+Version 2.8:
+- Added the ability to set romantic satisfaction levels.
+- Fixed an issue when setting Careers on a Sim. (It now handles Small Business careers)
+
 Version 2.7.1:
 - Fixed an issue from patch on 01/14/2025
 

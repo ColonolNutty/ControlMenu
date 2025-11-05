@@ -178,7 +178,7 @@ class CMModifyOccultTypeDialog(CMSimControlDialogBase):
 
         is_currently_occult = CommonSimOccultTypeUtils.is_currently_occult_type(self._sim_info, self._occult_type)
 
-        if self._occult_type in (CommonOccultType.ALIEN, CommonOccultType.VAMPIRE, CommonOccultType.WEREWOLF, CommonOccultType.MERMAID):
+        if CommonOccultUtils.has_occult_sim_info(self._sim_info, CommonOccultType.convert_to_vanilla(self._occult_type)):
             option_dialog.add_option(
                 CommonDialogButtonOption(
                     'SwitchOccult',
