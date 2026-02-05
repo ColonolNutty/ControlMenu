@@ -76,7 +76,7 @@ class CMSetFamilyRelationsBitOp(CMSingleSimOperation):
     @property
     def _relation_operations(self) -> Tuple[CMSetSimAAsRelationToSimBOperation]:
         result: Tuple[CMSetSimAAsRelationToSimBOperation, ...] = (
-            CMSetSimAAsAuntOrUncleToSimBOp(),
+            # CMSetSimAAsAuntOrUncleToSimBOp(),
             CMSetSimAAsChildToSimBOp(),
             CMSetSimAAsCousinToSimBOp(),
             CMSetSimAAsFatherToSimBOp(),
@@ -88,9 +88,9 @@ class CMSetFamilyRelationsBitOp(CMSingleSimOperation):
             CMSetSimAAsHusbandOrWifeToSimBOp(),
             CMSetSimAAsGirlfriendOrBoyfriendToSimBOp(),
             CMSetSimAAsEngagedToSimBOp(),
-            CMSetSimAAsPromisedToSimBOp(),
+            # CMSetSimAAsPromisedToSimBOp(),
             CMSetSimAAsMotherToSimBOp(),
-            CMSetSimAAsNieceOrNephewToSimBOp(),
+            # CMSetSimAAsNieceOrNephewToSimBOp(),
             CMSetSimAAsSiblingToSimBOp(),
             CMSetSimAAsStepSiblingToSimBOp(),
         )
@@ -183,6 +183,8 @@ class CMSetFamilyRelationsBitOp(CMSingleSimOperation):
         has_a_relation = False
         for relationship_operation in self._relation_operations:
             relationship_operation: CMSetSimAAsRelationToSimBOperation = relationship_operation
+            if not relationship_operation.is_allowed_between_sims(chosen_sim_info, sim_info):
+                continue
             display_name = relationship_operation.get_display_name(chosen_sim_info, sim_info)
             has_relation = relationship_operation.has_relation(sim_info, chosen_sim_info)
             if has_relation:
@@ -199,16 +201,16 @@ class CMSetFamilyRelationsBitOp(CMSingleSimOperation):
                 )
             )
 
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'None',
-                None,
-                CommonDialogResponseOptionContext(
-                    CommonLocalizationUtils.colorize(CMStringId.NONE, CommonLocalizedStringColor.GREEN) if not has_a_relation else CMStringId.NONE,
-                ),
-                on_chosen=_on_none_chosen
-            )
-        )
+        # option_dialog.add_option(
+        #     CommonDialogButtonOption(
+        #         'None',
+        #         None,
+        #         CommonDialogResponseOptionContext(
+        #             CommonLocalizationUtils.colorize(CMStringId.NONE, CommonLocalizedStringColor.GREEN) if not has_a_relation else CMStringId.NONE,
+        #         ),
+        #         on_chosen=_on_none_chosen
+        #     )
+        # )
 
         for option in options:
             option_dialog.add_option(option)

@@ -5,27 +5,21 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from typing import Callable, Any, Union
+from typing import Callable, Union
 
 from protocolbuffers.Localization_pb2 import LocalizedString
 from relationships.relationship_bit import RelationshipBit
 from sims.sim_info import SimInfo
 from sims4.resources import Types
 from sims4communitylib.classes.testing.common_execution_result import CommonExecutionResult
-from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_response_option_context import \
-    CommonDialogResponseOptionContext
+from sims4communitylib.classes.testing.common_test_result import CommonTestResult
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
 from sims4communitylib.services.common_service import CommonService
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.common_resource_utils import CommonResourceUtils
 from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
 from sims4communitylib.utils.sims.common_relationship_utils import CommonRelationshipUtils
-from sims4communitylib.dialogs.option_dialogs.common_choose_button_option_dialog import CommonChooseButtonOptionDialog
-from sims4communitylib.dialogs.option_dialogs.options.response.common_dialog_button_option import \
-    CommonDialogButtonOption
 from controlmenu.dialogs.modify_sim_data.double_sim_operation import CMDoubleSimOperation
-from controlmenu.dialogs.modify_sim_data.enums.string_identifiers import CMSimControlMenuStringId
-from controlmenu.enums.string_identifiers import CMStringId
 from controlmenu.logging.has_cm_log import HasCMLog
 
 
@@ -92,58 +86,73 @@ class CMSetSimAAsRelationToSimBOperation(CMDoubleSimOperation, HasCMLog, CommonS
         """
         return CommonRelationshipUtils.has_relationship_bit_with_sim(sim_info_b, sim_info_a, self.relationship_bit_id)
 
+    def is_allowed_between_sims(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> CommonTestResult:
+        """is_allowed_between_sims(sim_info_a, sim_info_b)
+
+        Determine if this relationship is allowed between two Sims.
+
+        :param sim_info_a: The info a Sim.
+        :type sim_info_a: SimInfo
+        :param sim_info_b: The info a Sim.
+        :type sim_info_b: SimInfo
+        :return: True, if the relationship is allowed. False, if not.
+        :rtype: CommonTestResult
+        """
+        return CommonTestResult.TRUE
+
     # noinspection PyMissingOrEmptyDocstring
     def run(self, sim_info_a: SimInfo, sim_info_b: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
-        if not self._should_update_family_tree:
-            self._add_relationship_bits(sim_info_a, sim_info_b)
-            on_completed(True)
-            return True
-
-        def _on_yes_selected(_: str, __: Any):
-            def _on_family_tree_updated(result: bool):
-                if result:
-                    self._add_relationship_bits(sim_info_a, sim_info_b)
-                on_completed(result)
-
-            self._update_family_tree(sim_info_a, sim_info_b, on_completed=_on_family_tree_updated)
-
-        def _on_no_selected(_: str, __: Any):
-            self._add_relationship_bits(sim_info_a, sim_info_b)
-            on_completed(True)
-
-        option_dialog = CommonChooseButtonOptionDialog(
-            self.mod_identity,
-            CMSimControlMenuStringId.UPDATE_FAMILY_TREE_TITLE,
-            CMSimControlMenuStringId.UPDATE_FAMILY_TREE_DESCRIPTION,
-            previous_button_text=CMStringId.CANCEL,
-            include_previous_button=True,
-            on_previous=lambda: on_completed(False),
-            on_close=lambda: on_completed(False)
-        )
-
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'Yes',
-                'YES',
-                CommonDialogResponseOptionContext(
-                    CMStringId.YES
-                ),
-                on_chosen=_on_yes_selected
-            )
-        )
-
-        option_dialog.add_option(
-            CommonDialogButtonOption(
-                'No',
-                'NO',
-                CommonDialogResponseOptionContext(
-                    CMStringId.NO
-                ),
-                on_chosen=_on_no_selected
-            )
-        )
-
-        option_dialog.show()
+        self._update_family_tree(sim_info_a, sim_info_b, on_completed=on_completed)
+        # if not self._should_update_family_tree:
+        #     self._add_relationship_bits(sim_info_a, sim_info_b)
+        #     on_completed(True)
+        #     return True
+        #
+        # def _on_yes_selected(_: str, __: Any):
+        #     def _on_family_tree_updated(result: bool):
+        #         if result:
+        #             self._add_relationship_bits(sim_info_a, sim_info_b)
+        #         on_completed(result)
+        #
+        #     self._update_family_tree(sim_info_a, sim_info_b, on_completed=_on_family_tree_updated)
+        #
+        # def _on_no_selected(_: str, __: Any):
+        #     self._add_relationship_bits(sim_info_a, sim_info_b)
+        #     on_completed(True)
+        #
+        # option_dialog = CommonChooseButtonOptionDialog(
+        #     self.mod_identity,
+        #     CMSimControlMenuStringId.UPDATE_FAMILY_TREE_TITLE,
+        #     CMSimControlMenuStringId.UPDATE_FAMILY_TREE_DESCRIPTION,
+        #     previous_button_text=CMStringId.CANCEL,
+        #     include_previous_button=True,
+        #     on_previous=lambda: on_completed(False),
+        #     on_close=lambda: on_completed(False)
+        # )
+        #
+        # option_dialog.add_option(
+        #     CommonDialogButtonOption(
+        #         'Yes',
+        #         'YES',
+        #         CommonDialogResponseOptionContext(
+        #             CMStringId.YES
+        #         ),
+        #         on_chosen=_on_yes_selected
+        #     )
+        # )
+        #
+        # option_dialog.add_option(
+        #     CommonDialogButtonOption(
+        #         'No',
+        #         'NO',
+        #         CommonDialogResponseOptionContext(
+        #             CMStringId.NO
+        #         ),
+        #         on_chosen=_on_no_selected
+        #     )
+        # )
+        #
+        # option_dialog.show()
         return True
 
     def _add_relationship_bits(self, sim_info_a: SimInfo, sim_info_b: SimInfo) -> CommonExecutionResult:

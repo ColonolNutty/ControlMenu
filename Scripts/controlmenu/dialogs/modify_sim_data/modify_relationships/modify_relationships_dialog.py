@@ -191,34 +191,34 @@ class CMModifyRelationshipsDialog(CMSimControlDialogBase):
             )
 
         # Has blood relatives.
-        has_blood_relatives = False
-        for sim_info_b in CommonSimUtils.get_sim_info_for_all_sims_generator():
-            if self._sim_info is not sim_info_b and CommonRelationshipUtils.are_blood_relatives(self._sim_info, sim_info_b):
-                has_blood_relatives = True
-                break
-        if (target_sim_info is None and CMSetFamilyRelationsBitOp().can_run_with_sim(self._sim_info) and has_blood_relatives) or CMSetFamilyRelationsBitOp().can_run_with_sims(self._sim_info, target_sim_info):
-            option_dialog.add_option(
-                CommonDialogButtonOption(
-                    'FamilyRelations',
-                    None,
-                    CommonDialogResponseOptionContext(
-                        CMSimControlMenuStringId.SET_FAMILY_RELATIONS
-                    ),
-                    on_chosen=lambda *_, **__: _operation_run(CMSetFamilyRelationsBitOp())
-                )
-            )
+        # has_blood_relatives = False
+        # for sim_info_b in CommonSimUtils.get_sim_info_for_all_sims_generator():
+        #     if self._sim_info is not sim_info_b and CommonRelationshipUtils.are_blood_relatives(self._sim_info, sim_info_b):
+        #         has_blood_relatives = True
+        #         break
+        # if (target_sim_info is None and CMSetFamilyRelationsBitOp().can_run_with_sim(self._sim_info) and has_blood_relatives) or CMSetFamilyRelationsBitOp().can_run_with_sims(self._sim_info, target_sim_info):
+        #     option_dialog.add_option(
+        #         CommonDialogButtonOption(
+        #             'FamilyRelations',
+        #             None,
+        #             CommonDialogResponseOptionContext(
+        #                 CMSimControlMenuStringId.SET_FAMILY_RELATIONS
+        #             ),
+        #             on_chosen=lambda *_, **__: _operation_run(CMSetFamilyRelationsBitOp())
+        #         )
+        #     )
 
-        if (target_sim_info is None and CMRemoveFamilyRelationsBitOp().can_run_with_sim(self._sim_info)) or CMRemoveFamilyRelationsBitOp().can_run_with_sims(self._sim_info, target_sim_info):
-            option_dialog.add_option(
-                CommonDialogButtonOption(
-                    'RemoveFamilyRelations',
-                    None,
-                    CommonDialogResponseOptionContext(
-                        CMSimControlMenuStringId.REMOVE_FAMILY_RELATIONS
-                    ),
-                    on_chosen=lambda *_, **__: _operation_run(CMRemoveFamilyRelationsBitOp())
-                )
-            )
+        # if (target_sim_info is None and CMRemoveFamilyRelationsBitOp().can_run_with_sim(self._sim_info)) or CMRemoveFamilyRelationsBitOp().can_run_with_sims(self._sim_info, target_sim_info):
+        #     option_dialog.add_option(
+        #         CommonDialogButtonOption(
+        #             'RemoveFamilyRelations',
+        #             None,
+        #             CommonDialogResponseOptionContext(
+        #                 CMSimControlMenuStringId.REMOVE_FAMILY_RELATIONS
+        #             ),
+        #             on_chosen=lambda *_, **__: _operation_run(CMRemoveFamilyRelationsBitOp())
+        #         )
+        #     )
 
         if (target_sim_info is None and CMRemoveRelationshipBitOp().can_run_with_sim(self._sim_info)) or CMRemoveRelationshipBitOp().can_run_with_sims(self._sim_info, target_sim_info):
             option_dialog.add_option(

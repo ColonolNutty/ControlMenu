@@ -47,7 +47,7 @@ class CMSetSimAAsGrandmotherOnFathersSideToSimBOp(CMSetSimAAsRelationToSimBOpera
 
     # noinspection PyMissingOrEmptyDocstring
     def run(self, grandparent_sim_info: SimInfo, grandchild_sim_info: SimInfo, on_completed: Callable[[bool], None] = CommonFunctionUtils.noop) -> bool:
-        from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.mother import \
-            CMSetSimAAsMotherToSimBOp
-        parent_sim_info = CommonSimGenealogyUtils.get_father_sim_info(grandchild_sim_info)
-        return CMSetSimAAsMotherToSimBOp().run(grandparent_sim_info, parent_sim_info, on_completed=on_completed)
+        result = CommonSimGenealogyUtils.set_as_fathers_mother_of(grandparent_sim_info, grandchild_sim_info)
+        if on_completed is not None:
+            on_completed(result)
+        return result

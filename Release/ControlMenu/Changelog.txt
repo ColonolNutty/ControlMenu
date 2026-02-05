@@ -1,3 +1,7 @@
+Version 2.9:
+- Fixed issues with February 3rd, 2026 patch.
+- Disabled setting family relations until it can be fixed properly.
+
 Version 2.8:
 - Added the ability to set romantic satisfaction levels.
 - Fixed an issue when setting Careers on a Sim. (It now handles Small Business careers)

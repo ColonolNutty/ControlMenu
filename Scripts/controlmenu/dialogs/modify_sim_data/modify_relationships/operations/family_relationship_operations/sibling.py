@@ -8,6 +8,7 @@ Copyright (c) COLONOLNUTTY
 from typing import Callable
 
 from sims.sim_info import SimInfo
+from sims4communitylib.classes.testing.common_execution_result import CommonExecutionResult
 from sims4communitylib.enums.relationship_bits_enum import CommonRelationshipBitId
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
 from sims4communitylib.utils.sims.common_sim_genealogy_utils import CommonSimGenealogyUtils
@@ -41,7 +42,7 @@ class CMSetSimAAsSiblingToSimBOp(CMSetSimAAsRelationToSimBOperation):
             CMSetSimAAsMotherToSimBOp()._update_family_tree(mother_sim_info, new_brother_or_sister_sim_info)
         return True
 
-    def _add_relationship_bits(self, new_brother_or_sister_sim_info: SimInfo, sim_info: SimInfo) -> bool:
+    def _add_relationship_bits(self, new_brother_or_sister_sim_info: SimInfo, sim_info: SimInfo) -> CommonExecutionResult:
         from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.mother import \
             CMSetSimAAsMotherToSimBOp
         from controlmenu.dialogs.modify_sim_data.modify_relationships.operations.family_relationship_operations.father import \
